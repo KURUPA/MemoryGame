@@ -8,5 +8,6 @@ namespace MemoryGame
             InitializeCard();
             cardManager = new CardManager();
         }
+
     }
 }

@@ -22,8 +22,6 @@ namespace MemoryGame
         {
             SuspendLayout();
             setStartVisible(false);
-            cardManager.Lang1 = comboBoxLang1.SelectedValue != null ? (string)comboBoxLang1.SelectedValue : "zh_tw";
-            cardManager.Lang2 = comboBoxLang2.SelectedValue != null ? (string)comboBoxLang2.SelectedValue : "en_us";
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 6; j++)
@@ -80,11 +78,7 @@ namespace MemoryGame
         public void setStartVisible(bool visible)
         {
             this.ButtonStart.Visible = visible;
-            this.comboBoxLang1.Visible = visible;
-            this.comboBoxLang2.Visible = visible;
             this.ButtonStart.Enabled = visible;
-            this.comboBoxLang1.Enabled = visible;
-            this.comboBoxLang2.Enabled = visible;
         }
     }
 }

@@ -31,8 +31,7 @@ namespace MemoryGame
         private void InitializeComponent()
         {
             ButtonStart = new Button();
-            comboBoxLang1 = new ComboBox();
-            comboBoxLang2 = new ComboBox();
+            label1 = new Label();
             SuspendLayout();
             // 
             // ButtonStart
@@ -45,37 +44,21 @@ namespace MemoryGame
             ButtonStart.UseVisualStyleBackColor = true;
             ButtonStart.Click += ButtonStartClick;
             // 
-            // comboBox1
+            // label1
             // 
-            comboBoxLang1.FormattingEnabled = true;
-            comboBoxLang1.Location = new Point(238, 261);
-            comboBoxLang1.Name = "comboBoxLang1";
-            comboBoxLang1.Size = new Size(121, 23);
-            comboBoxLang1.TabIndex = 1;
-            var rows1 = LangDataTable.Rows.Cast<DataRow>();
-            var distinctValues1 = rows1.Select(row => row["Lang"]).Distinct().ToList();
-            comboBoxLang1.DataSource = distinctValues1;
-            comboBoxLang1.DisplayMember = "Lang";
-            // 
-            // comboBox2
-            // 
-            comboBoxLang2.FormattingEnabled = true;
-            comboBoxLang2.Location = new Point(446, 261);
-            comboBoxLang2.Name = "comboBoxLang2";
-            comboBoxLang2.Size = new Size(121, 23);
-            comboBoxLang2.TabIndex = 2;
-            var rows2 = LangDataTable.Rows.Cast<DataRow>();
-            var distinctValues2 = rows2.Select(row => row["Lang"]).Distinct().ToList();
-            comboBoxLang2.DataSource = distinctValues2;
-            comboBoxLang2.DisplayMember = "Lang";
+            label1.AutoSize = true;
+            label1.Location = new Point(365, 68);
+            label1.Name = "label1";
+            label1.Size = new Size(42, 15);
+            label1.TabIndex = 1;
+            label1.Text = "失智";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(comboBoxLang2);
-            Controls.Add(comboBoxLang1);
+            Controls.Add(label1);
             Controls.Add(ButtonStart);
             Name = "MainForm";
             Text = "Form1";
@@ -86,6 +69,6 @@ namespace MemoryGame
         #endregion
 
         private Button ButtonStart;
-        private ComboBox comboBoxLang1, comboBoxLang2;
+        private Label label1;
     }
 }

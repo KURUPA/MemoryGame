@@ -1,842 +1,102 @@
 [
-  {
-    "Key": "key.dog",
-    "Lang": "en_us",
-    "Text": "Dog"
-  },
-  {
-    "Key": "key.dog",
-    "Lang": "zh_tw",
-    "Text": "狗"
-  },
-  {
-    "Key": "key.dog",
-    "Lang": "ja_jp",
-    "Text": "犬（イヌ）"
-  },
-  {
-    "Key": "key.house",
-    "Lang": "en_us",
-    "Text": "House"
-  },
-  {
-    "Key": "key.house",
-    "Lang": "zh_tw",
-    "Text": "房子"
-  },
-  {
-    "Key": "key.house",
-    "Lang": "ja_jp",
-    "Text": "家（いえ）"
-  },
-  {
-    "Key": "key.car",
-    "Lang": "en_us",
-    "Text": "Car"
-  },
-  {
-    "Key": "key.car",
-    "Lang": "zh_tw",
-    "Text": "汽車"
-  },
-  {
-    "Key": "key.car",
-    "Lang": "ja_jp",
-    "Text": "車（くるま）"
-  },
-  {
-    "Key": "key.bicycle",
-    "Lang": "en_us",
-    "Text": "Bicycle"
-  },
-  {
-    "Key": "key.bicycle",
-    "Lang": "zh_tw",
-    "Text": "腳踏車"
-  },
-  {
-    "Key": "key.bicycle",
-    "Lang": "ja_jp",
-    "Text": "自転車（じてんしゃ）"
-  },
-  {
-    "Key": "key.book",
-    "Lang": "en_us",
-    "Text": "Book"
-  },
-  {
-    "Key": "key.book",
-    "Lang": "zh_tw",
-    "Text": "書"
-  },
-  {
-    "Key": "key.book",
-    "Lang": "ja_jp",
-    "Text": "本（ほん）"
-  },
-  {
-    "Key": "key.pen",
-    "Lang": "en_us",
-    "Text": "Pen"
-  },
-  {
-    "Key": "key.pen",
-    "Lang": "zh_tw",
-    "Text": "筆"
-  },
-  {
-    "Key": "key.pen",
-    "Lang": "ja_jp",
-    "Text": "ペン"
-  },
-  {
-    "Key": "key.pencil",
-    "Lang": "en_us",
-    "Text": "Pencil"
-  },
-  {
-    "Key": "key.pencil",
-    "Lang": "zh_tw",
-    "Text": "鉛筆"
-  },
-  {
-    "Key": "key.pencil",
-    "Lang": "ja_jp",
-    "Text": "鉛筆（えんぴつ）"
-  },
-  {
-    "Key": "key.phone",
-    "Lang": "en_us",
-    "Text": "Phone"
-  },
-  {
-    "Key": "key.phone",
-    "Lang": "zh_tw",
-    "Text": "電話"
-  },
-  {
-    "Key": "key.phone",
-    "Lang": "ja_jp",
-    "Text": "電話（でんわ）"
-  },
-  {
-    "Key": "key.computer",
-    "Lang": "en_us",
-    "Text": "Computer"
-  },
-  {
-    "Key": "key.computer",
-    "Lang": "zh_tw",
-    "Text": "電腦"
-  },
-  {
-    "Key": "key.computer",
-    "Lang": "ja_jp",
-    "Text": "コンピューター"
-  },
-  {
-    "Key": "key.television",
-    "Lang": "en_us",
-    "Text": "Television"
-  },
-  {
-    "Key": "key.television",
-    "Lang": "zh_tw",
-    "Text": "電視"
-  },
-  {
-    "Key": "key.television",
-    "Lang": "ja_jp",
-    "Text": "テレビ"
-  },
-  {
-    "Key": "key.music",
-    "Lang": "en_us",
-    "Text": "Music"
-  },
-  {
-    "Key": "key.music",
-    "Lang": "zh_tw",
-    "Text": "音樂"
-  },
-  {
-    "Key": "key.music",
-    "Lang": "ja_jp",
-    "Text": "音楽（おんがく）"
-  },
-  {
-    "Key": "key.movie",
-    "Lang": "en_us",
-    "Text": "Movie"
-  },
-  {
-    "Key": "key.movie",
-    "Lang": "zh_tw",
-    "Text": "電影"
-  },
-  {
-    "Key": "key.movie",
-    "Lang": "ja_jp",
-    "Text": "映画（えいが）"
-  },
-  {
-    "Key": "key.food",
-    "Lang": "en_us",
-    "Text": "Food"
-  },
-  {
-    "Key": "key.food",
-    "Lang": "zh_tw",
-    "Text": "食物"
-  },
-  {
-    "Key": "key.food",
-    "Lang": "ja_jp",
-    "Text": "食べ物（たべもの）"
-  },
-  {
-    "Key": "key.coffee",
-    "Lang": "en_us",
-    "Text": "Coffee"
-  },
-  {
-    "Key": "key.coffee",
-    "Lang": "zh_tw",
-    "Text": "咖啡"
-  },
-  {
-    "Key": "key.coffee",
-    "Lang": "ja_jp",
-    "Text": "コーヒー"
-  },
-  {
-    "Key": "key.tea",
-    "Lang": "en_us",
-    "Text": "Tea"
-  },
-  {
-    "Key": "key.tea",
-    "Lang": "zh_tw",
-    "Text": "茶"
-  },
-  {
-    "Key": "key.tea",
-    "Lang": "ja_jp",
-    "Text": "お茶（おちゃ）"
-  },
-  {
-    "Key": "key.milk",
-    "Lang": "en_us",
-    "Text": "Milk"
-  },
-  {
-    "Key": "key.milk",
-    "Lang": "zh_tw",
-    "Text": "牛奶"
-  },
-  {
-    "Key": "key.milk",
-    "Lang": "ja_jp",
-    "Text": "牛乳（ぎゅうにゅう）"
-  },
-  {
-    "Key": "key.bread",
-    "Lang": "en_us",
-    "Text": "Bread"
-  },
-  {
-    "Key": "key.bread",
-    "Lang": "zh_tw",
-    "Text": "麵包"
-  },
-  {
-    "Key": "key.bread",
-    "Lang": "ja_jp",
-    "Text": "パン"
-  },
-  {
-    "Key": "key.rice",
-    "Lang": "en_us",
-    "Text": "Rice"
-  },
-  {
-    "Key": "key.rice",
-    "Lang": "zh_tw",
-    "Text": "米飯"
-  },
-  {
-    "Key": "key.rice",
-    "Lang": "ja_jp",
-    "Text": "ご飯（ごはん）"
-  },
-  {
-    "Key": "key.noodles",
-    "Lang": "en_us",
-    "Text": "Noodles"
-  },
-  {
-    "Key": "key.noodles",
-    "Lang": "zh_tw",
-    "Text": "麵條"
-  },
-  {
-    "Key": "key.noodles",
-    "Lang": "ja_jp",
-    "Text": "麺（めん）"
-  },
-  {
-    "Key": "key.fruit",
-    "Lang": "en_us",
-    "Text": "Fruit"
-  },
-  {
-    "Key": "key.fruit",
-    "Lang": "zh_tw",
-    "Text": "水果"
-  },
-  {
-    "Key": "key.fruit",
-    "Lang": "ja_jp",
-    "Text": "フルーツ"
-  },
-  {
-    "Key": "key.vegetable",
-    "Lang": "en_us",
-    "Text": "Vegetable"
-  },
-  {
-    "Key": "key.vegetable",
-    "Lang": "zh_tw",
-    "Text": "蔬菜"
-  },
-  {
-    "Key": "key.vegetable",
-    "Lang": "ja_jp",
-    "Text": "野菜（やさい）"
-  },
-  {
-    "Key": "key.spoon",
-    "Lang": "en_us",
-    "Text": "Spoon"
-  },
-  {
-    "Key": "key.spoon",
-    "Lang": "zh_tw",
-    "Text": "湯匙"
-  },
-  {
-    "Key": "key.spoon",
-    "Lang": "ja_jp",
-    "Text": "スプーン"
-  },
-  {
-    "Key": "key.fork",
-    "Lang": "en_us",
-    "Text": "Fork"
-  },
-  {
-    "Key": "key.fork",
-    "Lang": "zh_tw",
-    "Text": "叉子"
-  },
-  {
-    "Key": "key.fork",
-    "Lang": "ja_jp",
-    "Text": "フォーク"
-  },
-  {
-    "Key": "key.knife",
-    "Lang": "en_us",
-    "Text": "Knife"
-  },
-  {
-    "Key": "key.knife",
-    "Lang": "zh_tw",
-    "Text": "刀"
-  },
-  {
-    "Key": "key.knife",
-    "Lang": "ja_jp",
-    "Text": "ナイフ"
-  },
-  {
-    "Key": "key.bed",
-    "Lang": "en_us",
-    "Text": "Bed"
-  },
-  {
-    "Key": "key.bed",
-    "Lang": "zh_tw",
-    "Text": "床"
-  },
-  {
-    "Key": "key.bed",
-    "Lang": "ja_jp",
-    "Text": "ベッド"
-  },
-  {
-    "Key": "key.chair",
-    "Lang": "en_us",
-    "Text": "Chair"
-  },
-  {
-    "Key": "key.chair",
-    "Lang": "zh_tw",
-    "Text": "椅子"
-  },
-  {
-    "Key": "key.chair",
-    "Lang": "ja_jp",
-    "Text": "椅子（いす）"
-  },
-  {
-    "Key": "key.table",
-    "Lang": "en_us",
-    "Text": "Table"
-  },
-  {
-    "Key": "key.table",
-    "Lang": "zh_tw",
-    "Text": "桌子"
-  },
-  {
-    "Key": "key.table",
-    "Lang": "ja_jp",
-    "Text": "テーブル"
-  },
-  {
-    "Key": "key.toilet",
-    "Lang": "en_us",
-    "Text": "Toilet"
-  },
-  {
-    "Key": "key.toilet",
-    "Lang": "zh_tw",
-    "Text": "廁所"
-  },
-  {
-    "Key": "key.toilet",
-    "Lang": "ja_jp",
-    "Text": "トイレ"
-  },
-  {
-    "Key": "key.shower",
-    "Lang": "en_us",
-    "Text": "Shower"
-  },
-  {
-    "Key": "key.shower",
-    "Lang": "zh_tw",
-    "Text": "淋浴"
-  },
-  {
-    "Key": "key.shower",
-    "Lang": "ja_jp",
-    "Text": "シャワー"
-  },
-  {
-    "Key": "key.bath",
-    "Lang": "en_us",
-    "Text": "Bath"
-  },
-  {
-    "Key": "key.bath",
-    "Lang": "zh_tw",
-    "Text": "浴缸"
-  },
-  {
-    "Key": "key.bath",
-    "Lang": "ja_jp",
-    "Text": "お風呂（おふろ）"
-  },
-  {
-    "Key": "key.towel",
-    "Lang": "en_us",
-    "Text": "Towel"
-  },
-  {
-    "Key": "key.towel",
-    "Lang": "zh_tw",
-    "Text": "毛巾"
-  },
-  {
-    "Key": "key.towel",
-    "Lang": "ja_jp",
-    "Text": "タオル"
-  },
-  {
-    "Key": "key.clothes",
-    "Lang": "en_us",
-    "Text": "Clothes"
-  },
-  {
-    "Key": "key.clothes",
-    "Lang": "zh_tw",
-    "Text": "衣服"
-  },
-  {
-    "Key": "key.clothes",
-    "Lang": "ja_jp",
-    "Text": "服（ふく）"
-  },
-  {
-    "Key": "key.shoes",
-    "Lang": "en_us",
-    "Text": "Shoes"
-  },
-  {
-    "Key": "key.shoes",
-    "Lang": "zh_tw",
-    "Text": "鞋子"
-  },
-  {
-    "Key": "key.shoes",
-    "Lang": "ja_jp",
-    "Text": "靴（くつ）"
-  },
-  {
-    "Key": "key.hat",
-    "Lang": "en_us",
-    "Text": "Hat"
-  },
-  {
-    "Key": "key.hat",
-    "Lang": "zh_tw",
-    "Text": "帽子"
-  },
-  {
-    "Key": "key.hat",
-    "Lang": "ja_jp",
-    "Text": "帽子（ぼうし）"
-  },
-  {
-    "Key": "key.glasses",
-    "Lang": "en_us",
-    "Text": "Glasses"
-  },
-  {
-    "Key": "key.glasses",
-    "Lang": "zh_tw",
-    "Text": "眼鏡"
-  },
-  {
-    "Key": "key.glasses",
-    "Lang": "ja_jp",
-    "Text": "メガネ"
-  },
-  {
-    "Key": "key.wallet",
-    "Lang": "en_us",
-    "Text": "Wallet"
-  },
-  {
-    "Key": "key.wallet",
-    "Lang": "zh_tw",
-    "Text": "錢包"
-  },
-  {
-    "Key": "key.wallet",
-    "Lang": "ja_jp",
-    "Text": "財布（さいふ）"
-  },
-  {
-    "Key": "key.keys",
-    "Lang": "en_us",
-    "Text": "Keys"
-  },
-  {
-    "Key": "key.keys",
-    "Lang": "zh_tw",
-    "Text": "鑰匙"
-  },
-  {
-    "Key": "key.keys",
-    "Lang": "ja_jp",
-    "Text": "鍵（かぎ）"
-  },
-  {
-    "Key": "key.creditcard",
-    "Lang": "en_us",
-    "Text": "Credit Card"
-  },
-  {
-    "Key": "key.creditcard",
-    "Lang": "zh_tw",
-    "Text": "信用卡"
-  },
-  {
-    "Key": "key.creditcard",
-    "Lang": "ja_jp",
-    "Text": "クレジットカード"
-  },
-  {
-    "Key": "key.passport",
-    "Lang": "en_us",
-    "Text": "Passport"
-  },
-  {
-    "Key": "key.passport",
-    "Lang": "zh_tw",
-    "Text": "護照"
-  },
-  {
-    "Key": "key.passport",
-    "Lang": "ja_jp",
-    "Text": "パスポート"
-  },
-  {
-    "Key": "key.camera",
-    "Lang": "en_us",
-    "Text": "Camera"
-  },
-  {
-    "Key": "key.camera",
-    "Lang": "zh_tw",
-    "Text": "相機"
-  },
-  {
-    "Key": "key.camera",
-    "Lang": "ja_jp",
-    "Text": "カメラ"
-  },
-  {
-    "Key": "key.phonebook",
-    "Lang": "en_us",
-    "Text": "Phonebook"
-  },
-  {
-    "Key": "key.phonebook",
-    "Lang": "zh_tw",
-    "Text": "電話簿"
-  },
-  {
-    "Key": "key.phonebook",
-    "Lang": "ja_jp",
-    "Text": "電話帳（でんわちょう）"
-  },
-  {
-    "Key": "key.calendar",
-    "Lang": "en_us",
-    "Text": "Calendar"
-  },
-  {
-    "Key": "key.calendar",
-    "Lang": "zh_tw",
-    "Text": "日曆"
-  },
-  {
-    "Key": "key.calendar",
-    "Lang": "ja_jp",
-    "Text": "カレンダー"
-  },
-  {
-    "Key": "key.clock",
-    "Lang": "en_us",
-    "Text": "Clock"
-  },
-  {
-    "Key": "key.clock",
-    "Lang": "zh_tw",
-    "Text": "時鐘"
-  },
-  {
-    "Key": "key.clock",
-    "Lang": "ja_jp",
-    "Text": "時計（とけい）"
-  },
-  {
-    "Key": "key.radio",
-    "Lang": "en_us",
-    "Text": "Radio"
-  },
-  {
-    "Key": "key.radio",
-    "Lang": "zh_tw",
-    "Text": "收音機"
-  },
-  {
-    "Key": "key.radio",
-    "Lang": "ja_jp",
-    "Text": "ラジオ"
-  },
-  {
-    "Key": "key.newspaper",
-    "Lang": "en_us",
-    "Text": "Newspaper"
-  },
-  {
-    "Key": "key.newspaper",
-    "Lang": "zh_tw",
-    "Text": "報紙"
-  },
-  {
-    "Key": "key.newspaper",
-    "Lang": "ja_jp",
-    "Text": "新聞（しんぶん）"
-  },
-  {
-    "Key": "key.magazine",
-    "Lang": "en_us",
-    "Text": "Magazine"
-  },
-  {
-    "Key": "key.magazine",
-    "Lang": "zh_tw",
-    "Text": "雜誌"
-  },
-  {
-    "Key": "key.magazine",
-    "Lang": "ja_jp",
-    "Text": "雑誌（ざっし）"
-  },
-  {
-    "Key": "key.postcard",
-    "Lang": "en_us",
-    "Text": "Postcard"
-  },
-  {
-    "Key": "key.postcard",
-    "Lang": "zh_tw",
-    "Text": "明信片"
-  },
-  {
-    "Key": "key.postcard",
-    "Lang": "ja_jp",
-    "Text": "ハガキ"
-  },
-  {
-    "Key": "key.envelope",
-    "Lang": "en_us",
-    "Text": "Envelope"
-  },
-  {
-    "Key": "key.envelope",
-    "Lang": "zh_tw",
-    "Text": "信封"
-  },
-  {
-    "Key": "key.envelope",
-    "Lang": "ja_jp",
-    "Text": "封筒（ふうとう）"
-  },
-  {
-    "Key": "key.notebook",
-    "Lang": "en_us",
-    "Text": "Notebook"
-  },
-  {
-    "Key": "key.notebook",
-    "Lang": "zh_tw",
-    "Text": "筆記本"
-  },
-  {
-    "Key": "key.notebook",
-    "Lang": "ja_jp",
-    "Text": "ノート"
-  },
-  {
-    "Key": "key.mouse",
-    "Lang": "en_us",
-    "Text": "Mouse"
-  },
-  {
-    "Key": "key.mouse",
-    "Lang": "zh_tw",
-    "Text": "滑鼠"
-  },
-  {
-    "Key": "key.mouse",
-    "Lang": "ja_jp",
-    "Text": "マウス"
-  },
-  {
-    "Key": "key.printer",
-    "Lang": "en_us",
-    "Text": "Printer"
-  },
-  {
-    "Key": "key.printer",
-    "Lang": "zh_tw",
-    "Text": "印表機"
-  },
-  {
-    "Key": "key.printer",
-    "Lang": "ja_jp",
-    "Text": "プリンター"
-  },
-  {
-    "Key": "key.scissors",
-    "Lang": "en_us",
-    "Text": "Scissors"
-  },
-  {
-    "Key": "key.scissors",
-    "Lang": "zh_tw",
-    "Text": "剪刀"
-  },
-  {
-    "Key": "key.scissors",
-    "Lang": "ja_jp",
-    "Text": "はさみ"
-  },
-  {
-    "Key": "key.train",
-    "Lang": "en_us",
-    "Text": "Train"
-  },
-  {
-    "Key": "key.train",
-    "Lang": "zh_tw",
-    "Text": "火車"
-  },
-  {
-    "Key": "key.train",
-    "Lang": "ja_jp",
-    "Text": "電車（でんしゃ）"
-  },
-  {
-    "Key": "key.airplane",
-    "Lang": "en_us",
-    "Text": "Airplane"
-  },
-  {
-    "Key": "key.airplane",
-    "Lang": "zh_tw",
-    "Text": "飛機"
-  },
-  {
-    "Key": "key.airplane",
-    "Lang": "ja_jp",
-    "Text": "飛行機（ひこうき）"
-  },
-  {
-    "Key": "key.umbrella",
-    "Lang": "en_us",
-    "Text": "Umbrella"
-  },
-  {
-    "Key": "key.umbrella",
-    "Lang": "zh_tw",
-    "Text": "雨傘"
-  },
-  {
-    "Key": "key.umbrella",
-    "Lang": "ja_jp",
-    "Text": "傘（かさ）"
-  },
-  {
-    "Key": "key.sunglasses",
-    "Lang": "en_us",
-    "Text": "Sunglasses"
-  },
-  {
-    "Key": "key.sunglasses",
-    "Lang": "zh_tw",
-    "Text": "太陽眼鏡"
-  },
-  {
-    "Key": "key.sunglasses",
-    "Lang": "ja_jp",
-    "Text": "サングラス"
-  }
+    {
+        "Singer": "小鳳凰",
+        "Title": "為按怎",
+        "File": "小鳳凰 為按怎"
+    },
+    {
+        "Singer": "王建傑",
+        "Title": "心內話",
+        "File": "王建傑 心內話"
+    },
+    {
+        "Singer": "江蕙",
+        "Title": "夜半路燈",
+        "File": "江蕙 夜半路燈"
+    },
+    {
+        "Singer": "江蕙",
+        "Title": "青蚵仔嫂",
+        "File": "江蕙 青蚵仔嫂"
+    },
+    {
+        "Singer": "江蕙",
+        "Title": "暗相思",
+        "File": "江蕙 暗相思"
+    },
+    {
+        "Singer": "江蕙",
+        "Title": "落山風",
+        "File": "江蕙 落山風"
+    },
+    {
+        "Singer": "江蕙",
+        "Title": "薄情郎",
+        "File": "江蕙 薄情郎"
+    },
+    {
+        "Singer": "西卿",
+        "Title": "命運青紅燈",
+        "File": "西卿 命運青紅燈"
+    },
+    {
+        "Singer": "李翊君",
+        "Title": "為錢賭生命",
+        "File": "李翊君 為錢賭生命"
+    },
+    {
+        "Singer": "沈文程",
+        "Title": "雲中月",
+        "File": "沈文程 雲中月"
+    },
+    {
+        "Singer": "洪榮宏",
+        "Title": "台北今夜冷清清",
+        "File": "洪榮宏 台北今夜冷清清"
+    },
+    {
+        "Singer": "洪榮宏",
+        "Title": "孤兒淚",
+        "File": "洪榮宏 孤兒淚"
+    },
+    {
+        "Singer": "洪榮宏",
+        "Title": "爸爸在哪裡",
+        "File": "洪榮宏 爸爸在哪裡"
+    },
+    {
+        "Singer": "洶湧",
+        "Title": "霹靂英雄音樂",
+        "File": "洶湧 霹靂英雄音樂"
+    },
+    {
+        "Singer": "陳一郎",
+        "Title": "阿霞相思夢",
+        "File": "陳一郎 阿霞相思夢"
+    },
+    {
+        "Singer": "陳小雲",
+        "Title": "月夜相思曲",
+        "File": "陳小雲 月夜相思曲"
+    },
+    {
+        "Singer": "黃乙玲",
+        "Title": "六月割菜假有心",
+        "File": "黃乙玲 六月割菜假有心"
+    },
+    {
+        "Singer": "黃乙玲",
+        "Title": "何必當初",
+        "File": "黃乙玲 何必當初"
+    },
+    {
+        "Singer": "詹雅雯",
+        "Title": "新娘悲歌",
+        "File": "詹雅雯 新娘悲歌"
+    },
+    {
+        "Singer": "蕭煌奇",
+        "Title": "一支小雨傘",
+        "File": "蕭煌奇 一支小雨傘"
+    }
 ]

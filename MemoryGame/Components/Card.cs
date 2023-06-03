@@ -6,6 +6,7 @@ namespace MemoryGame
         public readonly Image FrontImage;
         public readonly Image BackImage;
         private bool IsFlipped { get; set; }
+        public bool isSong { get; set; }
 
         public String Key { get; set; }
         public String Lang { get; set; }
