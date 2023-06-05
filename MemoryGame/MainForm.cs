@@ -7,6 +7,7 @@ namespace MemoryGame
             InitializeComponent();
             InitializeCard();
             cardManager = new CardManager();
+            LangDataTable = createLangDataTable();
         }
 
     }

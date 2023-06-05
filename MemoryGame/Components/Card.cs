@@ -1,44 +1,44 @@
+using System.Drawing;
+
 namespace MemoryGame
 {
-    public class Card : PictureBox
+    public class SongTitle : PictureBox
     {
         public readonly CardManager CardManager;
         public readonly Image FrontImage;
         public readonly Image BackImage;
         private bool IsFlipped { get; set; }
-        public bool isSong { get; set; }
 
-        public String Key { get; set; }
-        public String Lang { get; set; }
+        public String File { get; set; }
         public int Id { get; set; }
 
-        private string ShowText { get; set; }
-        public static readonly int CARD_WIDTH = 120;
-        public static readonly int CARD_HEIGHT = 60;
+        private string Title { get; set; }
+        private string Singer { get; set; }
+        public static readonly int CARD_WIDTH = 144;
+        public static readonly int CARD_HEIGHT = 72;
 
-        public Card(int x, int y, CardManager cardManager, String key, int index) : this(x, y, cardManager)
+        public SongTitle(int x, int y, CardManager cardManager, String key, int index) : this(x, y, cardManager)
         {
-            this.Key = key;
+            this.File = key;
             this.Id = index;
         }
 
-        public Card(int x, int y, CardManager cardManager) : this(cardManager)
+        public SongTitle(int x, int y, CardManager cardManager) : this(cardManager)
         {
             this.Location = new Point(x, y);
         }
 
-        public Card(CardManager cardManager)
+        public SongTitle(CardManager cardManager)
         {
-            this.ShowText = "";
-            this.Key = "";
-            this.Lang = "en_us";
+            this.Title = "";
+            this.Singer = "";
+            this.File = "";
             this.CardManager = cardManager;
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Size = new Size(CARD_WIDTH, CARD_HEIGHT);
             this.FrontImage = Image.FromFile("assets/texture/front.png");
             this.BackImage = Image.FromFile("assets/texture/back.png");
             this.Image = this.BackImage;
-            this.BackColor = Color.Aqua;
             this.IsFlipped = false;
             this.Click += new EventHandler(CardClick);
         }
@@ -47,7 +47,8 @@ namespace MemoryGame
         {
             this.Image = flipp ? this.FrontImage : this.BackImage;
             IsFlipped = flipp;
-            this.ShowText = MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.Key, this.Lang);
+            this.Title = MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Title");
+            this.Singer = MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Singer");
         }
 
         public void FlipOver()
@@ -82,23 +83,21 @@ namespace MemoryGame
         {
             base.OnPaint(e);
 
-            if (IsFlipped && !string.IsNullOrEmpty(ShowText))
+            if (IsFlipped && !string.IsNullOrEmpty(Title))
             {
-                // 設定字型和字體大小
-                Font font = new Font("Arial", 12);
-
-                // 計算文字應該放置的位置
+                Font font = new Font("微軟正黑體", 12);
+                TextFormatFlags flags = TextFormatFlags.WordBreak | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
+                SizeF titleSize = TextRenderer.MeasureText(Title, font);
+                SizeF authorSize = TextRenderer.MeasureText(Singer, font);
                 float x = Padding.Left;
                 float y = Padding.Top;
+                float titleX = x + (Width + titleSize.Width) / 2;
+                float authorX = x + (Width + authorSize.Width) / 2;
+                float titleY = y + (Height - Padding.Vertical - titleSize.Height) / 2;
+                float authorY = titleY + titleSize.Height + 10;
 
-                // 計算文字可使用的區域
-                RectangleF textArea = new RectangleF(x, y, Width - Padding.Horizontal, Height - Padding.Vertical);
-
-                // 設定文字格式化選項，包括自動換行和對齊方式
-                TextFormatFlags flags = TextFormatFlags.WordBreak | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
-
-                // 在中央繪製文字
-                TextRenderer.DrawText(e.Graphics, ShowText, font, Rectangle.Round(textArea), Color.Black, flags);
+                TextRenderer.DrawText(e.Graphics, Title, font, new Point((int)titleX, (int)titleY), Color.White, flags);
+                TextRenderer.DrawText(e.Graphics, Singer, font, new Point((int)authorX, (int)authorY), Color.White, flags);
             }
         }
 

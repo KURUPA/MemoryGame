@@ -7,21 +7,17 @@ namespace MemoryGame
     {
         private readonly Timer DelayTimer;
         private readonly Timer Tick;
-        public List<Card> CardList { get; set; }
-        private int CardFirstId { get; set; }
-        private int CardSecondId { get; set; }
-        public string Lang1 { get; set; }
-        public string Lang2 { get; set; }
+        public List<SongTitle> CardList { get; set; }
+        private int CardTitleId { get; set; }
+        private int SongId { get; set; }
         private bool isPickOne { get; set; }
         private bool CanPick = true;
 
         public CardManager()
         {
-            Lang1 = "zh_tw";
-            Lang2 = "en_us";
-            CardList = new List<Card>();
-            CardFirstId = -1;
-            CardSecondId = -1;
+            CardList = new List<SongTitle>();
+            CardTitleId = -1;
+            SongId = -1;
             DelayTimer = new Timer();
             Tick = new Timer();
             DelayTimer.Interval = 500;
@@ -29,7 +25,7 @@ namespace MemoryGame
             DelayTimer.Tick += new EventHandler(DelayTimer_Tick);
         }
 
-        public void AddCard(Card card)
+        public void AddCard(SongTitle card)
         {
             CardList.Add(card);
         }
@@ -46,73 +42,70 @@ namespace MemoryGame
             List<string> keys = new List<string>();
             foreach (DataRow row in MainForm.LangDataTable.Rows)
             {
-                string? key = row["Key"].ToString();
-                if (key != null)
+                string? file = row["File"].ToString();
+                if (file != null)
                 {
-                    keys.Add(key);
+                    keys.Add(file);
                 }
             }
             keys = keys.OrderBy(x => random.Next()).ToList();
-            if (keys.Count < CardList.Count / 2)
+            if (keys.Count < CardList.Count)
             {
-                Console.WriteLine("沒有足夠的keys :" + keys.ToString());
+                Console.WriteLine("沒有足夠的File keys :" + keys.ToString());
                 return;
             }
-            for (int i = 0; i < CardList.Count; i += 2)
+            for (int i = 0; i < CardList.Count; i ++)
             {
-                string key = keys[i / 2];
-                CardList[i].Key = key;
-                CardList[i].Lang = Lang1;
-                CardList[i + 1].Key = key;
-                CardList[i + 1].Lang = Lang2;
+                string key = keys[i];
+                CardList[i].File = key;
             }
         }
 
-        public Card? getCardFirst()
+        public SongTitle? getCardTitleId()
         {
-            return this.GetCardById(this.CardFirstId);
+            return this.GetCardById(this.CardTitleId);
         }
 
-        public Card? getCardSecond()
+        public SongTitle? getSongId()
         {
-            return this.GetCardById(this.CardSecondId);
+            return this.GetCardById(this.SongId);
         }
 
         public void ResetPickCard()
         {
-            CardFirstId = -1;
-            CardSecondId = -1;
+            CardTitleId = -1;
+            SongId = -1;
             isPickOne = false;
             CanPick = true;
         }
 
         public Boolean isCanPick() { return this.CanPick; }
 
-        public void PickCard(Card card)
+        public void PickCard(SongTitle card)
         {
             if (!isPickOne)
             {
-                CardFirstId = card.Id;
+                CardTitleId = card.Id;
                 isPickOne = true;
             }
             else
             {
-                CardSecondId = card.Id;
+                SongId = card.Id;
                 CanPick = false;
                 DelayTimer.Start();
             }
         }
 
-        public Card? GetCardById(int id)
+        public SongTitle? GetCardById(int id)
         {
             return CardList.FirstOrDefault(card => card.Id == id);
         }
         private void DelayTimer_Tick(object? sender, EventArgs e)
         {
-            Card? cardFirst = getCardFirst();
-            Card? cardSecondId = getCardSecond();
+            SongTitle? cardFirst = getCardTitleId();
+            SongTitle? cardSecondId = getSongId();
             if (cardFirst == null || cardSecondId == null) { return; }
-            if (cardFirst.Key == cardSecondId.Key)
+            if (cardFirst.File == cardSecondId.File)
             {
                 cardFirst.Visible = false;
                 cardSecondId.Visible = false;

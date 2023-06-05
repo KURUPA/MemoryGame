@@ -1,7 +1,6 @@
 using System.Data;
-using System.IO;
-using System.Text.Json.Nodes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace MemoryGame
@@ -24,9 +23,9 @@ namespace MemoryGame
             setStartVisible(false);
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    Card card = CreateCard(20 + j * (6 + Card.CARD_WIDTH), 20 + i * (6 + Card.CARD_HEIGHT), i * 10 + j, "cat");
+                    SongTitle card = CreateCard(20 + j * (6 + SongTitle.CARD_WIDTH), 20 + i * (6 + SongTitle.CARD_HEIGHT), i * 10 + j, "cat");
                     cardManager.AddCard(card);
                 }
             }
@@ -35,43 +34,41 @@ namespace MemoryGame
             ResumeLayout();
         }
 
-        private Card CreateCard(int x, int y, int index, String key)
+        private SongTitle CreateCard(int x, int y, int index, String key)
         {
-            return new Card(x, y, this.cardManager, key, index);
+            return new SongTitle(x, y, this.cardManager, key, index);
         }
 
         private static DataTable createLangDataTable()
         {
+            string jsonFilePath = "assets/data/data_table.json";
+            string jsonData = File.ReadAllText(jsonFilePath);
+            JArray json = JArray.Parse(jsonData);
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add(new DataColumn("Song", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-            var data = new[]
+            // 建立DataTable的欄位
+            dataTable.Columns.Add("Singer");
+            dataTable.Columns.Add("Title");
+            dataTable.Columns.Add("File");
+            foreach (JToken item in json)
             {
-            new { Song = "key.dog", Text = "Dog" },
-            new { Song = "key.dog", Text = "狗" },
-            };
-            foreach (var item in data)
-            {
-                var row = dataTable.NewRow();
-                row["Song"] = item.Song;
-                row["Text"] = item.Text;
+                DataRow row = dataTable.NewRow();
+                row["Singer"] = item["Singer"]?.ToString();
+                row["Title"] = item["Title"]?.ToString();
+                row["File"] = item["File"]?.ToString();
                 dataTable.Rows.Add(row);
             }
-            string filePath = "assets/data/data_table.json";
-            string json = JsonConvert.SerializeObject(dataTable, Formatting.Indented);
-            File.WriteAllText(filePath, json);
             return dataTable;
         }
-        public static string FindTextByKeyAndLang(DataTable dataTable, string key, string lang)
+        public static string FindTextByKeyAndLang(DataTable dataTable, string key, string value)
         {
-            DataRow[] rows = dataTable.Select($"Key = '{key}' AND Lang = '{lang}'");
+            DataRow[] rows = dataTable.Select($"File = '{key}'");
             if (rows.Length > 0)
             {
-                return (string)rows[0]["Text"];
+                return (string)rows[0][value];
             }
             else
             {
-                return "Text not found";
+                return value + " not found";
             }
         }
 

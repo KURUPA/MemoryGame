@@ -17,3 +17,4 @@ D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\Memory
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\ref\MemoryGame.dll
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\MemoryGame.csproj.CopyComplete
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\MemoryGame.MainForm.resources
