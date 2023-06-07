@@ -4,6 +4,15 @@
     <Compile Update="Components\Card.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Components\TabPages\Description1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\TabPages\Level1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\TabPages\MainMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="MainForm.Cards.cs">
       <SubType>Form</SubType>
     </Compile>

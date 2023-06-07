@@ -1,5 +1,4 @@
 using System.Data;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
@@ -7,37 +6,35 @@ namespace MemoryGame
 {
     public partial class MainForm
     {
-        private CardManager cardManager;
         public static DataTable LangDataTable = createLangDataTable();
 
+        public TabControl tabControl = new TabControl();
+        public TabPage menu;
+        public TabPage description1;
+        public TabPage level1;
+        public TabPage description2 = new TabPage("Description 2");
+        public TabPage level2 = new TabPage("Level 2");
+        public TabPage description3 = new TabPage("Description 3");
+        public TabPage level3 = new TabPage("Level 3");
 
         private void InitializeCard()
         {
-
-
+            this.Controls.Add(tabControl);
+            tabControl.Location = new Point(0, 0);
+            tabControl.Size = this.ClientSize;
+            tabControl.TabPages.Add(menu);
+            tabControl.TabPages.Add(description1);
+            tabControl.TabPages.Add(level1);
+            tabControl.TabPages.Add(description2);
+            tabControl.TabPages.Add(level2);
+            tabControl.TabPages.Add(description3);
+            tabControl.TabPages.Add(level3);
+            tabControl.SelectedIndex = 0;
+            tabControl.Show();
         }
 
-        private void ButtonStartClick(object sender, EventArgs e)
-        {
-            SuspendLayout();
-            setStartVisible(false);
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    SongTitle card = CreateCard(20 + j * (6 + SongTitle.CARD_WIDTH), 20 + i * (6 + SongTitle.CARD_HEIGHT), i * 10 + j, "cat");
-                    cardManager.AddCard(card);
-                }
-            }
-            cardManager.RandomlyAssignKeys();
-            cardManager.CardList.ForEach(card => this.Controls.Add(card));
-            ResumeLayout();
-        }
 
-        private SongTitle CreateCard(int x, int y, int index, String key)
-        {
-            return new SongTitle(x, y, this.cardManager, key, index);
-        }
+
 
         private static DataTable createLangDataTable()
         {
@@ -70,12 +67,6 @@ namespace MemoryGame
             {
                 return value + " not found";
             }
-        }
-
-        public void setStartVisible(bool visible)
-        {
-            this.ButtonStart.Visible = visible;
-            this.ButtonStart.Enabled = visible;
         }
     }
 }

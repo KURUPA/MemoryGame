@@ -5,8 +5,9 @@ namespace MemoryGame
     public class SongTitle : PictureBox
     {
         public readonly CardManager CardManager;
-        public readonly Image FrontImage;
-        public readonly Image BackImage;
+        public readonly Image ButtonImage = Image.FromFile("assets/texture/Song_Title/button.png");
+        public readonly Image ButtonDownImage = Image.FromFile("assets/texture/Song_Title/button_down.png");
+        public readonly Image ButtonUpImage = Image.FromFile("assets/texture/Song_Title/button_up.png");
         private bool IsFlipped { get; set; }
 
         public String File { get; set; }
@@ -36,34 +37,23 @@ namespace MemoryGame
             this.CardManager = cardManager;
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Size = new Size(CARD_WIDTH, CARD_HEIGHT);
-            this.FrontImage = Image.FromFile("assets/texture/front.png");
-            this.BackImage = Image.FromFile("assets/texture/back.png");
-            this.Image = this.BackImage;
+            this.Image = this.ButtonImage;
             this.IsFlipped = false;
-            this.Click += new EventHandler(CardClick);
+            this.MouseDown += new MouseEventHandler(SongTitleMouseDown);
+            this.MouseUp += new MouseEventHandler(SongTitleMouseUp);
         }
 
         public void FlipOver(Boolean flipp)
         {
-            this.Image = flipp ? this.FrontImage : this.BackImage;
+            this.Image = flipp ? this.ButtonUpImage : this.ButtonImage;
+            this.Title = flipp ? MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Title") : " ";
+            this.Singer = flipp ? MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Singer") : " ";
             IsFlipped = flipp;
-            this.Title = MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Title");
-            this.Singer = MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Singer");
         }
 
         public void FlipOver()
         {
             this.FlipOver(!IsFlipped);
-        }
-
-        private void CardClick(object? sender, EventArgs e)
-        {
-            if (!CardManager.isCanPick() || this.IsFlipped)
-            {
-                return;
-            }
-            this.FlipOver();
-            CardManager.PickCard(this);
         }
 
         public bool Flipped
@@ -85,20 +75,36 @@ namespace MemoryGame
 
             if (IsFlipped && !string.IsNullOrEmpty(Title))
             {
-                Font font = new Font("微軟正黑體", 12);
-                TextFormatFlags flags = TextFormatFlags.WordBreak | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
+                Font font = MemoryGame.Tabs.MainMenu.getFont();
+                Brush brush = new SolidBrush(Color.DarkBlue);
                 SizeF titleSize = TextRenderer.MeasureText(Title, font);
-                SizeF authorSize = TextRenderer.MeasureText(Singer, font);
-                float x = Padding.Left;
-                float y = Padding.Top;
-                float titleX = x + (Width + titleSize.Width) / 2;
-                float authorX = x + (Width + authorSize.Width) / 2;
-                float titleY = y + (Height - Padding.Vertical - titleSize.Height) / 2;
-                float authorY = titleY + titleSize.Height + 10;
-
-                TextRenderer.DrawText(e.Graphics, Title, font, new Point((int)titleX, (int)titleY), Color.White, flags);
-                TextRenderer.DrawText(e.Graphics, Singer, font, new Point((int)authorX, (int)authorY), Color.White, flags);
+                SizeF singerSize = TextRenderer.MeasureText(Singer, font);
+                PointF titlePoint = new PointF((this.Width - titleSize.Width) / 2, (this.Height - titleSize.Height) / 2 - 16);
+                PointF singerPoint = new PointF((this.Width - singerSize.Width) / 2, (this.Height + singerSize.Height) / 2 - 16);
+                e.Graphics.DrawString(Title, font, brush, titlePoint);
+                e.Graphics.DrawString(Singer, font, brush, singerPoint);
             }
+        }
+
+
+        private void SongTitleMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (!CardManager.isCanPick() || this.IsFlipped)
+            {
+                return;
+            }
+            this.Image = this.ButtonDownImage;
+        }
+        private void SongTitleMouseUp(object? sender, MouseEventArgs e)
+        {
+            this.Image = this.ButtonUpImage;
+            if (!CardManager.isCanPick())
+            {
+                return;
+            }
+            this.FlipOver(true);
+            CardManager.PickCard(this);
+
         }
 
     }
