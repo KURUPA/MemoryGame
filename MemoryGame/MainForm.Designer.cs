@@ -33,12 +33,13 @@ namespace MemoryGame
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            MaximizeBox = false;
-            Name = "MainForm";
-            Text = "Form1";
+            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(800, 450);
+            this.MaximizeBox = false;
+            this.Name = "MainForm";
+            this.Text = "Form1";
+            this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
             ResumeLayout(false);
         }
 

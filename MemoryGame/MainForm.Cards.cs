@@ -12,10 +12,14 @@ namespace MemoryGame
         public TabPage menu;
         public TabPage description1;
         public TabPage level1;
-        public TabPage description2 = new TabPage("Description 2");
-        public TabPage level2 = new TabPage("Level 2");
-        public TabPage description3 = new TabPage("Description 3");
-        public TabPage level3 = new TabPage("Level 3");
+        public TabPage description2;
+        public TabPage level2;
+        public TabPage description3;
+        public TabPage level3;
+        public TabPage scoreboard;
+        public TimeSpan level1Time;
+        public TimeSpan level2Time;
+        public TimeSpan level3Time;
 
         private void InitializeCard()
         {
@@ -29,12 +33,17 @@ namespace MemoryGame
             tabControl.TabPages.Add(level2);
             tabControl.TabPages.Add(description3);
             tabControl.TabPages.Add(level3);
+            tabControl.TabPages.Add(scoreboard);
             tabControl.SelectedIndex = 0;
+            tabControl.Appearance = TabAppearance.FlatButtons;
+            tabControl.SizeMode = TabSizeMode.Fixed;
+            foreach (TabPage tabPage in tabControl.TabPages)
+            {
+                tabPage.BackColor = Color.Transparent;
+            }
             tabControl.Show();
+
         }
-
-
-
 
         private static DataTable createLangDataTable()
         {
@@ -42,17 +51,19 @@ namespace MemoryGame
             string jsonData = File.ReadAllText(jsonFilePath);
             JArray json = JArray.Parse(jsonData);
             DataTable dataTable = new DataTable();
-            // 建立DataTable的欄位
             dataTable.Columns.Add("Singer");
             dataTable.Columns.Add("Title");
             dataTable.Columns.Add("File");
             foreach (JToken item in json)
             {
-                DataRow row = dataTable.NewRow();
-                row["Singer"] = item["Singer"]?.ToString();
-                row["Title"] = item["Title"]?.ToString();
-                row["File"] = item["File"]?.ToString();
-                dataTable.Rows.Add(row);
+                if (item["Singer"] != null && item["Title"] != null && item["File"] != null)
+                {
+                    DataRow row = dataTable.NewRow();
+                    row["Singer"] = item["Singer"]?.ToString();
+                    row["Title"] = item["Title"]?.ToString();
+                    row["File"] = item["File"]?.ToString();
+                    dataTable.Rows.Add(row);
+                }
             }
             return dataTable;
         }
@@ -67,6 +78,29 @@ namespace MemoryGame
             {
                 return value + " not found";
             }
+        }
+
+        public void updataTime()
+        {
+            JObject jObject = new JObject();
+            jObject.Add("Date", System.DateTime.Today);
+            jObject.Add("Level_1_Time", this.level1Time);
+            jObject.Add("Level_2_Time", this.level2Time);
+            jObject.Add("Level_3_Time", this.level3Time);
+            string jsonFilePath = "assets/data/scoreboard.json";
+            string jsonData = File.ReadAllText(jsonFilePath);
+            JArray jArray;
+            if (jsonData != null)
+            {
+                jArray = JArray.Parse(jsonData);
+            }
+            else
+            {
+                jArray = new JArray();
+            }
+            jArray.Add(jObject);
+            string filePath = "assets/data/scoreboard.json";
+            File.WriteAllText(filePath, jArray.ToString());
         }
     }
 }

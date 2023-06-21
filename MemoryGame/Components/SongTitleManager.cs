@@ -3,31 +3,30 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace MemoryGame
 {
-    public class CardManager
+    public class SongTitleManager
     {
         public int point;
         private readonly Timer DelayTimer;
-        private readonly Timer Tick;
-        public List<SongTitle> CardList { get; set; }
-        private int CardTitleId { get; set; }
+        public List<SongTitle> list { get; set; }
+        private string CardTitleFile { get; set; }
         private string song { get; set; }
-        private bool CanPick = true;
+        public bool CanPick = true;
+        public Managerlistener? managerlistener;
+        public SongTitle? pickSong;
 
-        public CardManager()
+        public SongTitleManager()
         {
-            CardList = new List<SongTitle>();
-            CardTitleId = -1;
+            list = new List<SongTitle>();
+            CardTitleFile = "";
             song = "";
             DelayTimer = new Timer();
-            Tick = new Timer();
             DelayTimer.Interval = 500;
-            Tick.Interval = 20;
             DelayTimer.Tick += new EventHandler(DelayTimer_Tick);
         }
 
         public void AddCard(SongTitle card)
         {
-            CardList.Add(card);
+            list.Add(card);
         }
 
         public void setSong(string File)
@@ -37,13 +36,13 @@ namespace MemoryGame
 
         public void ClearAllCard()
         {
-            CardList.Clear();
+            list.Clear();
         }
 
         public void RandomlyAssignKeys()
         {
             Random random = new Random();
-            CardList = CardList.OrderBy(card => random.Next()).ToList();
+            list = list.OrderBy(card => random.Next()).ToList();
             List<string> keys = new List<string>();
             foreach (DataRow row in MainForm.LangDataTable.Rows)
             {
@@ -54,60 +53,57 @@ namespace MemoryGame
                 }
             }
             keys = keys.OrderBy(x => random.Next()).ToList();
-            if (keys.Count < CardList.Count)
+            if (keys.Count < list.Count)
             {
-                Console.WriteLine("沒有足夠的File keys :" + keys.ToString());
+                Console.WriteLine("not enough File keys :" + keys.ToString());
                 return;
             }
-            for (int i = 0; i < CardList.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 string key = keys[i];
-                CardList[i].File = key;
+                list[i].File = key;
             }
         }
 
-        public SongTitle? getCardTitleId()
+        public string getRandomSong()
         {
-            return this.GetCardById(this.CardTitleId);
-        }
-
-        public string getSong()
-        {
-            string song = CardList.ElementAt(new Random().Next(CardList.Count)).File;
+            string song = list.ElementAt(new Random().Next(list.Count)).File;
             return song;
         }
 
         public Boolean isCanPick() { return this.CanPick; }
 
-        public void PickCard(SongTitle card)
+        public void PickCard(SongTitle song)
         {
             this.CanPick = false;
-            this.CardTitleId = card.Id;
+            this.pickSong = song;
             DelayTimer.Start();
-
         }
 
-        public SongTitle? GetCardById(int id)
-        {
-            return CardList.FirstOrDefault(card => card.Id == id);
-        }
         private void DelayTimer_Tick(object? sender, EventArgs e)
         {
-            SongTitle? cardFirst = getCardTitleId();
-            string song = getSong();
-            if (cardFirst == null)
+            bool match = false;
+            CanPick = true;
+            if (pickSong == null)
             {
                 return;
             }
-            cardFirst.FlipOver(false);
-            if (cardFirst.File == song)
+            Console.WriteLine("DelayTimer_Tick");
+            pickSong.FlipOver(false);
+            pickSong.Image = pickSong.IsShowText ? SongTitle.ButtonLightImage : SongTitle.ButtonImage;
+            if (pickSong.File == song)
             {
-                cardFirst.Visible = false;
-                cardFirst.Enabled = false;
+                pickSong.Visible = false;
+                pickSong.Enabled = false;
+                list.Remove(pickSong);
+                match = true;
                 point++;
             }
-            CardTitleId = -1;
-            CanPick = true;
+            CardTitleFile = "";
+            if (managerlistener != null)
+            {
+                managerlistener.CardPick(pickSong, match);
+            }
             DelayTimer.Stop();
         }
     }

@@ -3,7 +3,7 @@ namespace MemoryGame.Tabs;
 using NAudio.Wave;
 using System.Diagnostics;
 using System.Windows.Forms;
-public class Level1 : TabPage, Managerlistener
+public class Level2 : TabPage, Managerlistener
 {
     private readonly Random random;
     private SongTitleManager manager;
@@ -19,7 +19,7 @@ public class Level1 : TabPage, Managerlistener
     private Mp3FileReader? mp3FileReader;
     private Stopwatch stopwatch;
     private Timer timer;
-    public Level1(TabControl tabControl, MainForm form)
+    public Level2(TabControl tabControl, MainForm form)
     {
         this.manager = generateCard();
         this.manager.managerlistener = this;
@@ -112,7 +112,7 @@ public class Level1 : TabPage, Managerlistener
         string song = this.manager.list[random.Next(this.manager.list.Count())].File;
         this.manager.setSong(song);
         this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
-        Console.WriteLine("song = {0}", song);
+        Console.WriteLine("song:{0}", song);
     }
 
     private SongTitleManager generateCard()
@@ -127,7 +127,7 @@ public class Level1 : TabPage, Managerlistener
             }
         }
         manager.RandomlyAssignKeys();
-        manager.list.ForEach(card => { this.Controls.Add(card); card.setIsShowText(true); card.FlipOver(false); });
+        manager.list.ForEach(card => { this.Controls.Add(card); card.setIsShowText(false); card.FlipOver(false); });
         return manager;
     }
 
@@ -164,13 +164,12 @@ public class Level1 : TabPage, Managerlistener
             {
                 this.timer.Stop();
                 this.stopwatch.Stop();
-                this.form.level1Time = this.time;
+                this.form.level2Time = this.time;
                 this.reset();
-                this.tabControl.SelectedIndex = 3;
+                this.tabControl.SelectedIndex = 5;
             }
         }
     }
-
     public void reset()
     {
         this.timer.Stop();

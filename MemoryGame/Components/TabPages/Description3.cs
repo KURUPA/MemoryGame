@@ -1,14 +1,14 @@
 namespace MemoryGame.Tabs;
 
-public class Description1 : TabPage
+public class Description3 : TabPage
 {
 
     private Button buttonStart;
     public TabControl tabControl;
     private Size formClientSize;
-    public Description1(TabControl tabControl, Size formClientSize)
+    public Description3(TabControl tabControl, Size formClientSize)
     {
-        this.Text = "Description1";
+        this.Text = "Description3";
         this.BorderStyle = BorderStyle.None;
         this.tabControl = tabControl;
         this.formClientSize = formClientSize;
@@ -28,7 +28,7 @@ public class Description1 : TabPage
         this.buttonStart.Text = "開始關卡";
         this.buttonStart.TextAlign = ContentAlignment.MiddleCenter;
         this.buttonStart.UseVisualStyleBackColor = true;
-        this.buttonStart.Click += (s, e) => tabControl.SelectedIndex = 2;
+        this.buttonStart.Click += (s, e) => tabControl.SelectedIndex = 6;
         this.Controls.Add(this.buttonStart);
 
         ResumeLayout();

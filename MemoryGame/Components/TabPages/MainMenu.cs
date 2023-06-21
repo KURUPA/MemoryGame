@@ -5,39 +5,35 @@ using System.Drawing.Text;
 public class MainMenu : TabPage
 {
     private Button buttonStart;
-    private Label labelTitle;
-    private CardManager cardManager;
+    private SongTitleManager cardManager;
     public TabControl tabControl;
     private Size formClientSize;
     public MainMenu(TabControl tabControl, Size formClientSize)
     {
         this.Text = "MainMenu";
+        this.BorderStyle = BorderStyle.None;
+        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.tabControl = tabControl;
         this.formClientSize = formClientSize;
-        this.cardManager = new CardManager();
+        this.cardManager = new SongTitleManager();
         SuspendLayout();
 
-        Font font = getFont();
+        Font font = getCubicFont();
 
-        this.labelTitle = new Label();
-        this.labelTitle.Name = "labelTitle";
-        this.labelTitle.Size = new Size(42, 30);
-        this.labelTitle.Location = new Point((formClientSize.Width - labelTitle.Width) / 2, 68);
-        this.labelTitle.TabIndex = 1;
-        this.labelTitle.Text = "Title";
-        this.labelTitle.Font = font;
+        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 180, 30, Image.FromFile("assets/texture/description.png"), new List<string> { "失智老人猜歌啥的" });
 
         this.buttonStart = new Button();
         this.buttonStart.Name = "buttonStart";
         this.buttonStart.Size = new Size(75, 30);
         this.buttonStart.Location = new Point((formClientSize.Width - buttonStart.Width) / 2, 261);
         this.buttonStart.TabIndex = 0;
-        this.buttonStart.Text = "START";
+        this.buttonStart.Text = "開始遊戲";
+        this.buttonStart.TextAlign = ContentAlignment.MiddleCenter;
         this.buttonStart.UseVisualStyleBackColor = true;
         this.buttonStart.Font = font;
 
         this.Controls.Add(buttonStart);
-        this.Controls.Add(labelTitle);
+        this.Controls.Add(textPictureBox);
 
         ResumeLayout();
         this.buttonStart.Click += (sender, args) => tabControl.SelectedIndex = 1;
@@ -47,11 +43,15 @@ public class MainMenu : TabPage
         return new SongTitle(x, y, this.cardManager, key, index);
     }
 
-    public static Font getFont()
+    public static Font getCubicFont()
+    {
+        return getCubicFont(12);
+    }
+    public static Font getCubicFont(int Size)
     {
         PrivateFontCollection fontcollection = new PrivateFontCollection();
         fontcollection.AddFontFile("assets/font/Cubic_11_1.010_R.ttf");
-        Font font = new Font(fontcollection.Families[0], 12);
+        Font font = new Font(fontcollection.Families[0], Size);
         return font;
     }
 

@@ -18,3 +18,10 @@ D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\ref\Me
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\MemoryGame.csproj.CopyComplete
 D:\Visual Studio Workspace\MemoryGame\MemoryGame\obj\Debug\net7.0-windows\MemoryGame.MainForm.resources
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.Asio.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.Core.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.Midi.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.Wasapi.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.WinForms.dll
+D:\Visual Studio Workspace\MemoryGame\MemoryGame\bin\Debug\net7.0-windows\NAudio.WinMM.dll
