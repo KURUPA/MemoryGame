@@ -6,7 +6,7 @@ namespace MemoryGame
 {
     public partial class MainForm
     {
-        public static DataTable LangDataTable = createLangDataTable();
+        public static DataTable dataTable = createDataTable();
 
         public TabControl tabControl = new TabControl();
         public TabPage menu;
@@ -17,9 +17,9 @@ namespace MemoryGame
         public TabPage description3;
         public TabPage level3;
         public TabPage scoreboard;
-        public TimeSpan level1Time;
-        public TimeSpan level2Time;
-        public TimeSpan level3Time;
+        public TimeSpan Level1Time;
+        public TimeSpan Level2Time;
+        public TimeSpan Level3Time;
 
         private void InitializeCard()
         {
@@ -45,7 +45,7 @@ namespace MemoryGame
 
         }
 
-        private static DataTable createLangDataTable()
+        private static DataTable createDataTable()
         {
             string jsonFilePath = "assets/data/data_table.json";
             string jsonData = File.ReadAllText(jsonFilePath);
@@ -84,9 +84,9 @@ namespace MemoryGame
         {
             JObject jObject = new JObject();
             jObject.Add("Date", System.DateTime.Today);
-            jObject.Add("Level_1_Time", this.level1Time);
-            jObject.Add("Level_2_Time", this.level2Time);
-            jObject.Add("Level_3_Time", this.level3Time);
+            jObject.Add("Level_1_Time", this.Level1Time);
+            jObject.Add("Level_2_Time", this.Level2Time);
+            jObject.Add("Level_3_Time", this.Level3Time);
             string jsonFilePath = "assets/data/scoreboard.json";
             string jsonData = File.ReadAllText(jsonFilePath);
             JArray jArray;

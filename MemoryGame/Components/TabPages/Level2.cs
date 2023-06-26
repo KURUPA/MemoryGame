@@ -12,9 +12,7 @@ public class Level2 : TabPage, Managerlistener
     private TimeSpan time;
     private int score;
     private Label timeboard;
-    private Label scoreboard;
     private PictureBox buttonPlay;
-    private PictureBox buttonRestart;
     private PictureBox buttonNext;
     private Mp3FileReader? mp3FileReader;
     private Stopwatch stopwatch;
@@ -30,12 +28,7 @@ public class Level2 : TabPage, Managerlistener
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.tabControl = tabControl;
         this.form = form;
-        this.scoreboard = new Label();
-        this.scoreboard.Location = new Point((this.form.Width - scoreboard.Size.Width) / 2 + 160, 340);
-        this.scoreboard.Font = MainMenu.getCubicFont(36);
         this.setScore(0);
-        this.scoreboard.Size = TextRenderer.MeasureText(scoreboard.Text, scoreboard.Font);
-        this.scoreboard.ForeColor = Color.White;
         this.timeboard = new Label();
         this.timeboard.Location = new Point(20, 340);
         this.timeboard.Font = MainMenu.getCubicFont(36);
@@ -46,31 +39,29 @@ public class Level2 : TabPage, Managerlistener
         this.timer = new Timer();
         this.timer.Interval = 1000;
         this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
-        this.buttonRestart = generateButton(-40, "Restart");
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
-        this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonPlay = generateButton(-40, "Play");
+
+        this.buttonNext = generateButton(0, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
+
+        this.buttonPlay = generateButton(0, "Play");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
-            this.buttonRestart.Enabled = true;
-            this.buttonRestart.Visible = true;
             if (buttonPlay != null)
             {
                 this.buttonPlay.Enabled = false;
                 this.buttonPlay.Visible = false;
             }
             this.manager.CanPick = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
             this.timer.Start();
             this.stopwatch.Start();
         };
-        this.buttonNext = generateButton(40, "Next");
-        this.buttonNext.MouseUp += (s, e) => { Next(); };
-        this.Controls.Add(this.scoreboard);
         this.Controls.Add(this.timeboard);
         this.Controls.Add(this.buttonPlay);
-        this.Controls.Add(this.buttonRestart);
         this.Controls.Add(this.buttonNext);
     }
 
@@ -112,7 +103,7 @@ public class Level2 : TabPage, Managerlistener
         string song = this.manager.list[random.Next(this.manager.list.Count())].File;
         this.manager.setSong(song);
         this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
-        Console.WriteLine("song:{0}", song);
+        Console.WriteLine("song = {0}", song);
     }
 
     private SongTitleManager generateCard()
@@ -122,18 +113,20 @@ public class Level2 : TabPage, Managerlistener
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle card = CreateCard(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "cat");
-                manager.AddCard(card);
+                SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "cat");
+                manager.AddSongTitle(card);
             }
         }
         manager.RandomlyAssignKeys();
-        manager.list.ForEach(card => { this.Controls.Add(card); card.setIsShowText(false); card.FlipOver(false); });
         return manager;
     }
 
-    private SongTitle CreateCard(SongTitleManager cardManager, int x, int y, int index, String key)
+    private SongTitle CreateSongTitle(SongTitleManager cardManager, int x, int y, int index, String key)
     {
         SongTitle songTitle = new SongTitle(x, y, cardManager, key, index);
+        this.Controls.Add(songTitle);
+        songTitle.setIsShowText(false);
+        songTitle.FlipOver(false);
         return songTitle;
     }
     private void addScore(int score)
@@ -144,8 +137,6 @@ public class Level2 : TabPage, Managerlistener
     private void setScore(int score)
     {
         this.score = score;
-        this.scoreboard.Text = "分數：" + score;
-        this.scoreboard.Size = TextRenderer.MeasureText(scoreboard.Text, scoreboard.Font);
     }
     private void setTime(TimeSpan time)
     {
@@ -164,12 +155,13 @@ public class Level2 : TabPage, Managerlistener
             {
                 this.timer.Stop();
                 this.stopwatch.Stop();
-                this.form.level2Time = this.time;
+                this.form.Level2Time = this.time;
                 this.reset();
                 this.tabControl.SelectedIndex = 5;
             }
         }
     }
+
     public void reset()
     {
         this.timer.Stop();
@@ -179,7 +171,7 @@ public class Level2 : TabPage, Managerlistener
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
     }
 }

@@ -51,8 +51,8 @@ namespace MemoryGame
         public void FlipOver(Boolean flipp)
         {
             bool show = flipp || this.IsShowText;
-            this.Title = show ? MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Title") : " ";
-            this.Singer = show ? MainForm.FindTextByKeyAndLang(MainForm.LangDataTable, this.File, "Singer") : " ";
+            this.Title = show ? MainForm.FindTextByKeyAndLang(MainForm.dataTable, this.File, "Title") : " ";
+            this.Singer = show ? MainForm.FindTextByKeyAndLang(MainForm.dataTable, this.File, "Singer") : " ";
             IsFlipped = flipp;
         }
 

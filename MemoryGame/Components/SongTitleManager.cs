@@ -24,7 +24,7 @@ namespace MemoryGame
             DelayTimer.Tick += new EventHandler(DelayTimer_Tick);
         }
 
-        public void AddCard(SongTitle card)
+        public void AddSongTitle(SongTitle card)
         {
             list.Add(card);
         }
@@ -42,9 +42,9 @@ namespace MemoryGame
         public void RandomlyAssignKeys()
         {
             Random random = new Random();
-            list = list.OrderBy(card => random.Next()).ToList();
+            list = this.list.OrderBy(card => random.Next()).ToList();
             List<string> keys = new List<string>();
-            foreach (DataRow row in MainForm.LangDataTable.Rows)
+            foreach (DataRow row in MainForm.dataTable.Rows)
             {
                 string? file = row["File"].ToString();
                 if (file != null)

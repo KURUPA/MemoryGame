@@ -6,7 +6,7 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
-        LangDataTable = createLangDataTable();
+        dataTable = createDataTable();
         this.menu = new MainMenu(tabControl, this.ClientSize);
         this.description1 = new Description1(tabControl, this.ClientSize);
         this.description2 = new Description2(tabControl, this.ClientSize);
