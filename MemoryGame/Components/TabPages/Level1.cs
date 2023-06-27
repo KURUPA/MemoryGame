@@ -20,6 +20,8 @@ public class Level1 : TabPage, Managerlistener
     private Timer timer;
     public Level1(TabControl tabControl, MainForm form)
     {
+        this.tabControl = tabControl;
+        this.form = form;
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
@@ -27,8 +29,6 @@ public class Level1 : TabPage, Managerlistener
         this.Text = "Level 1";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.tabControl = tabControl;
-        this.form = form;
         this.setScore(0);
         this.timeboard = new Label();
         this.timeboard.Location = new Point(20, 340);
@@ -44,23 +44,28 @@ public class Level1 : TabPage, Managerlistener
         this.buttonRestart.Enabled = false;
         this.buttonRestart.Visible = false;
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonPlay = generateButton(-40, "Play");
+        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
+        this.buttonPlay = generateButton(0, "Play");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
             this.buttonRestart.Enabled = true;
             this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
             if (buttonPlay != null)
             {
                 this.buttonPlay.Enabled = false;
                 this.buttonPlay.Visible = false;
             }
             this.manager.CanPick = true;
+            this.manager.list.ForEach((song) => song.Visible = true);
             this.timer.Start();
             this.stopwatch.Start();
         };
-        this.buttonNext = generateButton(40, "Next");
-        this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.Controls.Add(this.timeboard);
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonRestart);
@@ -72,7 +77,7 @@ public class Level1 : TabPage, Managerlistener
         PictureBox button = new PictureBox();
         button.Size = new Size(60, 60);
         button.Location = new Point((form.Width - button.Size.Width) / 2 + x, 340);
-        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
         button.BackColor = Color.Transparent;
         button.MouseDown += (s, e) =>
         {
@@ -85,7 +90,7 @@ public class Level1 : TabPage, Managerlistener
         {
             if (s is PictureBox b)
             {
-                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
             }
         };
         return button;
@@ -128,7 +133,7 @@ public class Level1 : TabPage, Managerlistener
         SongTitle songTitle = new SongTitle(x, y, cardManager, key, index);
         this.Controls.Add(songTitle);
         songTitle.setIsShowText(true);
-        songTitle.FlipOver(false);
+        songTitle.Visible = false;
         return songTitle;
     }
     private void addScore(int score)

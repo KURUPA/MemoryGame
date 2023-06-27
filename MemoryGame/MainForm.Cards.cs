@@ -6,7 +6,7 @@ namespace MemoryGame
 {
     public partial class MainForm
     {
-        public static DataTable dataTable = createDataTable();
+        public static DataTable songDataTable = createDataTable();
 
         public TabControl tabControl = new TabControl();
         public TabPage menu;
@@ -67,9 +67,9 @@ namespace MemoryGame
             }
             return dataTable;
         }
-        public static string FindTextByKeyAndLang(DataTable dataTable, string key, string value)
+        public static string FindTextByKeyAndType(string key, string value)
         {
-            DataRow[] rows = dataTable.Select($"File = '{key}'");
+            DataRow[] rows = songDataTable.Select($"File = '{key}'");
             if (rows.Length > 0)
             {
                 return (string)rows[0][value];

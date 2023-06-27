@@ -19,6 +19,8 @@ public class Level2 : TabPage, Managerlistener
     private Timer timer;
     public Level2(TabControl tabControl, MainForm form)
     {
+        this.tabControl = tabControl;
+        this.form = form;
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
@@ -26,8 +28,6 @@ public class Level2 : TabPage, Managerlistener
         this.Text = "Level 1";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.tabControl = tabControl;
-        this.form = form;
         this.setScore(0);
         this.timeboard = new Label();
         this.timeboard.Location = new Point(20, 340);
@@ -70,7 +70,7 @@ public class Level2 : TabPage, Managerlistener
         PictureBox button = new PictureBox();
         button.Size = new Size(60, 60);
         button.Location = new Point((form.Width - button.Size.Width) / 2 + x, 340);
-        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
         button.BackColor = Color.Transparent;
         button.MouseDown += (s, e) =>
         {
@@ -83,7 +83,7 @@ public class Level2 : TabPage, Managerlistener
         {
             if (s is PictureBox b)
             {
-                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
             }
         };
         return button;

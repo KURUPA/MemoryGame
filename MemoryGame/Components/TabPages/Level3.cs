@@ -8,7 +8,7 @@ public class Level3 : TabPage, Managerlistener
 {
     private List<string> keys;
     private TextBox textBox;
-    private PictureBox buttonConfirm;
+    private PictureBox buttonAccept;
     private string NowSong;
     private readonly Random random;
     public TabControl tabControl;
@@ -25,18 +25,20 @@ public class Level3 : TabPage, Managerlistener
     private Timer timer;
     public Level3(TabControl tabControl, MainForm form)
     {
-        this.NowSong = "";
-        this.keys = generateFiles();
-        this.remainingSongs = new Label();
-        this.textBox = new TextBox();
-        this.buttonConfirm = generateButton(0, "Restart");
-        this.buttonConfirm.MouseClick += (s, e) => Checking();
-        this.random = new Random();
-        this.Text = "Level 1";
-        this.BorderStyle = BorderStyle.None;
-        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.tabControl = tabControl;
         this.form = form;
+        this.random = new Random();
+        this.NowSong = "";
+        this.keys = generateFiles();
+        this.textBox = new TextBox();
+        this.textBox.Size = new Size(560, 60);
+        this.textBox.Font = MainMenu.getCubicFont(36);
+        this.textBox.Location = new Point((form.Width - textBox.Width) / 2, (form.Height - textBox.Height) / 2 - 100);
+        this.buttonAccept = generateButton(textBox.Width / 2 + 60, textBox.Location.Y, "Accept");
+        this.buttonAccept.MouseClick += (s, e) => Checking();
+        this.Text = "Level 3";
+        this.BorderStyle = BorderStyle.None;
+        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.setScore(0);
         this.timeboard = new Label();
         this.timeboard.Location = new Point(20, 340);
@@ -44,6 +46,12 @@ public class Level3 : TabPage, Managerlistener
         this.timeboard.Text = "時間：00:00";
         this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
         this.timeboard.ForeColor = Color.White;
+        this.remainingSongs = new Label();
+        this.remainingSongs.Location = new Point(500, 340);
+        this.remainingSongs.Font = MainMenu.getCubicFont(36);
+        this.remainingSongs.Text = "剩餘：" + keys.Count();
+        this.remainingSongs.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
+        this.remainingSongs.ForeColor = Color.White;
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
         this.timer.Interval = 1000;
@@ -52,12 +60,18 @@ public class Level3 : TabPage, Managerlistener
         this.buttonRestart.Enabled = false;
         this.buttonRestart.Visible = false;
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonPlay = generateButton(-40, "Play");
+        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
+        this.buttonPlay = generateButton(0, "Play");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
             this.buttonRestart.Enabled = true;
             this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
             if (buttonPlay != null)
             {
                 this.buttonPlay.Enabled = false;
@@ -66,20 +80,24 @@ public class Level3 : TabPage, Managerlistener
             this.timer.Start();
             this.stopwatch.Start();
         };
-        this.buttonNext = generateButton(40, "Next");
-        this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.Controls.Add(this.timeboard);
+        this.Controls.Add(this.remainingSongs);
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonRestart);
         this.Controls.Add(this.buttonNext);
+        this.Controls.Add(this.buttonAccept);
+        this.Controls.Add(this.textBox);
+    }
+    private PictureBox generateButton(int x, String name)
+    {
+        return generateButton(x, 340, name);
     }
 
-    private PictureBox generateButton(int x, String name)
+    private PictureBox generateButton(int x, int y, String name)
     {
         PictureBox button = new PictureBox();
         button.Size = new Size(60, 60);
-        button.Location = new Point((form.Width - button.Size.Width) / 2 + x, 340);
-        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
         button.BackColor = Color.Transparent;
         button.MouseDown += (s, e) =>
         {
@@ -92,9 +110,10 @@ public class Level3 : TabPage, Managerlistener
         {
             if (s is PictureBox b)
             {
-                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "1.png");
+                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
             }
         };
+        button.Location = new Point((form.Width - button.Size.Width) / 2 + x, y);
         return button;
     }
 
@@ -104,11 +123,15 @@ public class Level3 : TabPage, Managerlistener
         {
             keys.Remove(NowSong);
             setScore(score + 10);
+            this.textBox.Clear();
+            this.remainingSongs.Text = "剩餘：" + keys.Count();
+            this.buttonRestart.Enabled = false;
+            this.buttonRestart.Image = Image.FromFile("assets/texture/Restart/A_Restart1.png");
         }
     }
     private bool CheckValuesInSameRow(object value1, object value2)
     {
-        foreach (DataRow row in MainForm.dataTable.Rows)
+        foreach (DataRow row in MainForm.songDataTable.Rows)
         {
             if (row.ItemArray.Contains(value1) && row.ItemArray.Contains(value2))
             {
@@ -129,12 +152,18 @@ public class Level3 : TabPage, Managerlistener
 
     private void Next()
     {
+        this.buttonRestart.Enabled = true;
+        this.buttonRestart.Image = Image.FromFile("assets/texture/Restart/A_Restart2.png");
+        string song = this.keys[random.Next(this.keys.Count())];
+        this.NowSong = song;
+        this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
+        Console.WriteLine("song = {0}", song);
     }
 
     private List<string> generateFiles()
     {
         List<string> Files = new List<string>();
-        foreach (DataRow row in MainForm.dataTable.Rows)
+        foreach (DataRow row in MainForm.songDataTable.Rows)
         {
             string? file = row["File"].ToString();
             if (file != null)

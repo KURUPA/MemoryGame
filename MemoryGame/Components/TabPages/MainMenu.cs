@@ -20,8 +20,7 @@ public class MainMenu : TabPage
 
         Font font = getCubicFont();
 
-        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 180, 30, Image.FromFile("assets/texture/description.png"), new List<string> { "失智老人猜歌啥的" });
-
+        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 180) / 2, 68, 180, 30, Image.FromFile("assets/texture/description.png"), new List<string> { "失智老人猜歌啥的" });
         this.buttonStart = new Button();
         this.buttonStart.Name = "buttonStart";
         this.buttonStart.Size = new Size(75, 30);

@@ -44,7 +44,7 @@ namespace MemoryGame
             Random random = new Random();
             list = this.list.OrderBy(card => random.Next()).ToList();
             List<string> keys = new List<string>();
-            foreach (DataRow row in MainForm.dataTable.Rows)
+            foreach (DataRow row in MainForm.songDataTable.Rows)
             {
                 string? file = row["File"].ToString();
                 if (file != null)
@@ -62,6 +62,7 @@ namespace MemoryGame
             {
                 string key = keys[i];
                 list[i].File = key;
+                list[i].FlipOver(false);
             }
         }
 
