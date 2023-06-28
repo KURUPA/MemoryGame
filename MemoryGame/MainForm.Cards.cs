@@ -1,5 +1,6 @@
 using System.Data;
 using Newtonsoft.Json.Linq;
+using MemoryGame.Tabs;
 
 
 namespace MemoryGame
@@ -9,14 +10,14 @@ namespace MemoryGame
         public static DataTable songDataTable = createDataTable();
 
         public TabControl tabControl = new TabControl();
-        public TabPage menu;
-        public TabPage description1;
-        public TabPage level1;
-        public TabPage description2;
-        public TabPage level2;
-        public TabPage description3;
-        public TabPage level3;
-        public TabPage scoreboard;
+        public MainMenu menu;
+        public Description1 description1;
+        public Level1 level1;
+        public Description2 description2;
+        public Level2 level2;
+        public Description3 description3;
+        public Level3 level3;
+        public Scoreboard scoreboard;
         public TimeSpan Level1Time;
         public TimeSpan Level2Time;
         public TimeSpan Level3Time;

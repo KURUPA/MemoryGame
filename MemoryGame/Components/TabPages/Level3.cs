@@ -201,6 +201,7 @@ public class Level3 : TabPage, Managerlistener
                 this.stopwatch.Stop();
                 this.form.Level3Time = this.time;
                 this.reset();
+                form.scoreboard.Serialization();
                 this.tabControl.SelectedIndex = 7;
             }
         }
