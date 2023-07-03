@@ -24,7 +24,6 @@ public class Level1 : TabPage, Managerlistener
         this.form = form;
         this.manager = generateCard();
         this.manager.managerlistener = this;
-        this.manager.CanPick = false;
         this.random = new Random();
         this.Text = "Level 1";
         this.BorderStyle = BorderStyle.None;
@@ -33,21 +32,15 @@ public class Level1 : TabPage, Managerlistener
         this.timeboard = new Label();
         this.timeboard.Location = new Point(20, 340);
         this.timeboard.Font = MainMenu.getCubicFont(36);
-        this.timeboard.Text = "時間：00:00";
         this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
         this.timeboard.ForeColor = Color.White;
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
-        this.timer.Interval = 1000;
         this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
         this.buttonRestart = generateButton(-40, "Restart");
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
         this.buttonRestart.MouseUp += (s, e) => Play();
         this.buttonNext = generateButton(40, "Next");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
-        this.buttonNext.Enabled = false;
-        this.buttonNext.Visible = false;
         this.buttonPlay = generateButton(0, "Play");
         this.buttonPlay.MouseDown += (s, e) =>
         {
@@ -70,6 +63,7 @@ public class Level1 : TabPage, Managerlistener
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonRestart);
         this.Controls.Add(this.buttonNext);
+        this.reset();
     }
 
     private PictureBox generateButton(int x, String name)
@@ -120,7 +114,7 @@ public class Level1 : TabPage, Managerlistener
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "cat");
+                SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "");
                 manager.AddSongTitle(card);
             }
         }
@@ -157,11 +151,10 @@ public class Level1 : TabPage, Managerlistener
     {
         if (match)
         {
+            this.Controls.Remove(songTitle);
             addScore(10);
             if (score >= 200)
             {
-                this.timer.Stop();
-                this.stopwatch.Stop();
                 this.form.Level1Time = this.time;
                 this.reset();
                 this.tabControl.SelectedIndex = 3;
@@ -171,14 +164,22 @@ public class Level1 : TabPage, Managerlistener
 
     public void reset()
     {
+        this.manager.CanPick = false;
+        this.timeboard.Text = "時間：00:00";
+        this.timer.Interval = 1000;
+        this.buttonPlay.Enabled = true;
+        this.buttonPlay.Visible = true;
+        this.buttonRestart.Enabled = false;
+        this.buttonRestart.Visible = false;
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
         this.timer.Stop();
         this.stopwatch.Stop();
+        this.stopwatch.Reset();
         this.setScore(0);
-        this.setTime(TimeSpan.Zero);
+        this.manager.list = new List<SongTitle>();
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
     }
 }

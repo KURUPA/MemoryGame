@@ -7,7 +7,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         songDataTable = createDataTable();
-        this.menu = new MainMenu(tabControl, this.ClientSize);
+        this.menu = new MainMenu(tabControl, this);
         this.description1 = new Description1(tabControl, this.ClientSize);
         this.description2 = new Description2(tabControl, this.ClientSize);
         this.description3 = new Description3(tabControl, this.ClientSize);

@@ -209,11 +209,15 @@ public class Level3 : TabPage, Managerlistener
 
     public void reset()
     {
+        this.timeboard.Text = "時間：00:00";
+        this.timer.Interval = 1000;
+        this.buttonPlay.Enabled = true;
+        this.buttonPlay.Visible = true;
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
         this.timer.Stop();
         this.stopwatch.Stop();
+        this.stopwatch.Reset();
         this.setScore(0);
-        this.setTime(TimeSpan.Zero);
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
     }
 }

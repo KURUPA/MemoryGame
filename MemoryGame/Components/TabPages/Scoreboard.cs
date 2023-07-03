@@ -22,6 +22,10 @@ public class Scoreboard : TabPage
     }
     private void init()
     {
+        if (this.scoreList.Count > 0)
+        {
+            scoreList.ForEach(l => this.Controls.Remove(l));
+        }
         PictureBox back = new PictureBox();
         back.Size = new Size(800, 400);
         back.Image = Image.FromFile("assets/texture/scoreboard.png");
@@ -38,24 +42,30 @@ public class Scoreboard : TabPage
 
     private void addScoreboard(int index)
     {
-        int xOffset = -40;
-        int yOffset = 185;
+        int xOffset = 40;
+        int yOffset = 255;
         DataTable dataTable = Deserialization();
         if (dataTable.Rows.Count == 0)
         {
             return;
         }
+
         for (int row = index * 5; row < index * 5 + 5; row++)
         {
+            if (dataTable.Rows.Count <= row)
+            {
+                return;
+            }
             DataRow dataRow = dataTable.Rows[row];
             if (dataRow != null)
             {
                 for (int col = 0; col < 4; col++)
                 {
                     string? text = dataRow[col].ToString();
+                    Console.WriteLine("text={0}", text);
                     if (text != null)
                     {
-                        createTitle(xOffset + yOffset * col, 36, text, false, 16);
+                        createTitle(xOffset + yOffset * col, 20, text, false, 16);
                     }
                 }
             }
@@ -71,6 +81,7 @@ public class Scoreboard : TabPage
         label.Font = bold ? new Font(MainMenu.getCubicFont(size), FontStyle.Bold) : MainMenu.getCubicFont(size);
         label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         label.BackColor = Color.FromArgb(255, 234, 212, 170);
+        this.scoreList.Add(label);
         this.Controls.Add(label);
         return label;
     }
@@ -87,13 +98,17 @@ public class Scoreboard : TabPage
         dataTable.Columns.Add("Time3");
         foreach (JToken item in json)
         {
-            if (item["Date"] != null && item["Time1"] != null && item["Time2"] != null && item["Time3"] != null)
+            JToken? date = item["Date"];
+            JToken? time1 = item["Time1"];
+            JToken? time2 = item["Time2"];
+            JToken? time3 = item["Time3"];
+            if (date != null && time1 != null && time2 != null && time3 != null)
             {
                 DataRow row = dataTable.NewRow();
-                row["Date"] = item["Date"]?.ToString();
-                row["Time1"] = item["Time1"]?.ToString();
-                row["Time2"] = item["Time2"]?.ToString();
-                row["Time3"] = item["Time3"]?.ToString();
+                row["Date"] = date.ToString();
+                row["Time1"] = time1.ToString();
+                row["Time2"] = time2.ToString();
+                row["Time3"] = time3.ToString();
                 dataTable.Rows.Add(row);
             }
         }
@@ -105,7 +120,7 @@ public class Scoreboard : TabPage
         string jsonFilePath = "assets/data/scoreboard.json";
         JArray json = new JArray();
         JObject item = new JObject();
-        item.Add("Date", System.DateTime.Now);
+        item.Add("Date", System.DateTime.Now.ToString());
         item.Add("Time1", this.form.Level1Time);
         item.Add("Time2", this.form.Level2Time);
         item.Add("Time3", this.form.Level3Time);
