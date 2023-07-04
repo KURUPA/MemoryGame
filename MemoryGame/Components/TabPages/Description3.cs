@@ -16,7 +16,7 @@ public class Description3 : TabPage
 
         SuspendLayout();
 
-        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 450, 90, Image.FromFile("assets/texture/description.png"), new List<string> { "播放音樂後，根據內容從選項中選取正確的歌名與歌手。" });
+        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 450, 90, Image.FromFile("assets/texture/description.png"), new List<string> { "播放音樂後，根據內容輸入正確的歌名。" });
         this.Controls.Add(textPictureBox);
 
         this.buttonStart = new Button();

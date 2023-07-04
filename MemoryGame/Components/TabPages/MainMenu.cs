@@ -31,16 +31,6 @@ public class MainMenu : TabPage
 
         this.Controls.Add(buttonStart);
         this.Controls.Add(textPictureBox);
-
-        Button test = new Button();
-        test.MouseClick += (s, e) =>
-        {
-            this.form.Level1Time = new TimeSpan(0, 0, 59);
-            this.form.Level2Time = new TimeSpan(0, 1, 57);
-            this.form.Level3Time = new TimeSpan(0, 3, 28);
-            this.form.scoreboard.Serialization();
-        };
-        this.Controls.Add(test);
         ResumeLayout();
         this.buttonStart.Click += (sender, args) => tabControl.SelectedIndex = 1;
     }

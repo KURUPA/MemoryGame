@@ -9,19 +9,26 @@ public class Scoreboard : TabPage
     public TabControl tabControl;
     private List<Label> scoreList;
     private int index;
+    private DataTable dataTable;
     public Scoreboard(TabControl tabControl, MainForm form)
     {
         this.tabControl = tabControl;
         this.form = form;
+        this.dataTable = Deserialization();
         this.index = 0;
         this.scoreList = new List<Label>();
         this.init();
         this.Text = "Scoreboard";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/background.png");
+        PictureBox buttonLeft = generateButton(10, "Left");
+        PictureBox buttonRight = generateButton(10, "Right");
+        buttonLeft.MouseUp += (s, e) => { if (this.index > 0) { this.index--; } };
+        buttonRight.MouseUp += (s, e) => { if (this.index < dataTable.Rows.Count * 0.25) { this.index--; } };
     }
     private void init()
     {
+        this.dataTable = Deserialization();
         if (this.scoreList.Count > 0)
         {
             scoreList.ForEach(l => this.Controls.Remove(l));
@@ -42,15 +49,12 @@ public class Scoreboard : TabPage
 
     private void addScoreboard(int index)
     {
-        int xOffset = 40;
-        int yOffset = 255;
-        DataTable dataTable = Deserialization();
         if (dataTable.Rows.Count == 0)
         {
             return;
         }
 
-        for (int row = index * 5; row < index * 5 + 5; row++)
+        for (int row = index * 4; row < index * 4 + 4; row++)
         {
             if (dataTable.Rows.Count <= row)
             {
@@ -65,7 +69,7 @@ public class Scoreboard : TabPage
                     Console.WriteLine("text={0}", text);
                     if (text != null)
                     {
-                        createTitle(xOffset + yOffset * col, 20, text, false, 16);
+                        createTitle(-40 + 185 * col, 90 + 60 * row, text, false, 16);
                     }
                 }
             }
@@ -127,5 +131,30 @@ public class Scoreboard : TabPage
         json.Add(item);
         string jsonData = json.ToString();
         File.WriteAllText(jsonFilePath, jsonData);
+    }
+
+    private PictureBox generateButton(int x, String name)
+    {
+        PictureBox button = new PictureBox();
+        button.Size = new Size(60, 60);
+        button.Location = new Point((form.Width - button.Size.Width) / 2 + x, 360);
+        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
+        button.BackColor = Color.Transparent;
+        button.MouseDown += (s, e) =>
+        {
+            if (s is PictureBox b)
+            {
+                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "3.png");
+            }
+        };
+        button.MouseUp += (s, e) =>
+        {
+            if (s is PictureBox b)
+            {
+                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
+            }
+        };
+        this.Controls.Add(button);
+        return button;
     }
 }
