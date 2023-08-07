@@ -21,7 +21,7 @@ public class MainMenu : TabPage
         TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 180) / 2, 68, 180, 30, Image.FromFile("assets/texture/description.png"), new List<string> { "失智老人猜歌啥的" });
         this.buttonStart = new Button();
         this.buttonStart.Name = "buttonStart";
-        this.buttonStart.Size = new Size(75, 30);
+        this.buttonStart.Size = new Size(100, 30);
         this.buttonStart.Location = new Point((formClientSize.Width - buttonStart.Width) / 2, 261);
         this.buttonStart.TabIndex = 0;
         this.buttonStart.Text = "開始遊戲";

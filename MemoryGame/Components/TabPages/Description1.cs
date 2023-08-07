@@ -22,7 +22,7 @@ public class Description1 : TabPage
         this.buttonStart = new Button();
         this.buttonStart.Font = MainMenu.getCubicFont();
         this.buttonStart.Name = "buttonStart";
-        this.buttonStart.Size = new Size(75, 30);
+        this.buttonStart.Size = new Size(100, 30);
         this.buttonStart.Location = new Point((formClientSize.Width - buttonStart.Width) / 2, 261);
         this.buttonStart.TabIndex = 0;
         this.buttonStart.Text = "開始關卡";

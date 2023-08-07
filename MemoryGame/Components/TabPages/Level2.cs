@@ -21,10 +21,10 @@ public class Level2 : TabPage, Managerlistener
     {
         this.tabControl = tabControl;
         this.form = form;
+        this.random = new Random();
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
-        this.random = new Random();
         this.Text = "Level 1";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
@@ -151,33 +151,59 @@ public class Level2 : TabPage, Managerlistener
         if (match)
         {
             addScore(10);
+            songTitle.Visible = false;
             if (score >= 200)
             {
-                this.timer.Stop();
-                this.stopwatch.Stop();
                 this.form.Level2Time = this.time;
-                this.reset();
-                this.tabControl.SelectedIndex = 5;
+                tabControl.SelectedIndex = 5;
+                this.init();
             }
         }
     }
 
-    public void reset()
+    public void init()
     {
-        this.manager.CanPick = false;
-        this.timeboard.Text = "時間：00:00";
-        this.timer.Interval = 1000;
-        this.buttonPlay.Enabled = true;
-        this.buttonPlay.Visible = true;
-        this.buttonNext.Enabled = false;
-        this.buttonNext.Visible = false;
-        this.timer.Stop();
-        this.stopwatch.Stop();
-        this.stopwatch.Reset();
-        this.setScore(0);
-        this.manager.list = new List<SongTitle>();
+        this.Controls.Clear();
         this.manager = generateCard();
         this.manager.managerlistener = this;
         this.manager.CanPick = false;
+        this.Text = "Level 1";
+        this.BorderStyle = BorderStyle.None;
+        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
+        this.setScore(0);
+        this.timeboard = new Label();
+        this.timeboard.Location = new Point(20, 340);
+        this.timeboard.Font = MainMenu.getCubicFont(36);
+        this.timeboard.Text = "時間：00:00";
+        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
+        this.timeboard.ForeColor = Color.White;
+        this.stopwatch = new Stopwatch();
+        this.timer = new Timer();
+        this.timer.Interval = 1000;
+        this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
+
+        this.buttonNext = generateButton(0, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
+
+        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay.MouseDown += (s, e) =>
+        {
+            Next();
+            if (buttonPlay != null)
+            {
+                this.buttonPlay.Enabled = false;
+                this.buttonPlay.Visible = false;
+            }
+            this.manager.CanPick = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
+            this.timer.Start();
+            this.stopwatch.Start();
+        };
+        this.Controls.Add(this.timeboard);
+        this.Controls.Add(this.buttonPlay);
+        this.Controls.Add(this.buttonNext);
     }
 }

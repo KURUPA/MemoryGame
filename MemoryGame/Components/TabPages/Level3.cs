@@ -200,24 +200,74 @@ public class Level3 : TabPage, Managerlistener
                 this.timer.Stop();
                 this.stopwatch.Stop();
                 this.form.Level3Time = this.time;
-                this.reset();
+                this.init();
                 form.scoreboard.Serialization();
                 this.tabControl.SelectedIndex = 7;
             }
         }
     }
 
-    public void reset()
+    public void init()
     {
+        this.Controls.Clear();
+        this.NowSong = "";
+        this.keys = generateFiles();
+        this.textBox = new TextBox();
+        this.textBox.Size = new Size(560, 60);
+        this.textBox.Font = MainMenu.getCubicFont(36);
+        this.textBox.Location = new Point((form.Width - textBox.Width) / 2, (form.Height - textBox.Height) / 2 - 100);
+        this.buttonAccept = generateButton(textBox.Width / 2 + 60, textBox.Location.Y, "Accept");
+        this.buttonAccept.MouseClick += (s, e) => Checking();
+        this.Text = "Level 3";
+        this.BorderStyle = BorderStyle.None;
+        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
+        this.setScore(0);
+        this.timeboard = new Label();
+        this.timeboard.Location = new Point(20, 340);
+        this.timeboard.Font = MainMenu.getCubicFont(36);
         this.timeboard.Text = "時間：00:00";
+        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
+        this.timeboard.ForeColor = Color.White;
+        this.remainingSongs = new Label();
+        this.remainingSongs.Location = new Point(500, 340);
+        this.remainingSongs.Font = MainMenu.getCubicFont(36);
+        this.remainingSongs.Text = "剩餘：" + keys.Count();
+        this.remainingSongs.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
+        this.remainingSongs.ForeColor = Color.White;
+        this.stopwatch = new Stopwatch();
+        this.timer = new Timer();
         this.timer.Interval = 1000;
-        this.buttonPlay.Enabled = true;
-        this.buttonPlay.Visible = true;
+        this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
+        this.buttonRestart = generateButton(-40, "Restart");
+        this.buttonRestart.Enabled = false;
+        this.buttonRestart.Visible = false;
+        this.buttonRestart.MouseUp += (s, e) => Play();
+        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.timer.Stop();
-        this.stopwatch.Stop();
-        this.stopwatch.Reset();
-        this.setScore(0);
+        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay.MouseDown += (s, e) =>
+        {
+            Next();
+            this.buttonRestart.Enabled = true;
+            this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
+            if (buttonPlay != null)
+            {
+                this.buttonPlay.Enabled = false;
+                this.buttonPlay.Visible = false;
+            }
+            this.timer.Start();
+            this.stopwatch.Start();
+        };
+        this.Controls.Add(this.timeboard);
+        this.Controls.Add(this.remainingSongs);
+        this.Controls.Add(this.buttonPlay);
+        this.Controls.Add(this.buttonRestart);
+        this.Controls.Add(this.buttonNext);
+        this.Controls.Add(this.buttonAccept);
+        this.Controls.Add(this.textBox);
     }
 }

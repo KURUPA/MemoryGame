@@ -7,10 +7,25 @@
     <Compile Update="Components\TabPages\Description1.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Components\TabPages\Description2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\TabPages\Description3.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Components\TabPages\Level1.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Components\TabPages\Level2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\TabPages\Level3.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Components\TabPages\MainMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\TabPages\Scoreboard.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Components\TextPictureBox.cs">

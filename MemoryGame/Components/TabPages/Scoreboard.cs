@@ -9,12 +9,10 @@ public class Scoreboard : TabPage
     public TabControl tabControl;
     private List<Label> scoreList;
     private int index;
-    private DataTable dataTable;
     public Scoreboard(TabControl tabControl, MainForm form)
     {
         this.tabControl = tabControl;
         this.form = form;
-        this.dataTable = Deserialization();
         this.index = 0;
         this.scoreList = new List<Label>();
         this.init();
@@ -24,11 +22,10 @@ public class Scoreboard : TabPage
         PictureBox buttonLeft = generateButton(10, "Left");
         PictureBox buttonRight = generateButton(10, "Right");
         buttonLeft.MouseUp += (s, e) => { if (this.index > 0) { this.index--; } };
-        buttonRight.MouseUp += (s, e) => { if (this.index < dataTable.Rows.Count * 0.25) { this.index--; } };
+        buttonRight.MouseUp += (s, e) => { if (this.index < 127) { this.index--; } };
     }
     private void init()
     {
-        this.dataTable = Deserialization();
         if (this.scoreList.Count > 0)
         {
             scoreList.ForEach(l => this.Controls.Remove(l));
@@ -49,6 +46,7 @@ public class Scoreboard : TabPage
 
     private void addScoreboard(int index)
     {
+        DataTable dataTable = Deserialization();
         if (dataTable.Rows.Count == 0)
         {
             return;

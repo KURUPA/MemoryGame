@@ -22,9 +22,10 @@ public class Level1 : TabPage, Managerlistener
     {
         this.tabControl = tabControl;
         this.form = form;
+        this.random = new Random();
+
         this.manager = generateCard();
         this.manager.managerlistener = this;
-        this.random = new Random();
         this.Text = "Level 1";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
@@ -41,6 +42,10 @@ public class Level1 : TabPage, Managerlistener
         this.buttonRestart.MouseUp += (s, e) => Play();
         this.buttonNext = generateButton(40, "Next");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonRestart.Enabled = false;
+        this.buttonRestart.Visible = false;
+        this.buttonNext.Enabled = false;
+        this.buttonNext.Visible = false;
         this.buttonPlay = generateButton(0, "Play");
         this.buttonPlay.MouseDown += (s, e) =>
         {
@@ -63,7 +68,15 @@ public class Level1 : TabPage, Managerlistener
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonRestart);
         this.Controls.Add(this.buttonNext);
-        this.reset();
+
+
+        PictureBox buttonTest = generateButton(160, "Restart");
+        buttonTest.MouseUp += (s, e) =>
+        {
+            manager.list.ForEach(card => this.Controls.Remove(card));
+            setScore(200);
+        };
+        this.Controls.Add(buttonTest);
     }
 
     private PictureBox generateButton(int x, String name)
@@ -101,10 +114,18 @@ public class Level1 : TabPage, Managerlistener
 
     private void Next()
     {
-        string song = this.manager.list[random.Next(this.manager.list.Count())].File;
-        this.manager.setSong(song);
-        this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
-        Console.WriteLine("song = {0}", song);
+        try
+        {
+            string song = this.manager.list[random.Next(this.manager.list.Count())].File;
+            this.manager.setSong(song);
+            this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
+            Console.WriteLine("song = {0}", song);
+
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("No song");
+        }
     }
 
     private SongTitleManager generateCard()
@@ -112,7 +133,7 @@ public class Level1 : TabPage, Managerlistener
         SongTitleManager manager = new SongTitleManager();
         for (int row = 0; row < 4; row++)
         {
-            for (int col = 0; col < 5; col++)
+            for (int col = 0; col <5; col++)
             {
                 SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "");
                 manager.AddSongTitle(card);
@@ -151,35 +172,64 @@ public class Level1 : TabPage, Managerlistener
     {
         if (match)
         {
-            this.Controls.Remove(songTitle);
+            songTitle.Visible = false;
             addScore(10);
+            
             if (score >= 200)
             {
                 this.form.Level1Time = this.time;
-                this.reset();
-                this.tabControl.SelectedIndex = 3;
+                tabControl.SelectedIndex = 3;
+                this.init();
             }
         }
     }
 
-    public void reset()
+    public void init()
     {
-        this.manager.CanPick = false;
-        this.timeboard.Text = "時間：00:00";
-        this.timer.Interval = 1000;
-        this.buttonPlay.Enabled = true;
-        this.buttonPlay.Visible = true;
+        this.Controls.Clear();
+        this.manager = generateCard();
+        this.manager.managerlistener = this;
+        this.Text = "Level 1";
+        this.BorderStyle = BorderStyle.None;
+        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
+        this.setScore(0);
+        this.timeboard = new Label();
+        this.timeboard.Location = new Point(20, 340);
+        this.timeboard.Font = MainMenu.getCubicFont(36);
+        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
+        this.timeboard.ForeColor = Color.White;
+        this.stopwatch = new Stopwatch();
+        this.timer = new Timer();
+        this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
+        this.buttonRestart = generateButton(-40, "Restart");
+        this.buttonRestart.MouseUp += (s, e) => Play();
+        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.buttonRestart.Enabled = false;
         this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.timer.Stop();
-        this.stopwatch.Stop();
-        this.stopwatch.Reset();
-        this.setScore(0);
-        this.manager.list = new List<SongTitle>();
-        this.manager = generateCard();
-        this.manager.managerlistener = this;
-        this.manager.CanPick = false;
+        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay.MouseDown += (s, e) =>
+        {
+            Next();
+            this.buttonRestart.Enabled = true;
+            this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
+            if (buttonPlay != null)
+            {
+                this.buttonPlay.Enabled = false;
+                this.buttonPlay.Visible = false;
+            }
+            this.manager.CanPick = true;
+            this.manager.list.ForEach((song) => song.Visible = true);
+            this.timer.Start();
+            this.stopwatch.Start();
+        };
+        this.Controls.Add(this.timeboard);
+        this.Controls.Add(this.buttonPlay);
+        this.Controls.Add(this.buttonRestart);
+        this.Controls.Add(this.buttonNext);
     }
 }
