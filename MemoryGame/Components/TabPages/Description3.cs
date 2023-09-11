@@ -4,6 +4,7 @@ public class Description3 : TabPage
 {
 
     private Button buttonStart;
+    private TextPictureBox textPictureBox;
     public TabControl tabControl;
     private Size formClientSize;
     public Description3(TabControl tabControl, Size formClientSize)
@@ -14,7 +15,7 @@ public class Description3 : TabPage
         this.formClientSize = formClientSize;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         SuspendLayout();
-        TextPictureBox textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 450, 90, Image.FromFile("assets/texture/description.png"), new List<string> { "播放音樂後，根據內容輸入正確的歌名。" });
+        textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 450, 90, Image.FromFile("assets/texture/description.png"), new List<string> { "播放音樂後，根據內容輸入正確的歌名。" }, MainMenu.getCubicFont());
         this.Controls.Add(textPictureBox);
         this.buttonStart = new Button();
         //this.buttonStart.Font = MainMenu.getCubicFont();
@@ -28,6 +29,12 @@ public class Description3 : TabPage
         this.buttonStart.Click += (s, e) => tabControl.SelectedIndex = 6;
         this.Controls.Add(this.buttonStart);
         ResumeLayout();
+    }
+    
+    public void init()
+    {
+        MainForm.InitControlPos(textPictureBox, tabControl.Size, 0.5, 0.3);
+        MainForm.InitControlPos(buttonStart, tabControl.Size, 0.5, 0.5);
     }
 
 }

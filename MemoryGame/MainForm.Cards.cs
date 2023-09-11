@@ -81,13 +81,20 @@ namespace MemoryGame
             }
         }
 
+        public static void InitControlPos(Control control, Size tabControl, double xOffsetj, double yOffset)
+        {
+            control.Location = new((int)((tabControl.Width - control.Width) * xOffsetj), (int)((tabControl.Height - control.Height) * yOffset));
+        }
+
         public void updataTime()
         {
-            JObject jObject = new JObject();
-            jObject.Add("Date", System.DateTime.Today);
-            jObject.Add("Level_1_Time", this.Level1Time);
-            jObject.Add("Level_2_Time", this.Level2Time);
-            jObject.Add("Level_3_Time", this.Level3Time);
+            JObject jObject = new JObject
+            {
+                { "Date", System.DateTime.Today },
+                { "Level_1_Time", this.Level1Time },
+                { "Level_2_Time", this.Level2Time },
+                { "Level_3_Time", this.Level3Time }
+            };
             string jsonFilePath = "assets/data/scoreboard.json";
             string jsonData = File.ReadAllText(jsonFilePath);
             JArray jArray;

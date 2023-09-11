@@ -30,9 +30,11 @@ public class Level1 : TabPage, Managerlistener
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.setScore(0);
-        this.timeboard = new Label();
-        this.timeboard.Location = new Point(20, 340);
-        this.timeboard.Font = MainMenu.getCubicFont(36);
+        this.timeboard = new Label
+        {
+            Location = new Point(20, 340),
+            Font = MainMenu.getCubicFont(36)
+        };
         this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
         this.timeboard.ForeColor = Color.White;
         this.stopwatch = new Stopwatch();
