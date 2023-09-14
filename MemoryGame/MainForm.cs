@@ -20,9 +20,12 @@ public partial class MainForm : Form
         {
             tabControl.Size = this.Size;
             menu.init();
-            menu.init();
-            menu.init();
-            menu.init();
+            description1.init();
+            description2.init();
+            description3.init();
+            level1.init();
+            level2.init();
+            level3.init();
         };
         InitializeCard();
     }

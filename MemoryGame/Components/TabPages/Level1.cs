@@ -135,7 +135,7 @@ public class Level1 : TabPage, Managerlistener
         SongTitleManager manager = new SongTitleManager();
         for (int row = 0; row < 4; row++)
         {
-            for (int col = 0; col <5; col++)
+            for (int col = 0; col < 5; col++)
             {
                 SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "");
                 manager.AddSongTitle(card);
@@ -176,17 +176,17 @@ public class Level1 : TabPage, Managerlistener
         {
             songTitle.Visible = false;
             addScore(10);
-            
+
             if (score >= 200)
             {
                 this.form.Level1Time = this.time;
                 tabControl.SelectedIndex = 3;
-                this.init();
+                this.reset();
             }
         }
     }
 
-    public void init()
+    public void reset()
     {
         this.Controls.Clear();
         this.manager = generateCard();
@@ -233,5 +233,12 @@ public class Level1 : TabPage, Managerlistener
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonRestart);
         this.Controls.Add(this.buttonNext);
+    }
+    public void init()
+    {
+        MainForm.InitControlPos(timeboard, tabControl.Size, 0.5, 0.1);
+        MainForm.InitControlPos(buttonPlay, tabControl.Size, 0.5, 0.3);
+        MainForm.InitControlPos(buttonRestart, tabControl.Size, 0.5, 0.4);
+        MainForm.InitControlPos(buttonNext, tabControl.Size, 0.5, 0.5);
     }
 }

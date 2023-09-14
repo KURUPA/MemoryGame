@@ -200,14 +200,14 @@ public class Level3 : TabPage, Managerlistener
                 this.timer.Stop();
                 this.stopwatch.Stop();
                 this.form.Level3Time = this.time;
-                this.init();
+                this.reset();
                 form.scoreboard.Serialization();
                 this.tabControl.SelectedIndex = 7;
             }
         }
     }
 
-    public void init()
+    public void reset()
     {
         this.Controls.Clear();
         this.NowSong = "";
@@ -269,5 +269,12 @@ public class Level3 : TabPage, Managerlistener
         this.Controls.Add(this.buttonNext);
         this.Controls.Add(this.buttonAccept);
         this.Controls.Add(this.textBox);
+    }
+    public void init()
+    {
+        MainForm.InitControlPos(timeboard, tabControl.Size, 0.5, 0.1);
+        MainForm.InitControlPos(buttonPlay, tabControl.Size, 0.5, 0.3);
+        MainForm.InitControlPos(buttonRestart, tabControl.Size, 0.5, 0.4);
+        MainForm.InitControlPos(buttonNext, tabControl.Size, 0.5, 0.5);
     }
 }

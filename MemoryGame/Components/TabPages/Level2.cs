@@ -156,12 +156,12 @@ public class Level2 : TabPage, Managerlistener
             {
                 this.form.Level2Time = this.time;
                 tabControl.SelectedIndex = 5;
-                this.init();
+                this.reset();
             }
         }
     }
 
-    public void init()
+    public void reset()
     {
         this.Controls.Clear();
         this.manager = generateCard();
@@ -205,5 +205,11 @@ public class Level2 : TabPage, Managerlistener
         this.Controls.Add(this.timeboard);
         this.Controls.Add(this.buttonPlay);
         this.Controls.Add(this.buttonNext);
+    }
+    public void init()
+    {
+        MainForm.InitControlPos(timeboard, tabControl.Size, 0.5, 0.1);
+        MainForm.InitControlPos(buttonPlay, tabControl.Size, 0.5, 0.3);
+        MainForm.InitControlPos(buttonNext, tabControl.Size, 0.5, 0.5);
     }
 }
