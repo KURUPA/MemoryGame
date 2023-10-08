@@ -113,21 +113,13 @@ public class Level2 : TabPage, Managerlistener
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "cat");
+                SongTitle card = SongTitle.CreateSongTitle(manager, col, row, row * 10 + col, "", false, false);
+                Controls.Add(card);
                 manager.AddSongTitle(card);
             }
         }
         manager.RandomlyAssignKeys();
         return manager;
-    }
-
-    private SongTitle CreateSongTitle(SongTitleManager cardManager, int x, int y, int index, String key)
-    {
-        SongTitle songTitle = new SongTitle(x, y, cardManager, key, index);
-        this.Controls.Add(songTitle);
-        songTitle.setIsShowText(false);
-        songTitle.FlipOver(false);
-        return songTitle;
     }
     private void addScore(int score)
     {

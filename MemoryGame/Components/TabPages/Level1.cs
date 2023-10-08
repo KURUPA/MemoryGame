@@ -107,6 +107,9 @@ public class Level1 : TabPage, Managerlistener
 
     private void Play()
     {
+        string song = this.manager.list[random.Next(this.manager.list.Count())].File;
+        this.manager.setSong(song);
+        this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
         using (var waveOut = new WaveOutEvent())
         {
             waveOut.Init(this.mp3FileReader);
@@ -121,6 +124,11 @@ public class Level1 : TabPage, Managerlistener
             string song = this.manager.list[random.Next(this.manager.list.Count())].File;
             this.manager.setSong(song);
             this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
+            using (var waveOut = new WaveOutEvent())
+            {
+                waveOut.Init(this.mp3FileReader);
+                waveOut.Play();
+            }
             Console.WriteLine("song = {0}", song);
 
         }
@@ -137,21 +145,13 @@ public class Level1 : TabPage, Managerlistener
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle card = CreateSongTitle(manager, 20 + col * (6 + SongTitle.CARD_WIDTH), 20 + row * (6 + SongTitle.CARD_HEIGHT), row * 10 + col, "");
+                SongTitle card = SongTitle.CreateSongTitle(manager, col, row, row * 10 + col, "", false, true);
+                Controls.Add(card);
                 manager.AddSongTitle(card);
             }
         }
         manager.RandomlyAssignKeys();
         return manager;
-    }
-
-    private SongTitle CreateSongTitle(SongTitleManager cardManager, int x, int y, int index, String key)
-    {
-        SongTitle songTitle = new SongTitle(x, y, cardManager, key, index);
-        this.Controls.Add(songTitle);
-        songTitle.setIsShowText(true);
-        songTitle.Visible = false;
-        return songTitle;
     }
     private void addScore(int score)
     {

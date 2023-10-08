@@ -4,7 +4,7 @@ public class Description1 : TabPage
 {
 
     private Button buttonStart;
-    private TextPictureBox textPictureBox;
+    private Label Title;
     public TabControl tabControl;
     private Size formClientSize;
     public Description1(TabControl tabControl, Size formClientSize)
@@ -17,28 +17,37 @@ public class Description1 : TabPage
 
         SuspendLayout();
 
-        textPictureBox = new TextPictureBox((formClientSize.Width - 450) / 2, 68, 450, 90, Image.FromFile("assets/texture/description.png"), new List<string> { "播放音樂後，根據內容從選項中選取正確的歌名與歌手。" }, MainMenu.getCubicFont());
-        this.Controls.Add(textPictureBox);
+        this.Title = new Label
+        {
+            Width = 800,
+            Height = 120,
+            Location = new Point((tabControl.Width - Width) / 2, Height),
+            Text = "播放音樂後，根據內容從選項中選取正確的歌名與歌手。",
+            Font = MainMenu.getCubicFont()
 
-        this.buttonStart = new Button();
-        this.buttonStart.Font = MainMenu.getCubicFont();
-        this.buttonStart.Name = "buttonStart";
-        this.buttonStart.Size = new Size(100, 30);
-        this.buttonStart.Location = new Point((formClientSize.Width - buttonStart.Width) / 2, 261);
-        this.buttonStart.TabIndex = 0;
-        this.buttonStart.Text = "開始關卡";
-        this.buttonStart.TextAlign = ContentAlignment.MiddleCenter;
-        this.buttonStart.UseVisualStyleBackColor = true;
+        }; this.Controls.Add(Title);
+
+        this.buttonStart = new Button
+        {
+            Font = MainMenu.getCubicFont(),
+            Name = "buttonStart",
+            Size = new Size(100, 30),
+            Location = new Point((formClientSize.Width - Width) / 2, 261),
+            TabIndex = 0,
+            Text = "開始關卡",
+            TextAlign = ContentAlignment.MiddleCenter,
+            UseVisualStyleBackColor = true
+        };
         this.buttonStart.Click += (s, e) => tabControl.SelectedIndex = 2;
         this.Controls.Add(this.buttonStart);
 
         ResumeLayout();
     }
 
-    
+
     public void init()
     {
-        MainForm.InitControlPos(textPictureBox, tabControl.Size, 0.5, 0.3);
+        MainForm.InitControlPos(Title, tabControl.Size, 0.5, 0.3);
         MainForm.InitControlPos(buttonStart, tabControl.Size, 0.5, 0.5);
     }
 

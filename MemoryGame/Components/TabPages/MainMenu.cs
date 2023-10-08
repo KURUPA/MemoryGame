@@ -9,7 +9,7 @@ public class MainMenu : TabPage
     private Button buttonStart3;
     private Button buttonScoreboard;
     public TabControl tabControl;
-    private TextPictureBox textPictureBox;
+    private Label Title;
     public MainMenu(TabControl tabControl)
     {
         this.Text = "MainMenu";
@@ -17,12 +17,19 @@ public class MainMenu : TabPage
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.tabControl = tabControl;
         SuspendLayout();
-        TextPictureBox textPictureBox = new((tabControl.Width - 180) / 2, 68, 360, 60, Image.FromFile("assets/texture/description.png"), new List<string> { "延緩失智遊戲" }, getCubicFont(30));
-        this.textPictureBox = textPictureBox;
+        this.Title = new Label
+        {
+            Width = 480,
+            Height = 120,
+            Location = new Point((tabControl.Width - 180) / 2, 68),
+            Text = "延緩失智遊戲",
+            Font = getCubicFont(48)
+
+        };
         this.buttonStart1 = new Button
         {
             Name = "buttonStart1",
-            Size = new Size(100, 30),
+            Size = new Size(300, 90),
             TabIndex = 0,
             Text = "第一關",
             TextAlign = ContentAlignment.MiddleCenter,
@@ -32,7 +39,7 @@ public class MainMenu : TabPage
         this.buttonStart2 = new Button
         {
             Name = "buttonStart2",
-            Size = new Size(100, 30),
+            Size = new Size(300, 90),
             TabIndex = 0,
             Text = "第二關",
             TextAlign = ContentAlignment.MiddleCenter,
@@ -42,7 +49,7 @@ public class MainMenu : TabPage
         this.buttonStart3 = new Button
         {
             Name = "buttonStart3",
-            Size = new Size(100, 30),
+            Size = new Size(300, 90),
             TabIndex = 0,
             Text = "第三關",
             TextAlign = ContentAlignment.MiddleCenter,
@@ -52,7 +59,7 @@ public class MainMenu : TabPage
         this.buttonScoreboard = new Button
         {
             Name = "buttonScoreboard",
-            Size = new Size(100, 30),
+            Size = new Size(300, 90),
             TabIndex = 0,
             Text = "記分板",
             TextAlign = ContentAlignment.MiddleCenter,
@@ -64,7 +71,7 @@ public class MainMenu : TabPage
         this.Controls.Add(buttonStart2);
         this.Controls.Add(buttonStart3);
         this.Controls.Add(buttonScoreboard);
-        this.Controls.Add(textPictureBox);
+        this.Controls.Add(Title);
         ResumeLayout();
         this.buttonStart1.Click += (sender, args) => tabControl.SelectedIndex = 1;
         this.buttonStart2.Click += (sender, args) => tabControl.SelectedIndex = 3;
@@ -75,7 +82,7 @@ public class MainMenu : TabPage
 
     public static Font getCubicFont()
     {
-        return getCubicFont(12);
+        return getCubicFont(36);
     }
     public static Font getCubicFont(int Size)
     {
@@ -87,7 +94,7 @@ public class MainMenu : TabPage
 
     public void init()
     {
-        MainForm.InitControlPos(textPictureBox, tabControl.Size, 0.5, 0.1);
+        MainForm.InitControlPos(Title, tabControl.Size, 0.5, 0.1);
         MainForm.InitControlPos(buttonStart1, tabControl.Size, 0.5, 0.3);
         MainForm.InitControlPos(buttonStart2, tabControl.Size, 0.5, 0.4);
         MainForm.InitControlPos(buttonStart3, tabControl.Size, 0.5, 0.5);

@@ -15,6 +15,8 @@ namespace MemoryGame
         private int YOffset { get; set; }
         public static readonly int CARD_WIDTH = 144;
         public static readonly int CARD_HEIGHT = 72;
+        private float posX;
+        private float posY;
 
         public SongTitle(int x, int y, SongTitleManager cardManager, String file, int index) : this(x, y, cardManager)
         {
@@ -121,6 +123,31 @@ namespace MemoryGame
                 this.FlipOver(true);
             }
             this.CardManager.PickCard(this);
+        }
+
+        public static SongTitle CreateSongTitle(SongTitleManager cardManager, int x, int y, int index, String key, bool visible, bool showText)
+        {
+            SongTitle songTitle = new SongTitle(
+                20 + x * (6 + SongTitle.CARD_WIDTH),
+                20 + y * (6 + SongTitle.CARD_HEIGHT),
+                cardManager, key, index);
+            songTitle.setIsShowText(showText);
+            songTitle.Visible = visible;
+            songTitle.setPos(1.0F - 1.0F / x, 1.0F - 1.0F / y);
+            return songTitle;
+        }
+
+        public void setPos(float x, float y)
+        {
+            posX = x;
+            posY = y;
+        }
+
+        public void move(Size size)
+        {
+
+            Location = new((int)((size.Width - this.Width) * posX), (int)((size.Height - this.Height) * posY));
+
         }
     }
 }

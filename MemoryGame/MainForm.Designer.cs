@@ -35,7 +35,7 @@ namespace MemoryGame
             // 
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(800, 450);
+            this.ClientSize = new Size(1920, 1080);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Form1";
