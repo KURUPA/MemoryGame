@@ -13,8 +13,8 @@ public class Level2 : TabPage, Managerlistener
     private int score;
     private Label timeboard;
     private PictureBox buttonPlay;
+    private PictureBox buttonRestart;
     private PictureBox buttonNext;
-    private Mp3FileReader? mp3FileReader;
     private Stopwatch stopwatch;
     private Timer timer;
     public Level2(TabControl tabControl, MainForm form)
@@ -22,63 +22,81 @@ public class Level2 : TabPage, Managerlistener
         this.tabControl = tabControl;
         this.form = form;
         this.random = new Random();
-        this.manager = generateCard();
+
+        this.manager = GenerateCard();
         this.manager.managerlistener = this;
-        this.manager.CanPick = false;
-        this.Text = "Level 1";
+        this.Text = "Level 2";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.setScore(0);
-        this.timeboard = new Label();
-        this.timeboard.Location = new Point(20, 340);
-        this.timeboard.Font = MainMenu.getCubicFont(36);
-        this.timeboard.Text = "時間：00:00";
-        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.timeboard.ForeColor = Color.White;
+        this.SetScore(0);
+        this.timeboard = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(1300, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "時間：00:00"
+        };
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
-        this.timer.Interval = 1000;
-        this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
-
-        this.buttonNext = generateButton(0, "Next");
+        this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
+        this.buttonRestart = GenerateButton(-200, "Restart", "重播");
+        this.buttonRestart.MouseUp += (s, e) => Play();
+        this.buttonNext = GenerateButton(200, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonRestart.Enabled = false;
+        this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-
-        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay = GenerateButton(0, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
+            this.buttonRestart.Enabled = true;
+            this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
             if (buttonPlay != null)
             {
                 this.buttonPlay.Enabled = false;
                 this.buttonPlay.Visible = false;
             }
             this.manager.CanPick = true;
-            this.buttonNext.Enabled = true;
-            this.buttonNext.Visible = true;
+            this.manager.list.ForEach((song) => song.Visible = true);
             this.timer.Start();
             this.stopwatch.Start();
         };
         this.Controls.Add(this.timeboard);
-        this.Controls.Add(this.buttonPlay);
-        this.Controls.Add(this.buttonNext);
     }
 
-    private PictureBox generateButton(int x, String name)
+    private PictureBox GenerateButton(int x, string name, string text)
     {
-        PictureBox button = new PictureBox();
-        button.Size = new Size(60, 60);
-        button.Location = new Point((form.Width - button.Size.Width) / 2 + x, 340);
-        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
-        button.BackColor = Color.Transparent;
-        button.MouseDown += (s, e) =>
+        PictureBox button = new PictureBox()
         {
-            if (s is PictureBox b)
-            {
-                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "3.png");
-            }
+            Size = new Size(160, 160),
+            Location = new Point((form.Width - 160) / 2 + x, 720),
+            SizeMode = PictureBoxSizeMode.Zoom,
+            Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png"),
+            BackColor = Color.Transparent
         };
+        this.Controls.Add(button);
+        Label label = new Label()
+        {
+            Text = text,
+            Size = new Size(220, 160),
+            Location = new Point((form.Width - 220) / 2 + x, button.Location.Y + 120),
+            TextAlign = ContentAlignment.MiddleCenter
+
+        };
+        this.Controls.Add(label);
+        button.MouseDown += (s, e) =>
+                {
+                    if (s is PictureBox b)
+                    {
+                        b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "3.png");
+                    }
+                };
         button.MouseUp += (s, e) =>
         {
             if (s is PictureBox b)
@@ -86,34 +104,43 @@ public class Level2 : TabPage, Managerlistener
                 b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
             }
         };
+        button.VisibleChanged += (s, e) => { label.Visible = button.Visible; label.Enabled = button.Enabled; };
+
         return button;
     }
 
     private void Play()
     {
-        using (var waveOut = new WaveOutEvent())
-        {
-            waveOut.Init(this.mp3FileReader);
-            waveOut.Play();
-        }
+        string song = this.manager.list[random.Next(this.manager.list.Count())].File;
+        this.manager.setSong(song);
+        var reader = new Mp3FileReader("assets/song/" + song + ".mp3");
+        var waveOut = new WaveOut();
+        waveOut.Init(reader);
+        waveOut.Play();
+        Console.WriteLine("Song={0}", song);
     }
 
     private void Next()
     {
-        string song = this.manager.list[random.Next(this.manager.list.Count())].File;
-        this.manager.setSong(song);
-        this.mp3FileReader = new Mp3FileReader("assets/song/" + song + ".mp3");
-        Console.WriteLine("song = {0}", song);
+        try
+        {
+            Play();
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("No song");
+        }
     }
 
-    private SongTitleManager generateCard()
+    private SongTitleManager GenerateCard()
     {
+        int xxx = (tabControl.Width - (5 * (6 + SongTitle.CARD_WIDTH))) / 2;
         SongTitleManager manager = new SongTitleManager();
         for (int row = 0; row < 4; row++)
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle card = SongTitle.CreateSongTitle(manager, col, row, row * 10 + col, "", false, false);
+                SongTitle card = SongTitle.CreateSongTitle(manager, xxx, 60, col, row, row * 10 + col, "", false, false);
                 Controls.Add(card);
                 manager.AddSongTitle(card);
             }
@@ -121,16 +148,16 @@ public class Level2 : TabPage, Managerlistener
         manager.RandomlyAssignKeys();
         return manager;
     }
-    private void addScore(int score)
+    private void AddScore(int score)
     {
-        this.setScore(this.score + score);
+        this.SetScore(this.score + score);
     }
 
-    private void setScore(int score)
+    private void SetScore(int score)
     {
         this.score = score;
     }
-    private void setTime(TimeSpan time)
+    private void SetTime(TimeSpan time)
     {
         this.time = time;
         TimeSpan elapsedTime = this.stopwatch.Elapsed;
@@ -142,66 +169,71 @@ public class Level2 : TabPage, Managerlistener
     {
         if (match)
         {
-            addScore(10);
-            songTitle.Visible = false;
-            if (score >= 200)
-            {
-                this.form.Level2Time = this.time;
-                tabControl.SelectedIndex = 5;
-                this.reset();
-            }
+            CardPickMatch(songTitle);
         }
     }
 
-    public void reset()
+    void CardPickMatch(SongTitle songTitle)
+    {
+        songTitle.Visible = false;
+        Next();
+        AddScore(10);
+        if (score >= 200)
+        {
+            this.form.Level1Time = this.time;
+            tabControl.SelectedIndex = 5;
+            this.Reset();
+        }
+    }
+
+    public void Reset()
     {
         this.Controls.Clear();
-        this.manager = generateCard();
+
+        this.manager = GenerateCard();
         this.manager.managerlistener = this;
-        this.manager.CanPick = false;
-        this.Text = "Level 1";
+        this.Text = "Level 2";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.setScore(0);
-        this.timeboard = new Label();
-        this.timeboard.Location = new Point(20, 340);
-        this.timeboard.Font = MainMenu.getCubicFont(36);
-        this.timeboard.Text = "時間：00:00";
-        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.timeboard.ForeColor = Color.White;
+        this.SetScore(0);
+        this.timeboard = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(1300, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "時間：00:00"
+        };
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
-        this.timer.Interval = 1000;
-        this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
-
-        this.buttonNext = generateButton(0, "Next");
+        this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
+        this.buttonRestart = GenerateButton(-200, "Restart", "重播");
+        this.buttonRestart.MouseUp += (s, e) => Play();
+        this.buttonNext = GenerateButton(200, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
+        this.buttonRestart.Enabled = false;
+        this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-
-        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay = GenerateButton(0, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
+            this.buttonRestart.Enabled = true;
+            this.buttonRestart.Visible = true;
+            this.buttonNext.Enabled = true;
+            this.buttonNext.Visible = true;
             if (buttonPlay != null)
             {
                 this.buttonPlay.Enabled = false;
                 this.buttonPlay.Visible = false;
             }
             this.manager.CanPick = true;
-            this.buttonNext.Enabled = true;
-            this.buttonNext.Visible = true;
+            this.manager.list.ForEach((song) => song.Visible = true);
             this.timer.Start();
             this.stopwatch.Start();
         };
         this.Controls.Add(this.timeboard);
-        this.Controls.Add(this.buttonPlay);
-        this.Controls.Add(this.buttonNext);
-    }
-    public void init()
-    {
-        MainForm.InitControlPos(timeboard, tabControl.Size, 0.5, 0.1);
-        MainForm.InitControlPos(buttonPlay, tabControl.Size, 0.5, 0.3);
-        MainForm.InitControlPos(buttonNext, tabControl.Size, 0.5, 0.5);
     }
 }

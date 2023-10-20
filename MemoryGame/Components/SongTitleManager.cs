@@ -89,7 +89,6 @@ namespace MemoryGame
             {
                 return;
             }
-            Console.WriteLine("DelayTimer_Tick");
             pickSong.FlipOver(false);
             pickSong.Image = pickSong.IsShowText ? SongTitle.ButtonLightImage : SongTitle.ButtonImage;
             if (pickSong.File == song)

@@ -13,8 +13,8 @@ namespace MemoryGame
         private string Title { get; set; }
         private string Singer { get; set; }
         private int YOffset { get; set; }
-        public static readonly int CARD_WIDTH = 144;
-        public static readonly int CARD_HEIGHT = 72;
+        public static readonly int CARD_WIDTH = 288;
+        public static readonly int CARD_HEIGHT = 144;
         private float posX;
         private float posY;
 
@@ -82,7 +82,7 @@ namespace MemoryGame
 
             if (this.IsShowText || this.IsFlipped && !string.IsNullOrEmpty(this.Title))
             {
-                Font font = MemoryGame.Tabs.MainMenu.getCubicFont();
+                Font font = MemoryGame.Tabs.MainMenu.getCubicFont(24);
                 Brush brush = new SolidBrush(Color.DarkBlue);
                 SizeF titleSize = TextRenderer.MeasureText(this.Title, font);
                 SizeF singerSize = TextRenderer.MeasureText(this.Singer, font);
@@ -112,24 +112,41 @@ namespace MemoryGame
 
         private void SongTitleMouseUp(object? sender, MouseEventArgs e)
         {
-            this.YOffset = 16;
-            this.Image = ButtonLightImage;
-            if (!this.CardManager.isCanPick())
+            YOffset = 16;
+            Image = ButtonLightImage;
+            if (CardManager.list.Count <= 0)
             {
                 return;
             }
-            if (!this.IsShowText)
+            if (!CardManager.isCanPick())
             {
-                this.FlipOver(true);
+                return;
             }
-            this.CardManager.PickCard(this);
+            if (!IsShowText)
+            {
+                FlipOver(true);
+            }
+            CardManager.PickCard(this);
         }
 
-        public static SongTitle CreateSongTitle(SongTitleManager cardManager, int x, int y, int index, String key, bool visible, bool showText)
+        /// <summary>
+        /// 創建一個新的歌曲標題（SongTitle）對象。
+        /// </summary>
+        /// <param name="cardManager">歌曲標題管理器（SongTitleManager）的引用。</param>
+        /// <param name="initX">初始化 X 坐標。</param>
+        /// <param name="initY">初始化 Y 坐標。</param>
+        /// <param name="x">X 方向上的偏移量。</param>
+        /// <param name="y">Y 方向上的偏移量。</param>
+        /// <param name="index">歌曲標題的索引。</param>
+        /// <param name="key">歌曲標題的標識鍵。</param>
+        /// <param name="visible">指定歌曲標題是否可見。</param>
+        /// <param name="showText">指定是否顯示文本。</param>
+        /// <returns>新創建的 SongTitle 對象。</returns>
+        public static SongTitle CreateSongTitle(SongTitleManager cardManager, int initX, int initY, int x, int y, int index, String key, bool visible, bool showText)
         {
             SongTitle songTitle = new SongTitle(
-                20 + x * (6 + SongTitle.CARD_WIDTH),
-                20 + y * (6 + SongTitle.CARD_HEIGHT),
+                initX + x * (6 + CARD_WIDTH),
+                initY + y * (6 + CARD_HEIGHT),
                 cardManager, key, index);
             songTitle.setIsShowText(showText);
             songTitle.Visible = visible;

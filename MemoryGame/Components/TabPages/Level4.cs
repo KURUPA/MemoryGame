@@ -3,7 +3,7 @@ namespace MemoryGame.Tabs;
 using NAudio.Wave;
 using System.Diagnostics;
 using System.Windows.Forms;
-public class Level1 : TabPage, Managerlistener
+public class Level4 : TabPage, Managerlistener
 {
     private readonly Random random;
     private SongTitleManager manager;
@@ -17,7 +17,7 @@ public class Level1 : TabPage, Managerlistener
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
     private Timer timer;
-    public Level1(TabControl tabControl, MainForm form)
+    public Level4(TabControl tabControl, MainForm form)
     {
         this.tabControl = tabControl;
         this.form = form;
@@ -25,7 +25,7 @@ public class Level1 : TabPage, Managerlistener
 
         this.manager = GenerateCard();
         this.manager.managerlistener = this;
-        this.Text = "Level 1";
+        this.Text = "Level 3";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.SetScore(0);
@@ -191,7 +191,6 @@ public class Level1 : TabPage, Managerlistener
     public void Reset()
     {
         this.Controls.Clear();
-
         this.manager = GenerateCard();
         this.manager.managerlistener = this;
         this.Text = "Level 1";
@@ -200,12 +199,10 @@ public class Level1 : TabPage, Managerlistener
         this.SetScore(0);
         this.timeboard = new Label
         {
-            Font = MainMenu.getCubicFont(64),
-            Location = new Point(1300, 800),
+            Location = new Point(form.Width - 80, form.Height - 80),
             ForeColor = Color.White,
-            Size = new Size(560, 110),
-            Visible = true,
-            Text = "時間：00:00"
+            Size = TextRenderer.MeasureText(Text, Font),
+            Visible = true
         };
         this.Controls.Add(this.timeboard);
         this.stopwatch = new Stopwatch();

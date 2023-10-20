@@ -30,41 +30,51 @@ public class Level3 : TabPage, Managerlistener
         this.random = new Random();
         this.NowSong = "";
         this.keys = generateFiles();
-        this.textBox = new TextBox();
-        this.textBox.Size = new Size(560, 60);
-        this.textBox.Font = MainMenu.getCubicFont(36);
-        this.textBox.Location = new Point((form.Width - textBox.Width) / 2, (form.Height - textBox.Height) / 2 - 100);
-        this.buttonAccept = generateButton(textBox.Width / 2 + 60, textBox.Location.Y, "Accept");
+        this.textBox = new TextBox
+        {
+            Size = new Size(900, 300),
+            Font = MainMenu.getCubicFont(60),
+            Location = new Point((form.Width - 900) / 2, (form.Height - 300) / 2 - 100)
+        };
+        this.buttonAccept = GenerateButton(textBox.Width / 2 + 200, textBox.Location.Y - 40, "Accept", "確定");
         this.buttonAccept.MouseClick += (s, e) => Checking();
         this.Text = "Level 3";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.setScore(0);
-        this.timeboard = new Label();
-        this.timeboard.Location = new Point(20, 340);
-        this.timeboard.Font = MainMenu.getCubicFont(36);
-        this.timeboard.Text = "時間：00:00";
-        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.timeboard.ForeColor = Color.White;
-        this.remainingSongs = new Label();
-        this.remainingSongs.Location = new Point(500, 340);
-        this.remainingSongs.Font = MainMenu.getCubicFont(36);
-        this.remainingSongs.Text = "剩餘：" + keys.Count();
-        this.remainingSongs.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.remainingSongs.ForeColor = Color.White;
+        this.timeboard = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(1300, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "時間：00:00"
+        };
+        this.remainingSongs = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(10, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "剩餘：" + keys.Count(),
+        };
         this.stopwatch = new Stopwatch();
-        this.timer = new Timer();
-        this.timer.Interval = 1000;
+        this.timer = new Timer
+        {
+            Interval = 1000
+        };
         this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
-        this.buttonRestart = generateButton(-40, "Restart");
+        this.buttonRestart = GenerateButton(-200, "Restart", "重播");
         this.buttonRestart.Enabled = false;
         this.buttonRestart.Visible = false;
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext = GenerateButton(200, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay = GenerateButton(0, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
@@ -82,30 +92,40 @@ public class Level3 : TabPage, Managerlistener
         };
         this.Controls.Add(this.timeboard);
         this.Controls.Add(this.remainingSongs);
-        this.Controls.Add(this.buttonPlay);
-        this.Controls.Add(this.buttonRestart);
-        this.Controls.Add(this.buttonNext);
-        this.Controls.Add(this.buttonAccept);
         this.Controls.Add(this.textBox);
     }
-    private PictureBox generateButton(int x, String name)
+    private PictureBox GenerateButton(int x, string name, string text)
     {
-        return generateButton(x, 340, name);
+        return GenerateButton(x, 720, name, text);
     }
 
-    private PictureBox generateButton(int x, int y, String name)
+    private PictureBox GenerateButton(int x, int y, string name, string text)
     {
-        PictureBox button = new PictureBox();
-        button.Size = new Size(60, 60);
-        button.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
-        button.BackColor = Color.Transparent;
-        button.MouseDown += (s, e) =>
+        PictureBox button = new PictureBox()
         {
-            if (s is PictureBox b)
-            {
-                b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "3.png");
-            }
+            Size = new Size(160, 160),
+            Location = new Point((form.Width - 160) / 2 + x, y),
+            SizeMode = PictureBoxSizeMode.Zoom,
+            Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png"),
+            BackColor = Color.Transparent
         };
+        this.Controls.Add(button);
+        Label label = new Label()
+        {
+            Text = text,
+            Size = new Size(220, 160),
+            Location = new Point((form.Width - 220) / 2 + x, button.Location.Y + 120),
+            TextAlign = ContentAlignment.MiddleCenter
+
+        };
+        this.Controls.Add(label);
+        button.MouseDown += (s, e) =>
+                {
+                    if (s is PictureBox b)
+                    {
+                        b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "3.png");
+                    }
+                };
         button.MouseUp += (s, e) =>
         {
             if (s is PictureBox b)
@@ -113,7 +133,8 @@ public class Level3 : TabPage, Managerlistener
                 b.Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png");
             }
         };
-        button.Location = new Point((form.Width - button.Size.Width) / 2 + x, y);
+        button.VisibleChanged += (s, e) => { label.Visible = button.Visible; label.Enabled = button.Enabled; };
+
         return button;
     }
 
@@ -212,41 +233,51 @@ public class Level3 : TabPage, Managerlistener
         this.Controls.Clear();
         this.NowSong = "";
         this.keys = generateFiles();
-        this.textBox = new TextBox();
-        this.textBox.Size = new Size(560, 60);
-        this.textBox.Font = MainMenu.getCubicFont(36);
-        this.textBox.Location = new Point((form.Width - textBox.Width) / 2, (form.Height - textBox.Height) / 2 - 100);
-        this.buttonAccept = generateButton(textBox.Width / 2 + 60, textBox.Location.Y, "Accept");
+        this.textBox = new TextBox
+        {
+            Size = new Size(560, 60),
+            Font = MainMenu.getCubicFont(36),
+            Location = new Point((form.Width - 560) / 2, (form.Height - 60) / 2 - 100)
+        };
+        this.buttonAccept = GenerateButton(textBox.Width / 2 + 60, textBox.Location.Y, "Accept", "確認");
         this.buttonAccept.MouseClick += (s, e) => Checking();
         this.Text = "Level 3";
         this.BorderStyle = BorderStyle.None;
         this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.setScore(0);
-        this.timeboard = new Label();
-        this.timeboard.Location = new Point(20, 340);
-        this.timeboard.Font = MainMenu.getCubicFont(36);
-        this.timeboard.Text = "時間：00:00";
-        this.timeboard.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.timeboard.ForeColor = Color.White;
-        this.remainingSongs = new Label();
-        this.remainingSongs.Location = new Point(500, 340);
-        this.remainingSongs.Font = MainMenu.getCubicFont(36);
-        this.remainingSongs.Text = "剩餘：" + keys.Count();
-        this.remainingSongs.Size = TextRenderer.MeasureText(timeboard.Text, timeboard.Font);
-        this.remainingSongs.ForeColor = Color.White;
+        this.timeboard = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(1300, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "時間：00:00"
+        };
+        this.remainingSongs = new Label
+        {
+            Font = MainMenu.getCubicFont(64),
+            Location = new Point(10, 800),
+            ForeColor = Color.White,
+            Size = new Size(560, 110),
+            Visible = true,
+            Text = "剩餘：" + keys.Count(),
+        };
         this.stopwatch = new Stopwatch();
-        this.timer = new Timer();
-        this.timer.Interval = 1000;
+        this.timer = new Timer
+        {
+            Interval = 1000
+        };
         this.timer.Tick += (s, e) => setTime(stopwatch.Elapsed);
-        this.buttonRestart = generateButton(-40, "Restart");
+        this.buttonRestart = GenerateButton(-40, "Restart", "重播");
         this.buttonRestart.Enabled = false;
         this.buttonRestart.Visible = false;
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonNext = generateButton(40, "Next");
+        this.buttonNext = GenerateButton(40, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) => { Next(); };
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.buttonPlay = generateButton(0, "Play");
+        this.buttonPlay = GenerateButton(0, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
@@ -269,12 +300,5 @@ public class Level3 : TabPage, Managerlistener
         this.Controls.Add(this.buttonNext);
         this.Controls.Add(this.buttonAccept);
         this.Controls.Add(this.textBox);
-    }
-    public void init()
-    {
-        MainForm.InitControlPos(timeboard, tabControl.Size, 0.5, 0.1);
-        MainForm.InitControlPos(buttonPlay, tabControl.Size, 0.5, 0.3);
-        MainForm.InitControlPos(buttonRestart, tabControl.Size, 0.5, 0.4);
-        MainForm.InitControlPos(buttonNext, tabControl.Size, 0.5, 0.5);
     }
 }

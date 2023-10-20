@@ -21,7 +21,7 @@ public class MainMenu : TabPage
         {
             Width = 480,
             Height = 120,
-            Location = new Point((tabControl.Width - 180) / 2, 68),
+            Location = new Point((tabControl.Width - 480) / 2, (int)(tabControl.Height * 0.2)),
             Text = "延緩失智遊戲",
             Font = getCubicFont(48)
 
@@ -34,7 +34,7 @@ public class MainMenu : TabPage
             Text = "第一關",
             TextAlign = ContentAlignment.MiddleCenter,
             UseVisualStyleBackColor = true,
-            Font = getCubicFont()
+            Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.5))
         };
         this.buttonStart2 = new Button
         {
@@ -44,7 +44,7 @@ public class MainMenu : TabPage
             Text = "第二關",
             TextAlign = ContentAlignment.MiddleCenter,
             UseVisualStyleBackColor = true,
-            Font = getCubicFont()
+            Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.6))
         };
         this.buttonStart3 = new Button
         {
@@ -53,8 +53,8 @@ public class MainMenu : TabPage
             TabIndex = 0,
             Text = "第三關",
             TextAlign = ContentAlignment.MiddleCenter,
-            UseVisualStyleBackColor = true,
-            Font = getCubicFont()
+            Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.7)),
+            UseVisualStyleBackColor = true
         };
         this.buttonScoreboard = new Button
         {
@@ -63,8 +63,8 @@ public class MainMenu : TabPage
             TabIndex = 0,
             Text = "記分板",
             TextAlign = ContentAlignment.MiddleCenter,
-            UseVisualStyleBackColor = true,
-            Font = getCubicFont()
+            Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.8)),
+            UseVisualStyleBackColor = true
         };
 
         this.Controls.Add(buttonStart1);
@@ -77,7 +77,6 @@ public class MainMenu : TabPage
         this.buttonStart2.Click += (sender, args) => tabControl.SelectedIndex = 3;
         this.buttonStart3.Click += (sender, args) => tabControl.SelectedIndex = 5;
         this.buttonScoreboard.Click += (sender, args) => tabControl.SelectedIndex = 7;
-        init();
     }
 
     public static Font getCubicFont()
@@ -90,15 +89,6 @@ public class MainMenu : TabPage
         fontcollection.AddFontFile("assets/font/Cubic_11_1.010_R.ttf");
         Font font = new Font(fontcollection.Families[0], Size);
         return font;
-    }
-
-    public void init()
-    {
-        MainForm.InitControlPos(Title, tabControl.Size, 0.5, 0.1);
-        MainForm.InitControlPos(buttonStart1, tabControl.Size, 0.5, 0.3);
-        MainForm.InitControlPos(buttonStart2, tabControl.Size, 0.5, 0.4);
-        MainForm.InitControlPos(buttonStart3, tabControl.Size, 0.5, 0.5);
-        MainForm.InitControlPos(buttonScoreboard, tabControl.Size, 0.5, 0.6);
     }
 
 }

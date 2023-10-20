@@ -11,12 +11,6 @@ namespace MemoryGame
 
         public TabControl tabControl = new TabControl();
         public MainMenu menu;
-        public Description1 description1;
-        public Level1 level1;
-        public Description2 description2;
-        public Level2 level2;
-        public Description3 description3;
-        public Level3 level3;
         public Scoreboard scoreboard;
         public TimeSpan Level1Time;
         public TimeSpan Level2Time;
@@ -25,15 +19,15 @@ namespace MemoryGame
         private void InitializeCard()
         {
             this.Controls.Add(tabControl);
-            tabControl.Location = new Point(0, 0);
+            tabControl.Location = new Point(0, -72);
             tabControl.Size = this.ClientSize;
             tabControl.TabPages.Add(menu);
-            tabControl.TabPages.Add(description1);
-            tabControl.TabPages.Add(level1);
-            tabControl.TabPages.Add(description2);
-            tabControl.TabPages.Add(level2);
-            tabControl.TabPages.Add(description3);
-            tabControl.TabPages.Add(level3);
+            tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 2));
+            tabControl.TabPages.Add(new Level1(tabControl, this));
+            tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 4));
+            tabControl.TabPages.Add(new Level2(tabControl, this));
+            tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容輸入正確的歌名。", 6));
+            tabControl.TabPages.Add(new Level3(tabControl, this));
             tabControl.TabPages.Add(scoreboard);
             tabControl.SelectedIndex = 0;
             tabControl.Appearance = TabAppearance.FlatButtons;

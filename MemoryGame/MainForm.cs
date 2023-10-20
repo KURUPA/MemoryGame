@@ -7,26 +7,10 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         songDataTable = createDataTable();
-        tabControl.Size = this.Size;
+        tabControl.Size = new Size(1920, 1080);
+        tabControl.Location = new Point(0, -80);
         this.menu = new MainMenu(tabControl);
-        this.description1 = new Description1(tabControl, this.ClientSize);
-        this.description2 = new Description2(tabControl, this.ClientSize);
-        this.description3 = new Description3(tabControl, this.ClientSize);
-        this.level1 = new Level1(tabControl, this);
-        this.level2 = new Level2(tabControl, this);
-        this.level3 = new Level3(tabControl, this);
         this.scoreboard = new Scoreboard(tabControl, this);
-        this.SizeChanged += (s, e) =>
-        {
-            tabControl.Size = this.Size;
-            menu.init();
-            description1.init();
-            description2.init();
-            description3.init();
-            level1.init();
-            level2.init();
-            level3.init();
-        };
         InitializeCard();
     }
 }
