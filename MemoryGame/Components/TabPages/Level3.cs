@@ -12,7 +12,7 @@ public class Level3 : TabPage, Managerlistener
     private string NowSong;
     private readonly Random random;
     public TabControl tabControl;
-    private readonly MainForm form;
+    private readonly MainMenu form;
     private TimeSpan time;
     private int score;
     private Label timeboard;
@@ -23,7 +23,7 @@ public class Level3 : TabPage, Managerlistener
     private Mp3FileReader? mp3FileReader;
     private Stopwatch stopwatch;
     private Timer timer;
-    public Level3(TabControl tabControl, MainForm form)
+    public Level3(TabControl tabControl, MainMenu form)
     {
         this.tabControl = tabControl;
         this.form = form;
@@ -220,9 +220,9 @@ public class Level3 : TabPage, Managerlistener
             {
                 this.timer.Stop();
                 this.stopwatch.Stop();
-                this.form.Level3Time = this.time;
+                //this.form.Level3Time = this.time;
                 this.reset();
-                form.scoreboard.Serialization();
+                //form.scoreboard.Serialization();
                 this.tabControl.SelectedIndex = 7;
             }
         }

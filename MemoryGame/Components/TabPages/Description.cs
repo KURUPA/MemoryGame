@@ -7,10 +7,11 @@ public class Description : TabPage
     public TabControl tabControl;
     public Description(TabControl tabControl, string value, int index)
     {
-        this.Text = "Description1";
-        this.BorderStyle = BorderStyle.None;
+        Text = "Description1";
+        BorderStyle = BorderStyle.None;
         this.tabControl = tabControl;
-        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
+        BackColor = Color.DarkSlateGray;
+        //this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
 
         SuspendLayout();
 

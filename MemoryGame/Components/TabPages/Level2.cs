@@ -8,7 +8,7 @@ public class Level2 : TabPage, Managerlistener
     private readonly Random random;
     private SongTitleManager manager;
     public TabControl tabControl;
-    private readonly MainForm form;
+    private readonly MainMenu form;
     private TimeSpan time;
     private int score;
     private Label timeboard;
@@ -17,7 +17,7 @@ public class Level2 : TabPage, Managerlistener
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
     private Timer timer;
-    public Level2(TabControl tabControl, MainForm form)
+    public Level2(TabControl tabControl, MainMenu form)
     {
         this.tabControl = tabControl;
         this.form = form;
@@ -180,7 +180,7 @@ public class Level2 : TabPage, Managerlistener
         AddScore(10);
         if (score >= 200)
         {
-            this.form.Level1Time = this.time;
+            //this.form.Level2Time = this.time;
             tabControl.SelectedIndex = 5;
             this.Reset();
         }

@@ -23,18 +23,18 @@ namespace MemoryGame
             tabControl.Size = this.ClientSize;
             tabControl.TabPages.Add(menu);
             tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 2));
-            tabControl.TabPages.Add(new Level1(tabControl, this));
+            tabControl.TabPages.Add(new Level1(tabControl, menu));
             tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 4));
-            tabControl.TabPages.Add(new Level2(tabControl, this));
+            tabControl.TabPages.Add(new Level2(tabControl, menu));
             tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容輸入正確的歌名。", 6));
-            tabControl.TabPages.Add(new Level3(tabControl, this));
+            tabControl.TabPages.Add(new Level3(tabControl, menu));
             tabControl.TabPages.Add(scoreboard);
             tabControl.SelectedIndex = 0;
             tabControl.Appearance = TabAppearance.FlatButtons;
             tabControl.SizeMode = TabSizeMode.Fixed;
             foreach (TabPage tabPage in tabControl.TabPages)
             {
-                tabPage.BackColor = Color.Transparent;
+                tabPage.BackColor = Color.DarkSlateGray;
             }
             tabControl.Show();
 

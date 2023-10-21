@@ -30,16 +30,17 @@ namespace MemoryGame
         /// </summary>
         private void InitializeComponent()
         {
+            SuspendLayout();
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(1920, 1080);
-            this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "Form1";
-            this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.DarkSlateGray;
+            ClientSize = new Size(1920, 1061);
+            MaximizeBox = false;
+            Name = "MainForm";
+            Text = "Form1";
             ResumeLayout(false);
         }
 

@@ -25,7 +25,7 @@ public class Scoreboard : TabPage
         buttonRight.MouseUp += (s, e) => { if (this.index < 127) { this.index--; } };
     }
     private void init()
-    {
+    {/*
         if (this.scoreList.Count > 0)
         {
             scoreList.ForEach(l => this.Controls.Remove(l));
@@ -42,10 +42,11 @@ public class Scoreboard : TabPage
         createTitle(xOffset + yOffset * 3, 36, "第3關時間", true, 20);
         addScoreboard(this.index);
         this.Controls.Add(back);
+        */
     }
 
     private void addScoreboard(int index)
-    {
+    {/*
         DataTable dataTable = Deserialization();
         if (dataTable.Rows.Count == 0)
         {
@@ -72,6 +73,7 @@ public class Scoreboard : TabPage
                 }
             }
         }
+        */
     }
 
     private Label createTitle(int x, int y, string text, bool bold, int size)
@@ -118,17 +120,23 @@ public class Scoreboard : TabPage
     }
 
     public void Serialization()
-    {
+    {/*
         string jsonFilePath = "assets/data/scoreboard.json";
         JArray json = new JArray();
         JObject item = new JObject();
-        item.Add("Date", System.DateTime.Now.ToString());
-        item.Add("Time1", this.form.Level1Time);
-        item.Add("Time2", this.form.Level2Time);
-        item.Add("Time3", this.form.Level3Time);
+        string date = DateTime.Now.ToString();
+        string time1 = this.form.Level1Time.ToString();
+        string time2 = this.form.Level2Time.ToString();
+        string time3 = this.form.Level3Time.ToString();
+        item.Add("Date", date);
+        item.Add("Time1", time1);
+        item.Add("Time2", time2);
+        item.Add("Time3", time3);
+        Console.WriteLine("date={0}, time1={1}, time2={2}, time3={3}", date, time1, time2, time3);
         json.Add(item);
         string jsonData = json.ToString();
         File.WriteAllText(jsonFilePath, jsonData);
+        */
     }
 
     private PictureBox generateButton(int x, String name)

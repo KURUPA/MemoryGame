@@ -14,6 +14,7 @@ namespace MemoryGame
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.SetDefaultFont(MainMenu.getCubicFont());
+            
             Application.Run(new MainForm());
         }
     }

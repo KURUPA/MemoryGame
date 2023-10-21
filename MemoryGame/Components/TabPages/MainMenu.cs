@@ -5,6 +5,7 @@ using System.Drawing.Text;
 public class MainMenu : TabPage
 {
     private Button buttonStart1;
+    public Label timeboard1;
     private Button buttonStart2;
     private Button buttonStart3;
     private Button buttonScoreboard;
@@ -14,28 +15,38 @@ public class MainMenu : TabPage
     {
         this.Text = "MainMenu";
         this.BorderStyle = BorderStyle.None;
-        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
         this.tabControl = tabControl;
         SuspendLayout();
         this.Title = new Label
         {
-            Width = 480,
-            Height = 120,
+            Size = new Size(480, 120),
             Location = new Point((tabControl.Width - 480) / 2, (int)(tabControl.Height * 0.2)),
             Text = "延緩失智遊戲",
-            Font = getCubicFont(48)
-
+            TextAlign = ContentAlignment.MiddleCenter,
+            ForeColor = Color.White,
         };
+
+
         this.buttonStart1 = new Button
         {
             Name = "buttonStart1",
             Size = new Size(300, 90),
             TabIndex = 0,
-            Text = "第一關",
+            Text = "開始遊戲",
             TextAlign = ContentAlignment.MiddleCenter,
             UseVisualStyleBackColor = true,
             Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.5))
         };
+
+        this.timeboard1 = new Label
+        {
+            Location = new Point((tabControl.Width - 300) / 2 + 300, (int)(tabControl.Height * 0.5)+45),
+            ForeColor = Color.White,
+            Size = new Size(560, 90),
+            Visible = true,
+            Text = ""
+        };
+        this.Controls.Add(timeboard1);
         this.buttonStart2 = new Button
         {
             Name = "buttonStart2",
@@ -66,12 +77,11 @@ public class MainMenu : TabPage
             Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.8)),
             UseVisualStyleBackColor = true
         };
-
-        this.Controls.Add(buttonStart1);
-        this.Controls.Add(buttonStart2);
-        this.Controls.Add(buttonStart3);
-        this.Controls.Add(buttonScoreboard);
         this.Controls.Add(Title);
+        this.Controls.Add(buttonStart1);
+        //this.Controls.Add(buttonStart2);
+        //this.Controls.Add(buttonStart3);
+        //this.Controls.Add(buttonScoreboard);
         ResumeLayout();
         this.buttonStart1.Click += (sender, args) => tabControl.SelectedIndex = 1;
         this.buttonStart2.Click += (sender, args) => tabControl.SelectedIndex = 3;

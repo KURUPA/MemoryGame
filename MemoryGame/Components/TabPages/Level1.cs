@@ -8,16 +8,15 @@ public class Level1 : TabPage, Managerlistener
     private readonly Random random;
     private SongTitleManager manager;
     public TabControl tabControl;
-    private readonly MainForm form;
+    private readonly MainMenu form;
     private TimeSpan time;
-    private int score;
     private Label timeboard;
     private PictureBox buttonPlay;
     private PictureBox buttonRestart;
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
     private Timer timer;
-    public Level1(TabControl tabControl, MainForm form)
+    public Level1(TabControl tabControl, MainMenu form)
     {
         this.tabControl = tabControl;
         this.form = form;
@@ -26,9 +25,6 @@ public class Level1 : TabPage, Managerlistener
         this.manager = GenerateCard();
         this.manager.managerlistener = this;
         this.Text = "Level 1";
-        this.BorderStyle = BorderStyle.None;
-        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.SetScore(0);
         this.timeboard = new Label
         {
             Font = MainMenu.getCubicFont(64),
@@ -114,6 +110,10 @@ public class Level1 : TabPage, Managerlistener
 
     private void Play()
     {
+        if (manager.list.Count <= 0)
+        {
+            return;
+        }
         string song = this.manager.list[random.Next(this.manager.list.Count())].File;
         this.manager.setSong(song);
         var reader = new Mp3FileReader("assets/song/" + song + ".mp3");
@@ -139,9 +139,9 @@ public class Level1 : TabPage, Managerlistener
     {
         int xxx = (tabControl.Width - (5 * (6 + SongTitle.CARD_WIDTH))) / 2;
         SongTitleManager manager = new SongTitleManager();
-        for (int row = 0; row < 4; row++)
+        for (int row = 0; row < 2; row++)
         {
-            for (int col = 0; col < 5; col++)
+            for (int col = 0; col < 3; col++)
             {
                 SongTitle card = SongTitle.CreateSongTitle(manager, xxx, 60, col, row, row * 10 + col, "", false, true);
                 Controls.Add(card);
@@ -150,15 +150,6 @@ public class Level1 : TabPage, Managerlistener
         }
         manager.RandomlyAssignKeys();
         return manager;
-    }
-    private void AddScore(int score)
-    {
-        this.SetScore(this.score + score);
-    }
-
-    private void SetScore(int score)
-    {
-        this.score = score;
     }
     private void SetTime(TimeSpan time)
     {
@@ -177,27 +168,32 @@ public class Level1 : TabPage, Managerlistener
 
     void CardPickMatch(SongTitle songTitle)
     {
-        songTitle.Visible = false;
-        Next();
-        AddScore(10);
-        if (score >= 200)
+        try
         {
-            this.form.Level1Time = this.time;
-            tabControl.SelectedIndex = 3;
-            this.Reset();
+            songTitle.Visible = false;
+            if (manager.list.Count <= 0)
+            {
+                string timeText = $"通關時間：{this.time.Minutes:D2}:{this.time.Seconds:D2}";;
+                this.form.timeboard1.Text = timeText;
+                tabControl.SelectedIndex = 0;
+                this.Reset();
+                return;
+            }
+            Next();
+
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("WTF Boom");
+
+            throw;
         }
     }
 
     public void Reset()
     {
         this.Controls.Clear();
-
         this.manager = GenerateCard();
-        this.manager.managerlistener = this;
-        this.Text = "Level 1";
-        this.BorderStyle = BorderStyle.None;
-        this.BackgroundImage = Image.FromFile("assets/texture/Background.png");
-        this.SetScore(0);
         this.timeboard = new Label
         {
             Font = MainMenu.getCubicFont(64),

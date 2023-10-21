@@ -4,6 +4,9 @@
     <Compile Update="Components\SongTitle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Components\TabPages\Description.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Components\TabPages\Description1.cs">
       <SubType>Component</SubType>
     </Compile>

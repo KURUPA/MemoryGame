@@ -95,7 +95,10 @@ namespace MemoryGame
             {
                 pickSong.Visible = false;
                 pickSong.Enabled = false;
-                list.Remove(pickSong);
+                if (list.Count > 0 && list.Contains(pickSong))
+                {
+                    list.Remove(pickSong);
+                }
                 match = true;
                 point++;
             }
