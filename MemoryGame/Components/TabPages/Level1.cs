@@ -16,12 +16,13 @@ public class Level1 : TabPage, Managerlistener
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
     private Timer timer;
+    private WaveOut waveOut;
     public Level1(TabControl tabControl, MainMenu form)
     {
         this.tabControl = tabControl;
         this.form = form;
         this.random = new Random();
-
+        waveOut = new WaveOut();
         this.manager = GenerateCard();
         this.manager.managerlistener = this;
         this.Text = "Level 1";
@@ -38,9 +39,9 @@ public class Level1 : TabPage, Managerlistener
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
         this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
-        this.buttonRestart = GenerateButton(-200, "Restart", "重播");
+        this.buttonRestart = GenerateButton(200, "Restart", "重播");
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonNext = GenerateButton(200, "Next", "下一首");
+        this.buttonNext = GenerateButton(400, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) =>
         {
             Next();
@@ -117,7 +118,6 @@ public class Level1 : TabPage, Managerlistener
         string song = this.manager.list[random.Next(this.manager.list.Count())].File;
         this.manager.setSong(song);
         var reader = new Mp3FileReader("assets/song/" + song + ".mp3");
-        var waveOut = new WaveOut();
         waveOut.Init(reader);
         waveOut.Play();
         Console.WriteLine("Song={0}", song);
@@ -127,6 +127,7 @@ public class Level1 : TabPage, Managerlistener
     {
         try
         {
+            waveOut.Stop();
             Play();
         }
         catch (System.Exception)
@@ -173,7 +174,7 @@ public class Level1 : TabPage, Managerlistener
             songTitle.Visible = false;
             if (manager.list.Count <= 0)
             {
-                string timeText = $"通關時間：{this.time.Minutes:D2}:{this.time.Seconds:D2}";;
+                string timeText = $"通關時間：{this.time.Minutes:D2}:{this.time.Seconds:D2}"; ;
                 this.form.timeboard1.Text = timeText;
                 tabControl.SelectedIndex = 0;
                 this.Reset();
