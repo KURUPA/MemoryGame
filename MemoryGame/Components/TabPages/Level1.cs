@@ -139,9 +139,9 @@ public class Level1 : TabPage, Managerlistener
     {
         int xxx = (tabControl.Width - (5 * (6 + SongTitle.CARD_WIDTH))) / 2;
         SongTitleManager manager = new SongTitleManager();
-        for (int row = 0; row < 2; row++)
+        for (int row = 0; row < 4; row++)
         {
-            for (int col = 0; col < 3; col++)
+            for (int col = 0; col < 5; col++)
             {
                 SongTitle card = SongTitle.CreateSongTitle(manager, xxx, 60, col, row, row * 10 + col, "", false, true);
                 Controls.Add(card);
