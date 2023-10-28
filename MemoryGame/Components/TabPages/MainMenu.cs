@@ -40,7 +40,7 @@ public class MainMenu : TabPage
 
         this.timeboard1 = new Label
         {
-            Location = new Point((tabControl.Width - 300) / 2 + 300, (int)(tabControl.Height * 0.5)+45),
+            Location = new Point((tabControl.Width - 300) / 2 + 300, (int)(tabControl.Height * 0.5) + 45),
             ForeColor = Color.White,
             Size = new Size(560, 90),
             Visible = true,
@@ -95,9 +95,12 @@ public class MainMenu : TabPage
     }
     public static Font getCubicFont(int Size)
     {
+        /*
         PrivateFontCollection fontcollection = new PrivateFontCollection();
         fontcollection.AddFontFile("assets/font/Cubic_11_1.010_R.ttf");
         Font font = new Font(fontcollection.Families[0], Size);
+        */
+        Font font = new System.Drawing.Font("Microsoft JhengHei UI", Size, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
         return font;
     }
 

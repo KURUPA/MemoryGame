@@ -12,6 +12,7 @@ public class Level1 : TabPage, Managerlistener
     private TimeSpan time;
     private Label timeboard;
     private PictureBox buttonPlay;
+    private PictureBox buttonBack;
     private PictureBox buttonRestart;
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
@@ -41,6 +42,11 @@ public class Level1 : TabPage, Managerlistener
         this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
         this.buttonRestart = GenerateButton(200, "Restart", "重播");
         this.buttonRestart.MouseUp += (s, e) => Play();
+
+        this.buttonBack = GenerateButton(200, "Restart", "返回主畫面");
+        this.buttonBack.MouseUp += (s, e) => Back();
+        buttonBack.Enabled = false;
+        buttonBack.Visible = false;
         this.buttonNext = GenerateButton(400, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) =>
         {
@@ -50,7 +56,7 @@ public class Level1 : TabPage, Managerlistener
         this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.buttonPlay = GenerateButton(0, "Play", "開始");
+        this.buttonPlay = GenerateButton(200, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
@@ -135,6 +141,9 @@ public class Level1 : TabPage, Managerlistener
             Console.WriteLine("No song");
         }
     }
+    private void Back()
+    {
+    }
 
     private SongTitleManager GenerateCard()
     {
@@ -142,7 +151,7 @@ public class Level1 : TabPage, Managerlistener
         SongTitleManager manager = new SongTitleManager();
         for (int row = 0; row < 4; row++)
         {
-            for (int col = 0; col < 5; col++)
+            for (int col = 0; col < 2; col++)
             {
                 SongTitle card = SongTitle.CreateSongTitle(manager, xxx, 60, col, row, row * 10 + col, "", false, true);
                 Controls.Add(card);
@@ -176,8 +185,11 @@ public class Level1 : TabPage, Managerlistener
             {
                 string timeText = $"通關時間：{this.time.Minutes:D2}:{this.time.Seconds:D2}"; ;
                 this.form.timeboard1.Text = timeText;
+                Reset();
+                buttonBack.Enabled = true;
+                buttonBack.Visible = true;
                 tabControl.SelectedIndex = 0;
-                this.Reset();
+
                 return;
             }
             Next();
@@ -195,6 +207,8 @@ public class Level1 : TabPage, Managerlistener
     {
         this.Controls.Clear();
         this.manager = GenerateCard();
+        this.manager.managerlistener = this;
+        this.Text = "Level 1";
         this.timeboard = new Label
         {
             Font = MainMenu.getCubicFont(64),
@@ -208,9 +222,14 @@ public class Level1 : TabPage, Managerlistener
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
         this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
-        this.buttonRestart = GenerateButton(-200, "Restart", "重播");
+        this.buttonRestart = GenerateButton(200, "Restart", "重播");
         this.buttonRestart.MouseUp += (s, e) => Play();
-        this.buttonNext = GenerateButton(200, "Next", "下一首");
+
+        this.buttonBack = GenerateButton(200, "Restart", "返回主畫面");
+        this.buttonBack.MouseUp += (s, e) => Back();
+        buttonBack.Enabled = false;
+        buttonBack.Visible = false;
+        this.buttonNext = GenerateButton(400, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) =>
         {
             Next();
@@ -219,7 +238,7 @@ public class Level1 : TabPage, Managerlistener
         this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.buttonPlay = GenerateButton(0, "Play", "開始");
+        this.buttonPlay = GenerateButton(200, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
