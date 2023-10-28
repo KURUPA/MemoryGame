@@ -136,9 +136,6 @@ public class Level1 : TabPage, Managerlistener
             Console.WriteLine("No song");
         }
     }
-    private void Back()
-    {
-    }
 
     private SongTitleManager GenerateCard()
     {
@@ -168,6 +165,26 @@ public class Level1 : TabPage, Managerlistener
         if (match)
         {
             CardPickMatch(songTitle);
+        }
+        else
+        {
+            //TO DO
+            Stopwatch ErrorStopwatch = new Stopwatch();
+            ErrorStopwatch.Start();
+            var ErrorTimer = new Timer();
+            ErrorTimer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
+
+            /*
+            Label errorText = new Label()
+            {
+                ForeColor = Color.Red,
+                Text = "錯誤!",
+                Location = songTitle.Location,
+                Size = new Size(SongTitle.CARD_HEIGHT, SongTitle.CARD_WIDTH)
+            };
+            errorText.BringToFront();
+            this.Controls.Add(errorText);
+            */
         }
     }
 
