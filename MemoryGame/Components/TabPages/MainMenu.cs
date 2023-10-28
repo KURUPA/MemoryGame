@@ -40,7 +40,7 @@ public class MainMenu : TabPage
 
         this.timeboard1 = new Label
         {
-            Location = new Point((tabControl.Width - 300) / 2 + 300, (int)(tabControl.Height * 0.5) + 45),
+            Location = new Point((tabControl.Width - 300) / 2 + 300, (int)(tabControl.Height * 0.5) + 25),
             ForeColor = Color.White,
             Size = new Size(560, 90),
             Visible = true,

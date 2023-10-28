@@ -17,6 +17,7 @@ public class Description : TabPage
 
         var Title = new Label
         {
+            ForeColor = Color.White,
             Width = 800,
             Height = 120,
             Location = new Point((tabControl.Width - 800) / 2, Height),

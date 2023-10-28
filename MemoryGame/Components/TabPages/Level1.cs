@@ -12,7 +12,6 @@ public class Level1 : TabPage, Managerlistener
     private TimeSpan time;
     private Label timeboard;
     private PictureBox buttonPlay;
-    private PictureBox buttonBack;
     private PictureBox buttonRestart;
     private PictureBox buttonNext;
     private Stopwatch stopwatch;
@@ -40,14 +39,9 @@ public class Level1 : TabPage, Managerlistener
         this.stopwatch = new Stopwatch();
         this.timer = new Timer();
         this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
-        this.buttonRestart = GenerateButton(200, "Restart", "重播");
+        this.buttonRestart = GenerateButton(0, "Restart", "重播");
         this.buttonRestart.MouseUp += (s, e) => Play();
-
-        this.buttonBack = GenerateButton(200, "Restart", "返回主畫面");
-        this.buttonBack.MouseUp += (s, e) => Back();
-        buttonBack.Enabled = false;
-        buttonBack.Visible = false;
-        this.buttonNext = GenerateButton(400, "Next", "下一首");
+        this.buttonNext = GenerateButton(300, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) =>
         {
             Next();
@@ -56,7 +50,7 @@ public class Level1 : TabPage, Managerlistener
         this.buttonRestart.Visible = false;
         this.buttonNext.Enabled = false;
         this.buttonNext.Visible = false;
-        this.buttonPlay = GenerateButton(200, "Play", "開始");
+        this.buttonPlay = GenerateButton(0, "Play", "開始");
         this.buttonPlay.MouseDown += (s, e) =>
         {
             Next();
@@ -81,7 +75,7 @@ public class Level1 : TabPage, Managerlistener
         PictureBox button = new PictureBox()
         {
             Size = new Size(160, 160),
-            Location = new Point((form.Width - 160) / 2 + x, 720),
+            Location = new Point(80 + x, 720),
             SizeMode = PictureBoxSizeMode.Zoom,
             Image = Image.FromFile("assets/texture/" + name + "/A_" + name + "2.png"),
             BackColor = Color.Transparent
@@ -89,9 +83,10 @@ public class Level1 : TabPage, Managerlistener
         this.Controls.Add(button);
         Label label = new Label()
         {
+            ForeColor = Color.White,
             Text = text,
             Size = new Size(220, 160),
-            Location = new Point((form.Width - 220) / 2 + x, button.Location.Y + 120),
+            Location = new Point(50 + x, button.Location.Y + 120),
             TextAlign = ContentAlignment.MiddleCenter
 
         };
@@ -151,7 +146,7 @@ public class Level1 : TabPage, Managerlistener
         SongTitleManager manager = new SongTitleManager();
         for (int row = 0; row < 4; row++)
         {
-            for (int col = 0; col < 2; col++)
+            for (int col = 0; col < 5; col++)
             {
                 SongTitle card = SongTitle.CreateSongTitle(manager, xxx, 60, col, row, row * 10 + col, "", false, true);
                 Controls.Add(card);
@@ -186,8 +181,6 @@ public class Level1 : TabPage, Managerlistener
                 string timeText = $"通關時間：{this.time.Minutes:D2}:{this.time.Seconds:D2}"; ;
                 this.form.timeboard1.Text = timeText;
                 Reset();
-                buttonBack.Enabled = true;
-                buttonBack.Visible = true;
                 tabControl.SelectedIndex = 0;
 
                 return;
@@ -224,11 +217,6 @@ public class Level1 : TabPage, Managerlistener
         this.timer.Tick += (s, e) => SetTime(stopwatch.Elapsed);
         this.buttonRestart = GenerateButton(200, "Restart", "重播");
         this.buttonRestart.MouseUp += (s, e) => Play();
-
-        this.buttonBack = GenerateButton(200, "Restart", "返回主畫面");
-        this.buttonBack.MouseUp += (s, e) => Back();
-        buttonBack.Enabled = false;
-        buttonBack.Visible = false;
         this.buttonNext = GenerateButton(400, "Next", "下一首");
         this.buttonNext.MouseUp += (s, e) =>
         {
