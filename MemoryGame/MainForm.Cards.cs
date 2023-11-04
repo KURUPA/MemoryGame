@@ -7,11 +7,10 @@ namespace MemoryGame
 {
     public partial class MainForm
     {
-        public static DataTable songDataTable = createDataTable();
+        public static DataTable songDataTable = CreateDataTable();
 
         public TabControl tabControl = new TabControl();
         public MainMenu menu;
-        public Scoreboard scoreboard;
         public TimeSpan Level1Time;
         public TimeSpan Level2Time;
         public TimeSpan Level3Time;
@@ -21,14 +20,13 @@ namespace MemoryGame
             this.Controls.Add(tabControl);
             tabControl.Location = new Point(0, -72);
             tabControl.Size = this.ClientSize;
+            //在tabControl加入主畫面
             tabControl.TabPages.Add(menu);
+            //在tabControl加入第一關說明頁
             tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 2));
+            //在tabControl加入第一關
             tabControl.TabPages.Add(new Level1(tabControl, menu));
-            tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容從選項中選取正確的歌名與歌手。", 4));
-            tabControl.TabPages.Add(new Level2(tabControl, menu));
-            tabControl.TabPages.Add(new Description(tabControl, "播放音樂後，根據內容輸入正確的歌名。", 6));
-            tabControl.TabPages.Add(new Level3(tabControl, menu));
-            tabControl.TabPages.Add(scoreboard);
+
             tabControl.SelectedIndex = 0;
             tabControl.Appearance = TabAppearance.FlatButtons;
             tabControl.SizeMode = TabSizeMode.Fixed;
@@ -40,7 +38,7 @@ namespace MemoryGame
 
         }
 
-        private static DataTable createDataTable()
+        private static DataTable CreateDataTable()
         {
             string jsonFilePath = "assets/data/data_table.json";
             string jsonData = File.ReadAllText(jsonFilePath);
@@ -62,6 +60,7 @@ namespace MemoryGame
             }
             return dataTable;
         }
+        
         public static string FindTextByKeyAndType(string key, string value)
         {
             DataRow[] rows = songDataTable.Select($"File = '{key}'");
@@ -75,12 +74,8 @@ namespace MemoryGame
             }
         }
 
-        public static void InitControlPos(Control control, Size tabControl, double xOffsetj, double yOffset)
-        {
-            control.Location = new((int)((tabControl.Width - control.Width) * xOffsetj), (int)((tabControl.Height - control.Height) * yOffset));
-        }
-
-        public void updataTime()
+        /*
+        public void UpdataTime()
         {
             JObject jObject = new JObject
             {
@@ -103,6 +98,6 @@ namespace MemoryGame
             jArray.Add(jObject);
             string filePath = "assets/data/scoreboard.json";
             File.WriteAllText(filePath, jArray.ToString());
-        }
+        }*/
     }
 }

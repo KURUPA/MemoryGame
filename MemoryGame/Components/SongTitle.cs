@@ -40,8 +40,8 @@ namespace MemoryGame
             this.IsFlipped = false;
             this.BackColor = Color.Transparent;
             this.YOffset = 16;
-            this.MouseDown += new MouseEventHandler(SongTitleMouseDown);
-            this.MouseUp += new MouseEventHandler(SongTitleMouseUp);
+            this.MouseDown += new MouseEventHandler(SongTitleMouseDownEvent);
+            this.MouseUp += new MouseEventHandler(SongTitleMouseUpEvent);
         }
 
         public void setIsShowText(bool IsShow)
@@ -76,24 +76,40 @@ namespace MemoryGame
             }
         }
 
+        /// <summary>
+        /// 覆寫了控制項的繪製方法，用於自定義繪製標題和歌手文字。
+        /// </summary>
+        /// <param name="e">包含繪圖資訊的PaintEventArgs對象。</param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            base.OnPaint(e);  // 呼叫基類的OnPaint方法以確保正確的繪製行為
 
             if (this.IsShowText || this.IsFlipped && !string.IsNullOrEmpty(this.Title))
             {
-                Font font = MemoryGame.Tabs.MainMenu.getCubicFont(24);
-                Brush brush = new SolidBrush(Color.DarkBlue);
+                // 創建字體和筆刷以設置繪製文本的外觀
+                Font font = MemoryGame.Tabs.MainMenu.getCubicFont(24);  // 使用24pt的Cubic字體
+                Brush brush = new SolidBrush(Color.DarkBlue);  // 使用深藍色筆刷
+
+                // 測量標題和歌手文字的大小
                 SizeF titleSize = TextRenderer.MeasureText(this.Title, font);
                 SizeF singerSize = TextRenderer.MeasureText(this.Singer, font);
+
+                // 設置繪製文本的位置，使其置中
                 PointF titlePoint = new PointF((this.Width - titleSize.Width) / 2, (this.Height - titleSize.Height) / 2 - this.YOffset);
                 PointF singerPoint = new PointF((this.Width - singerSize.Width) / 2, (this.Height + singerSize.Height) / 2 - this.YOffset);
+
+                // 使用Graphics對象繪製標題和歌手文字
                 e.Graphics.DrawString(this.Title, font, brush, titlePoint);
                 e.Graphics.DrawString(this.Singer, font, brush, singerPoint);
             }
         }
 
-        private void SongTitleMouseDown(object? sender, MouseEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SongTitleMouseDownEvent(object? sender, MouseEventArgs e)
         {
             this.YOffset = 13;
             if (!this.CardManager.isCanPick() || this.IsFlipped)
@@ -109,8 +125,12 @@ namespace MemoryGame
                 this.Image = ButtonLightDownImage;
             }
         }
-
-        private void SongTitleMouseUp(object? sender, MouseEventArgs e)
+        /// <summary>
+        /// 滑鼠按下鬆開後彈起事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SongTitleMouseUpEvent(object? sender, MouseEventArgs e)
         {
             YOffset = 16;
             Image = ButtonLightImage;
@@ -150,21 +170,18 @@ namespace MemoryGame
                 cardManager, key, index);
             songTitle.setIsShowText(showText);
             songTitle.Visible = visible;
-            songTitle.setPos(1.0F - 1.0F / x, 1.0F - 1.0F / y);
+            songTitle.SetPos(1.0F - 1.0F / x, 1.0F - 1.0F / y);
             return songTitle;
         }
-
-        public void setPos(float x, float y)
+        /// <summary>
+        /// 設置位置座標
+        /// </summary>
+        /// <param name="x">X座標</param>
+        /// <param name="y">Y座標</param>
+        public void SetPos(float x, float y)
         {
             posX = x;
             posY = y;
-        }
-
-        public void move(Size size)
-        {
-
-            Location = new((int)((size.Width - this.Width) * posX), (int)((size.Height - this.Height) * posY));
-
         }
     }
 }

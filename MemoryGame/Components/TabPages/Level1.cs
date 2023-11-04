@@ -69,8 +69,12 @@ public class Level1 : TabPage, Managerlistener
             this.stopwatch.Start();
         };
     }
-
     private PictureBox GenerateButton(int x, string name, string text)
+    {
+        return GenerateButton(x, 720, name, text);
+    }
+
+    private PictureBox GenerateButton(int x, int y, string name, string text)
     {
         PictureBox button = new PictureBox()
         {

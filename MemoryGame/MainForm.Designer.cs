@@ -37,10 +37,10 @@ namespace MemoryGame
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
-            ClientSize = new Size(1920, 1061);
+            ClientSize = new Size(1920, 1080);
             MaximizeBox = false;
             Name = "MainForm";
-            Text = "Form1";
+            Text = "延緩失智猜歌遊戲";
             ResumeLayout(false);
         }
 

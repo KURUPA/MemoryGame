@@ -26,7 +26,7 @@ public class MainMenu : TabPage
             ForeColor = Color.White,
         };
 
-
+        //開始遊戲按鈕
         this.buttonStart1 = new Button
         {
             Name = "buttonStart1",
@@ -37,6 +37,8 @@ public class MainMenu : TabPage
             UseVisualStyleBackColor = true,
             Location = new Point((tabControl.Width - 300) / 2, (int)(tabControl.Height * 0.5))
         };
+
+        this.buttonStart1.Click += (sender, args) => tabControl.SelectedIndex = 1;
 
         this.timeboard1 = new Label
         {
@@ -83,7 +85,6 @@ public class MainMenu : TabPage
         //this.Controls.Add(buttonStart3);
         //this.Controls.Add(buttonScoreboard);
         ResumeLayout();
-        this.buttonStart1.Click += (sender, args) => tabControl.SelectedIndex = 1;
         this.buttonStart2.Click += (sender, args) => tabControl.SelectedIndex = 3;
         this.buttonStart3.Click += (sender, args) => tabControl.SelectedIndex = 5;
         this.buttonScoreboard.Click += (sender, args) => tabControl.SelectedIndex = 7;
