@@ -99,7 +99,7 @@ public class Game : TabPage, IManagerListener
     }
 
     /// <summary>
-    /// 生成一個圖片按鈕(PictureBox)，並在指定位置和文本下創建相關標籤(Label)。
+    /// 生成一個圖片按鈕(PictureBox)，並在指定位置和文字下創建相關標籤(Label)。
     /// </summary>
     /// <param name="x">按鈕的 X 軸位置</param>
     /// <param name="y">按鈕的 Y 軸位置</param>

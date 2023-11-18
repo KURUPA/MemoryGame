@@ -57,44 +57,30 @@ namespace MemoryGame
         /// </summary>
         public void RandomlyAssignKeys()
         {
-            // 建立一個亂數產生器，用於產生隨機數值。
-            Random random = new Random();
-            // 使用亂數重新排列 "list" 中的項目，以實現隨機分配。
-            list = this.list.OrderBy(card => random.Next()).ToList();
-            // 創建一個新的字串清單 "keys" 來儲存歌曲檔案的識別鍵。
-            List<string> keys = new List<string>();
-            // 疊代遍歷 MainForm.songDataTable 中的每一行資料。
-            foreach (DataRow row in MainForm.songDataTable.Rows)
+            Random random = new Random();    // 建立一個亂數產生器，用於產生隨機數值。
+            list = this.list.OrderBy(card => random.Next()).ToList();   // 使用亂數重新排列 "list" 中的項目，以實現隨機分配。
+            List<string> keys = new List<string>(); // 創建一個新的字串清單 "keys" 來儲存歌曲檔案的識別鍵。
+            foreach (DataRow row in MainForm.songDataTable.Rows)    // 疊代遍歷 MainForm.songDataTable 中的每一行資料。
             {
-                // 從每一行中擷取 "File" 欄位的內容轉換為字串。
-                string? file = row["File"].ToString();
-                // 如果 "file" 不為空，則將其添加到 "keys" 清單中。
-                if (file != null)
+                string? file = row["File"].ToString();  // 從每一行中擷取 "File" 欄位的內容轉換為字串。
+                if (file != null)   // 如果 "file" 不為空，則將其添加到 "keys" 清單中。
                 {
                     keys.Add(file);
                 }
             }
-            // 使用亂數重新排列 "keys" 清單中的識別鍵，以實現隨機分配。
-            keys = keys.OrderBy(x => random.Next()).ToList();
-            // 檢查 "keys" 清單中的元素數是否小於 "list" 清單中的元素數。
-            if (keys.Count < list.Count)
+            keys = keys.OrderBy(x => random.Next()).ToList();   // 使用亂數重新排列 "keys" 清單中的識別鍵，以實現隨機分配。
+            if (keys.Count < list.Count)    // 檢查 "keys" 清單中的元素數是否小於 "list" 清單中的元素數。
             {
-                // 如果 "keys" 元素數不足，則輸出訊息並返回。
-                Console.WriteLine("not enough File keys: " + keys.ToString());
+                Console.WriteLine("not enough File keys: " + keys.ToString());   // 如果 "keys" 元素數不足，則輸出訊息並返回。
                 return;
             }
-            // 遍歷 "list" 清單中的按鈕項目，並分配對應的歌曲識別鍵。
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)    // 遍歷 "list" 清單中的按鈕項目，並分配對應的歌曲識別鍵。
             {
-                // 從 "keys" 清單中取得一個識別鍵。
-                string key = keys[i];
-                // 將識別鍵分配給 "list" 清單中的按鈕項目的 "File" 屬性。
-                list[i].File = key;
-                // 執行按鈕翻轉操作，傳遞 "false" 參數以指示不要執行翻轉動畫。
-                list[i].FlipOver(false);
+                string key = keys[i];   // 從 "keys" 清單中取得一個識別鍵。
+                list[i].File = key; // 將識別鍵分配給 "list" 清單中的按鈕項目的 "File" 屬性。
+                list[i].FlipOver(false);    // 執行按鈕翻轉操作，傳遞 "false" 參數以指示不要執行翻轉動畫。
             }
         }
-
 
         /// <summary>
         /// 從管理器中隨機獲取一首歌曲。
@@ -148,33 +134,14 @@ namespace MemoryGame
         /// <param name="songTitle">要高亮顯示的歌曲標題對象。</param>
         private async void MismatchedEventHandler(SongTitle songTitle, bool match)
         {
-            // 播放錯誤提示音效
-            using (var audioFile = new AudioFileReader("assets/sound/maou_se_onepoint33.mp3"))
-            {
-                using (var outputDevice = new WaveOutEvent())
-                {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                    // 當音效播放結束後，釋放資源
-                    outputDevice.PlaybackStopped += (sender, e) =>
-                    {
-                        audioFile.Dispose();
-                        outputDevice.Dispose();
-                    };
-                }
-            }
             songTitle.PickMatch = match;
             songTitle.Match = false;
-            // 保存原始圖像
-            Image originalImage = songTitle.Image;
-            // 高亮顯示不匹配的歌曲標題
-            songTitle.Image = match ? SongTitle.ButtonGreenImage : SongTitle.ButtonRedImage;
-            // 等待一段時間以恢復原始圖像
-            await Task.Delay(500);
+            Image originalImage = songTitle.Image;  // 保存原始圖像
+            songTitle.Image = match ? SongTitle.ButtonGreenImage : SongTitle.ButtonRedImage; //根據是否匹配結果顯示不同圖像
+            await Task.Delay(500); //等待500毫秒
             if (match)
             {
-                // songTitle.Visible = false; // 如果選中的按鈕的檔案名與當前播放的歌曲相符，則將按鈕設為不可見
-                songTitle.Enabled = false; // 並設為不可選擇
+                songTitle.Enabled = false; // 設為不可選擇
                 if (list.Count > 0 && list.Contains(songTitle))
                 {
                     list.Remove(songTitle); // 從管理器中移除該按鈕
@@ -182,10 +149,8 @@ namespace MemoryGame
             }
             else
             {
-                songTitle.Image = originalImage;                // 恢復原始圖像
-
-                songTitle.Match = true;
-
+                songTitle.Image = originalImage; // 恢復原始圖像
+                songTitle.Match = true; 
             }
         }
     }
