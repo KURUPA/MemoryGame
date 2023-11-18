@@ -1,6 +1,4 @@
 using System.Data;
-using NAudio.Wave;
-using Timer = System.Windows.Forms.Timer;
 
 namespace MemoryGame
 {
@@ -119,7 +117,6 @@ namespace MemoryGame
             pickSong.FlipOver(false); // 翻轉按鈕，將其蓋上
             pickSong.Image = pickSong.IsShowText ? SongTitle.ButtonLightImage : SongTitle.ButtonImage; // 根據按鈕是否顯示文字設定圖片
             MismatchedEventHandler(pickSong, match);
-
             CardTitleFile = ""; // 清空按鈕標題文件
 
             if (managerlistener != null)

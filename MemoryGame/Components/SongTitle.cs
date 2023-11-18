@@ -92,30 +92,6 @@ namespace MemoryGame
         }
 
         /// <summary>
-        /// 翻轉歌曲標題卡片，切換顯示或隱藏歌曲資訊。
-        /// </summary>
-        public void FlipOver()
-        {
-            this.FlipOver(!IsFlipped);
-        }
-
-        /// <summary>
-        /// 獲取或設置卡片是否翻轉。
-        /// </summary>
-        public bool Flipped
-        {
-            get { return IsFlipped; }
-            set
-            {
-                if (IsFlipped != value)
-                {
-                    IsFlipped = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        /// <summary>
         /// 覆蓋控制項的繪製方法，用於自訂繪製標題和歌手文字。
         /// </summary>
         /// <param name="e">包含繪圖資訊的 PaintEventArgs 對象。</param>
