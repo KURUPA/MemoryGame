@@ -10,7 +10,6 @@ public partial class MainForm : Form
         tabControl.Size = new Size(1920, 1080);
         tabControl.Location = new Point(0, -80);
         this.menu = new MainMenu(tabControl);
-        //this.scoreboard = new Scoreboard(tabControl, this);
         this.MinimumSize = new Size(960, 540);
         InitializeCard();
     }

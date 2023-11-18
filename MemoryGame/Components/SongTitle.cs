@@ -2,32 +2,55 @@ namespace MemoryGame
 {
     public class SongTitle : PictureBox
     {
-        public readonly SongTitleManager CardManager;
-        public static readonly Image ButtonImage = Image.FromFile("assets/texture/Song_Title/button.png");
-        public static readonly Image ButtonDownImage = Image.FromFile("assets/texture/Song_Title/button_down.png");
-        public static readonly Image ButtonLightImage = Image.FromFile("assets/texture/Song_Title/button_light.png");
-        public static readonly Image ButtonLightDownImage = Image.FromFile("assets/texture/Song_Title/button_light_down.png");
-        private bool IsFlipped { get; set; }
-        public bool IsShowText { get; set; }
-        public String File { get; set; }
-        private string Title { get; set; }
-        private string Singer { get; set; }
-        private int YOffset { get; set; }
-        public static readonly int CARD_WIDTH = 288;
-        public static readonly int CARD_HEIGHT = 144;
-        private float posX;
-        private float posY;
+        public readonly SongTitleManager CardManager; // 歌曲標題管理器
+        public static readonly Image ButtonImage = Image.FromFile("assets/texture/Song_Title/button.png"); // 按鈕圖像
+        public static readonly Image ButtonDownImage = Image.FromFile("assets/texture/Song_Title/button_down.png"); // 按鈕按下圖像
+        public static readonly Image ButtonLightImage = Image.FromFile("assets/texture/Song_Title/button_light.png"); // 高亮按鈕圖像
+        public static readonly Image ButtonLightDownImage = Image.FromFile("assets/texture/Song_Title/button_light_down.png"); // 高亮按鈕按下圖像
+        public static readonly Image ButtonRedImage = Image.FromFile("assets/texture/Song_Title/button_red.png"); // 紅色按鈕圖像
+        public static readonly Image ButtonGreenImage = Image.FromFile("assets/texture/Song_Title/button_green.png"); // 紅色按鈕圖像
+        private bool IsFlipped { get; set; } // 卡片是否翻轉
+        public bool IsShowText { get; set; } // 是否顯示文本
+        public String File { get; set; } // 歌曲檔案名
+        private string Title { get; set; } // 歌曲標題
+        private string Singer { get; set; } // 歌手名稱
+        private int YOffset { get; set; } // Y 偏移量
+        public static readonly int CARD_WIDTH = 288; // 卡片寬度
+        public static readonly int CARD_HEIGHT = 144; // 卡片高度
+        private float posX; // X 坐標
+        private float posY; // Y 坐標
+        public bool Match;
+        public bool PickMatch;
 
+
+        /// <summary>
+        /// 創建一個新的歌曲標題（SongTitle）對象。
+        /// </summary>
+        /// <param name="x">初始化 X 坐標。</param>
+        /// <param name="y">初始化 Y 坐標。</param>
+        /// <param name="cardManager">歌曲標題管理器（SongTitleManager）的引用。</param>
+        /// <param name="file">歌曲檔案名。</param>
+        /// <param name="index">歌曲標題的索引。</param>
         public SongTitle(int x, int y, SongTitleManager cardManager, String file, int index) : this(x, y, cardManager)
         {
             this.File = file;
         }
 
+        /// <summary>
+        /// 創建一個新的歌曲標題（SongTitle）對象。
+        /// </summary>
+        /// <param name="x">X 坐標。</param>
+        /// <param name="y">Y 坐標。</param>
+        /// <param name="cardManager">歌曲標題管理器（SongTitleManager）的引用。</param>
         public SongTitle(int x, int y, SongTitleManager cardManager) : this(cardManager)
         {
             this.Location = new Point(x, y);
         }
 
+        /// <summary>
+        /// 創建一個新的歌曲標題（SongTitle）對象。
+        /// </summary>
+        /// <param name="cardManager">歌曲標題管理器（SongTitleManager）的引用。</param>
         public SongTitle(SongTitleManager cardManager)
         {
             this.Title = "";
@@ -42,27 +65,43 @@ namespace MemoryGame
             this.YOffset = 16;
             this.MouseDown += new MouseEventHandler(SongTitleMouseDownEvent);
             this.MouseUp += new MouseEventHandler(SongTitleMouseUpEvent);
+            this.Match = true;
+            this.PickMatch = false;
         }
 
-        public void setIsShowText(bool IsShow)
+        /// <summary>
+        /// 設置是否顯示文本。
+        /// </summary>
+        /// <param name="isShow">指定是否顯示文本。</param>
+        public void setIsShowText(bool isShow)
         {
-            this.IsShowText = IsShow;
-            this.Image = IsShow ? ButtonLightImage : ButtonImage;
+            this.IsShowText = isShow;
+            this.Image = isShow ? ButtonLightImage : ButtonImage;
         }
 
-        public void FlipOver(Boolean flipp)
+        /// <summary>
+        /// 翻轉歌曲標題卡片，顯示或隱藏歌曲資訊。
+        /// </summary>
+        /// <param name="flip">指定是否翻轉。</param>
+        public void FlipOver(bool flip)
         {
-            bool show = flipp || this.IsShowText;
+            bool show = flip || this.IsShowText;
             this.Title = show ? MainForm.FindTextByKeyAndType(this.File, "Title") : " ";
             this.Singer = show ? MainForm.FindTextByKeyAndType(this.File, "Singer") : " ";
-            IsFlipped = flipp;
+            IsFlipped = flip;
         }
 
+        /// <summary>
+        /// 翻轉歌曲標題卡片，切換顯示或隱藏歌曲資訊。
+        /// </summary>
         public void FlipOver()
         {
             this.FlipOver(!IsFlipped);
         }
 
+        /// <summary>
+        /// 獲取或設置卡片是否翻轉。
+        /// </summary>
         public bool Flipped
         {
             get { return IsFlipped; }
@@ -77,42 +116,58 @@ namespace MemoryGame
         }
 
         /// <summary>
-        /// 覆寫了控制項的繪製方法，用於自定義繪製標題和歌手文字。
+        /// 覆蓋控制項的繪製方法，用於自訂繪製標題和歌手文字。
         /// </summary>
-        /// <param name="e">包含繪圖資訊的PaintEventArgs對象。</param>
+        /// <param name="e">包含繪圖資訊的 PaintEventArgs 對象。</param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);  // 呼叫基類的OnPaint方法以確保正確的繪製行為
+            base.OnPaint(e);
 
             if (this.IsShowText || this.IsFlipped && !string.IsNullOrEmpty(this.Title))
             {
-                // 創建字體和筆刷以設置繪製文本的外觀
-                Font font = MemoryGame.Tabs.MainMenu.getCubicFont(24);  // 使用24pt的Cubic字體
-                Brush brush = new SolidBrush(Color.DarkBlue);  // 使用深藍色筆刷
+                if (Match)
+                {
+                    Font font = MemoryGame.Tabs.MainMenu.GetMicrosoftJhengHeiFont(24);
+                    Brush brush = new SolidBrush(Color.DarkBlue);  // 使用深藍色畫刷
+                    // 測量標題和歌手文字的大小
+                    SizeF titleSize = TextRenderer.MeasureText(this.Title, font);
+                    SizeF singerSize = TextRenderer.MeasureText(this.Singer, font);
 
-                // 測量標題和歌手文字的大小
-                SizeF titleSize = TextRenderer.MeasureText(this.Title, font);
-                SizeF singerSize = TextRenderer.MeasureText(this.Singer, font);
+                    // 設置繪製文本的位置，使其居中
+                    PointF titlePoint = new PointF((this.Width - titleSize.Width) / 2, (this.Height - titleSize.Height) / 2 - this.YOffset);
+                    PointF singerPoint = new PointF((this.Width - singerSize.Width) / 2, (this.Height + singerSize.Height) / 2 - this.YOffset);
 
-                // 設置繪製文本的位置，使其置中
-                PointF titlePoint = new PointF((this.Width - titleSize.Width) / 2, (this.Height - titleSize.Height) / 2 - this.YOffset);
-                PointF singerPoint = new PointF((this.Width - singerSize.Width) / 2, (this.Height + singerSize.Height) / 2 - this.YOffset);
+                    // 使用 Graphics 對象繪製標題和歌手文字
+                    e.Graphics.DrawString(this.Title, font, brush, titlePoint);
+                    e.Graphics.DrawString(this.Singer, font, brush, singerPoint);
+                }
+                else
+                {
+                    Font font = MemoryGame.Tabs.MainMenu.GetMicrosoftJhengHeiFont(32);
+                    Brush brush = new SolidBrush(PickMatch ? Color.LightGreen : Color.LightPink);  // 使用深紅色畫刷
+                    string Text = PickMatch ? "選擇正確" : "選擇錯誤";
+                    // 測量標題和歌手文字的大小
+                    SizeF Size = TextRenderer.MeasureText(Text, font);
 
-                // 使用Graphics對象繪製標題和歌手文字
-                e.Graphics.DrawString(this.Title, font, brush, titlePoint);
-                e.Graphics.DrawString(this.Singer, font, brush, singerPoint);
+                    // 設置繪製文本的位置，使其居中
+                    PointF Point = new PointF((this.Width - Size.Width) / 2, (this.Height - Size.Height) / 2 - this.YOffset);
+
+                    // 使用 Graphics 對象繪製標題和歌手文字
+                    e.Graphics.DrawString(Text, font, brush, Point);
+
+                }
             }
         }
 
         /// <summary>
-        /// 
+        /// 滑鼠按下事件處理程序。
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">事件的源對象。</param>
+        /// <param name="e">包含事件數據的 MouseEventArgs 對象。</param>
         private void SongTitleMouseDownEvent(object? sender, MouseEventArgs e)
         {
             this.YOffset = 13;
-            if (!this.CardManager.isCanPick() || this.IsFlipped)
+            if (this.IsFlipped)
             {
                 return;
             }
@@ -125,20 +180,17 @@ namespace MemoryGame
                 this.Image = ButtonLightDownImage;
             }
         }
+
         /// <summary>
-        /// 滑鼠按下鬆開後彈起事件
+        /// 滑鼠抬起事件處理程序。
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">事件的源對象。</param>
+        /// <param name="e">包含事件數據的 MouseEventArgs 對象。</param>
         private void SongTitleMouseUpEvent(object? sender, MouseEventArgs e)
         {
             YOffset = 16;
             Image = ButtonLightImage;
             if (CardManager.list.Count <= 0)
-            {
-                return;
-            }
-            if (!CardManager.isCanPick())
             {
                 return;
             }
@@ -173,15 +225,34 @@ namespace MemoryGame
             songTitle.SetPos(1.0F - 1.0F / x, 1.0F - 1.0F / y);
             return songTitle;
         }
+
         /// <summary>
-        /// 設置位置座標
+        /// 設置位置坐標。
         /// </summary>
-        /// <param name="x">X座標</param>
-        /// <param name="y">Y座標</param>
+        /// <param name="x">X 坐標。</param>
+        /// <param name="y">Y 坐標。</param>
         public void SetPos(float x, float y)
         {
             posX = x;
             posY = y;
+        }
+
+        public string GetTitle()
+        {
+            return this.Title;
+        }
+        public string GetSinger()
+        {
+            return this.Singer;
+        }
+
+        public void SetTitle(string title)
+        {
+            this.Title = title;
+        }
+        public void SetSinger(string singer)
+        {
+            this.Singer = singer;
         }
     }
 }
