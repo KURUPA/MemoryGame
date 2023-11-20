@@ -139,7 +139,7 @@ namespace MemoryGame
         /// <param name="visible">指定歌曲標題是否可見。</param>
         /// <param name="showText">指定是否顯示文字。</param>
         /// <returns>新創建的 SongTitle 對象。</returns>
-        public static SongTitle CreateSongTitle(SongTitleManager cardManager, int initX, int initY, int x, int y, int index, String key)
+        public static SongTitle Create(SongTitleManager cardManager, int initX, int initY, int x, int y, int index, String key)
         {
             SongTitle songTitle = new(    // 創建新的 SongTitle 對象，並設置初始位置
                 initX + x * (6 + CARD_WIDTH),
@@ -150,11 +150,11 @@ namespace MemoryGame
         /// <summary>
         /// 初始化按鈕顯示與資訊
         /// </summary>
-        public void InitDisplay()
+        public void InitializeDisplay()
         {
             this.Visible = true; // 設定按鈕可見性為 true
-            this.Title = MainForm.FindTextByKeyAndType(this.File, "Title"); // 獲取並設定標題
-            this.Singer = MainForm.FindTextByKeyAndType(this.File, "Singer"); // 獲取並設定歌手
+            this.Title = MainForm.GetSongInfoByKey(this.File, "Title"); // 獲取並設定標題
+            this.Singer = MainForm.GetSongInfoByKey(this.File, "Singer"); // 獲取並設定歌手
         }
     }
 }

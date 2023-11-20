@@ -54,7 +54,7 @@ namespace MemoryGame
         /// <returns>隨機選取的歌曲檔案名</returns>
         public string GetRandomSong()
         {
-            string song = List.ElementAt(new Random().Next(List.Count)).File; // 從列表中隨機選擇一首歌曲
+            string song = List.ElementAt(random.Next(List.Count)).File; // 從列表中隨機選擇一首歌曲
             return song; // 返回選擇的歌曲
         }
 

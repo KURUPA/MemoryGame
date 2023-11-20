@@ -76,7 +76,7 @@ public class Game : TabPage, IManagerListener
                 this.buttonPlay.Enabled = false;
                 this.buttonPlay.Visible = false;
             }
-            this.songTitleManager.List.ForEach((song) => song.InitDisplay());
+            this.songTitleManager.List.ForEach((song) => song.InitializeDisplay());
             this.timer.Start();
             this.stopwatch.Start();
         };
@@ -194,7 +194,7 @@ public class Game : TabPage, IManagerListener
         {
             for (int col = 0; col < 5; col++)
             {
-                SongTitle songTitle = SongTitle.CreateSongTitle(manager, xPos, 60, col, row, row * 10 + col, "");  // 創建歌曲標題按鈕並設定相關屬性
+                SongTitle songTitle = SongTitle.Create(manager, xPos, 60, col, row, row * 10 + col, "");  // 創建歌曲標題按鈕並設定相關屬性
                 songTitle.Visible = false;  // 設置歌曲標題按鈕的可見性為false
                 Controls.Add(songTitle);  // 將歌曲標題按鈕添加到控制項
                 manager.List.Add(songTitle);  // 將歌曲標題按鈕添加到管理器的列表中
