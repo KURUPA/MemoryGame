@@ -137,9 +137,6 @@ public class Game : TabPage, IManagerListener
         };
         return button; // 返回生成的圖片按鈕 (PictureBox)
     }
-
-
-
     /// <summary>
     /// 開始播放音樂。
     /// </summary>
