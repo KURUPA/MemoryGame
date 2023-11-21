@@ -7,18 +7,19 @@ namespace MemoryGame
     /// </summary>
     public class SongTitleManager
     {
-        private readonly Random random;
-        public List<SongTitle> List { get; set; }
-        public string Song { get; set; }
-        public bool CanPick = true;
-        public IManagerListener? Managerlistener;
-        public SongTitle? PickSong;
+        private readonly Random random; // 隨機數產生器
+        public List<SongTitle> List { get; set; }   // SongTitle列表
+        public string Song { get; set; }    // 正在撥放的歌曲名稱
+        public bool CanPick = true; // 管理器當前是否處於可選擇狀態
+        public IManagerListener? Managerlistener;   // 溝通介面，用於將事件傳遞至關卡內
+        public SongTitle? PickSong; // 目前正被選中的SongTitle
 
         /// <summary>
         /// SongTitleManager 類別的構造函數，用於初始化管理歌曲標題按鈕的物件。
         /// </summary>
         public SongTitleManager()
         {
+            // 初始化成員變數
             random = new Random();
             List = new List<SongTitle>();
             Song = "";
@@ -56,15 +57,6 @@ namespace MemoryGame
         {
             string song = List.ElementAt(random.Next(List.Count)).File; // 從列表中隨機選擇一首歌曲
             return song; // 返回選擇的歌曲
-        }
-
-        /// <summary>
-        /// 檢查是否可以選擇按鈕。
-        /// </summary>
-        /// <returns>如果可以選擇按鈕，則為 true；否則為 false。</returns>
-        public bool IsCanPick()
-        {
-            return this.CanPick;
         }
         /// <summary>
         /// 選擇按鈕並觸發選擇事件。

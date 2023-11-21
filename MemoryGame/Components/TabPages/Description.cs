@@ -5,8 +5,8 @@ namespace MemoryGame.Tabs;
 /// </summary>
 public class Description : TabPage
 {
-    private readonly Button buttonStart;
-    public readonly TabControl tabControl;
+    private readonly Button buttonStart; //開始按鈕
+    public readonly TabControl tabControl; //標籤控制
 
     /// <summary>
     /// Description 類別的構造函數，用於初始化描述遊戲關卡的 TabPage。
@@ -16,14 +16,15 @@ public class Description : TabPage
     /// <param name="index">選項卡的索引，用於切換至該遊戲關卡</param>
     public Description(TabControl tabControl, string text, int index)
     {
+        // 初始化成員變數
         BorderStyle = BorderStyle.None;
         this.tabControl = tabControl;
         BackColor = Color.DarkSlateGray;
-        SuspendLayout();    // 暫停佈局以提高效能
+        SuspendLayout(); // 暫停控制項的佈局邏輯
         var Title = new Label   //創建並設定關卡說明標題
         {
             ForeColor = Color.White,
-            Size = new Size(800,120),
+            Size = new Size(800, 120),
             Location = new Point((tabControl.Width - 800) / 2, Height),
             Text = text
         };
@@ -39,8 +40,8 @@ public class Description : TabPage
             TextAlign = ContentAlignment.MiddleCenter,
             UseVisualStyleBackColor = true
         };
-        this.buttonStart.Click += (sender, eventArgs) => tabControl.SelectedIndex = index;  
+        this.buttonStart.Click += (sender, eventArgs) => tabControl.SelectedIndex = index;
         this.Controls.Add(this.buttonStart);    //將開始按鈕加入控制項
-        ResumeLayout(); // 恢復佈局
+        ResumeLayout(); // 恢復控制項的佈局邏輯
     }
 }

@@ -15,9 +15,6 @@ public class Game : TabPage, IManagerListener
     private readonly MainMenu form; // 主選單視窗的參考
     private TimeSpan Time { get; set; } // 遊戲時間的時間間隔
     private readonly Label timeboard; // 顯示遊戲時間的標籤控制項
-    private readonly PictureBox buttonPlay; // 開始按鈕的圖片按鈕控制項
-    private readonly PictureBox buttonRestart; // 重播按鈕的圖片按鈕控制項
-    private readonly PictureBox buttonNext; // 下一首按鈕的圖片按鈕控制項
     private readonly Stopwatch stopwatch; // 用於計時的秒表
     private readonly Timer timer; // 用於觸發事件的計時器
     private readonly WaveOut waveOut; // 音訊播放的 WaveOut 控制項
@@ -29,7 +26,7 @@ public class Game : TabPage, IManagerListener
     /// <param name="form">主選單視窗的參考</param>
     public Game(TabControl tabControl, MainMenu form)
     {
-        // 初始化 Level1 的成員變數
+        // 初始化成員變數
         this.BackColor = Color.DarkSlateGray;
         this.TabControl = tabControl;
         this.form = form;
@@ -37,7 +34,7 @@ public class Game : TabPage, IManagerListener
         waveOut = new WaveOut();
         this.songTitleManager = GenerateAllSongTitle();
         this.songTitleManager.Managerlistener = this;
-        this.Text = "Level 1";
+        this.Text = "Game";
         this.timeboard = new Label  // 創建並設定時間顯示的標籤
         {
             Font = MainMenu.GetMicrosoftJhengHeiFont(64),
@@ -53,33 +50,35 @@ public class Game : TabPage, IManagerListener
         this.timer = new Timer();
         this.timer.Tick += (sender, eventArgs) => SetTime(stopwatch.Elapsed);
         // 生成並初始化重播按鈕
-        this.buttonRestart = GenerateImageButton(0, "Restart", "重播");
-        this.buttonRestart.Enabled = false;
-        this.buttonRestart.Visible = false;
-        this.buttonRestart.MouseUp += (sender, eventArgs) => PlaySong();
+        PictureBox buttonRestart = GenerateImageButton(0, "Restart", "重播");
+        buttonRestart.Enabled = false;
+        buttonRestart.Visible = false;
+        buttonRestart.MouseUp += (sender, eventArgs) => PlaySong();
         // 生成並初始化下一首按鈕
-        this.buttonNext = GenerateImageButton(300, "Next", "下一首");
-        this.buttonNext.Enabled = false;
-        this.buttonNext.Visible = false;
-        this.buttonNext.MouseUp += (sender, eventArgs) => NextSong();
+        PictureBox buttonNext = GenerateImageButton(300, "Next", "下一首");
+        buttonNext.Enabled = false;
+        buttonNext.Visible = false;
+        buttonNext.MouseUp += (sender, eventArgs) => NextSong();
         // 生成並初始化開始按鈕
-        this.buttonPlay = GenerateImageButton(0, "Play", "開始");
-        this.buttonPlay.MouseDown += (sender, eventArgs) =>
+        PictureBox buttonPlay = GenerateImageButton(0, "Play", "開始");
+        buttonPlay.MouseDown += (sender, eventArgs) =>
         {
-            NextSong();
-            this.buttonRestart.Enabled = true;
-            this.buttonRestart.Visible = true;
-            this.buttonNext.Enabled = true;
-            this.buttonNext.Visible = true;
-            if (buttonPlay != null)
+            NextSong();  // 調用 NextSong 方法
+            buttonRestart.Enabled = true;  // 啟用 buttonRestart 按鈕
+            buttonRestart.Visible = true;  // 顯示 buttonRestart 按鈕
+            buttonNext.Enabled = true;  // 啟用 buttonNext 按鈕
+            buttonNext.Visible = true;  // 顯示 buttonNext 按鈕
+            if (buttonPlay != null) // 檢查 buttonPlay 是否為 null，避免空引用例外
             {
-                this.buttonPlay.Enabled = false;
-                this.buttonPlay.Visible = false;
+                buttonPlay.Enabled = false;  // 禁用 buttonPlay 按鈕
+                buttonPlay.Visible = false;  // 隱藏 buttonPlay 按鈕
             }
+            // 對每個歌曲執行 InitializeDisplay 方法
             this.songTitleManager.List.ForEach((song) => song.InitializeDisplay());
-            this.timer.Start();
-            this.stopwatch.Start();
+            this.timer.Start();  // 開始計時器
+            this.stopwatch.Start();  // 開始秒表
         };
+
     }
     /// <summary>
     /// 生成圖片按鈕(PictureBox)控制項，Y軸預設為720。
@@ -103,8 +102,7 @@ public class Game : TabPage, IManagerListener
     /// <returns>生成的圖片按鈕(PictureBox)</returns>
     private PictureBox GenerateImageButton(int x, int y, string name, string text)
     {
-        // 創建圖片按鈕 (PictureBox) 並設定相關屬性
-        PictureBox button = new()
+        PictureBox button = new() // 創建圖片按鈕 (PictureBox) 並設定相關屬性
         {
             Size = new Size(160, 160),
             Location = new Point(80 + x, 720),
@@ -113,7 +111,7 @@ public class Game : TabPage, IManagerListener
             BackColor = Color.Transparent
         };
         this.Controls.Add(button); // 將按鈕添加到控制項
-        Label label = new()
+        Label label = new() //創建標籤(Label) 並設定相關屬性
         {
             ForeColor = Color.White,
             Text = text,
@@ -125,19 +123,15 @@ public class Game : TabPage, IManagerListener
         button.MouseDown += (sender, eventArgs) =>  // 處理按鈕的按下事件以切換圖片為按下狀態
         {
             if (sender is PictureBox pictureBox)
-            {
-                pictureBox.Image = Image.FromFile($"assets/texture/{name}/A_{name}3.png");
-            }
+            { pictureBox.Image = Image.FromFile($"assets/texture/{name}/A_{name}3.png"); }
         };
         button.MouseUp += (sender, eventArgs) =>    // 處理按鈕的釋放事件以切換圖片回原始狀態
         {
             if (sender is PictureBox pictureBox)
-            {
-                pictureBox.Image = Image.FromFile($"assets/texture/{name}/A_{name}2.png");
-            }
+            { pictureBox.Image = Image.FromFile($"assets/texture/{name}/A_{name}2.png"); }
         };
         button.VisibleChanged += (sender, eventArgs) => // 處理按鈕的可見性或啟用狀態變化以調整相關標籤的狀態
-        {
+        {   // 設定標籤的可見性和啟用狀態與按鈕相同
             label.Visible = button.Visible;
             label.Enabled = button.Enabled;
         };
